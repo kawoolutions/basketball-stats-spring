@@ -1,4 +1,4 @@
-package io.kawoolutions.bbstats.framework.entity;
+package io.kawoolutions.bbstats.entity.base;
 
 import io.kawoolutions.bbstats.application.ProjectGlobals;
 

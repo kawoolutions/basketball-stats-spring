@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import io.kawoolutions.bbstats.framework.entity.BaseEntity;
+import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
 @Table(name = "\"Scores\"")

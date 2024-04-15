@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 
-import io.kawoolutions.bbstats.framework.entity.BaseEntity;
+import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
 @Table(name = "\"GameLogs\"")

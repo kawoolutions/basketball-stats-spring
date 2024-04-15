@@ -27,7 +27,7 @@ import jakarta.persistence.SecondaryTable;
 import jakarta.persistence.Table;
 
 import io.kawoolutions.bbstats.entity.converter.ContactTypeConverter;
-import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
+import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
 @Table(name = "\"Contacts\"")

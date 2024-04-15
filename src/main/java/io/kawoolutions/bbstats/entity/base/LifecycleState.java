@@ -1,4 +1,4 @@
-package io.kawoolutions.bbstats.framework.entity;
+package io.kawoolutions.bbstats.entity.base;
 
 public enum LifecycleState {
     NEW,  // marked as to be persisted

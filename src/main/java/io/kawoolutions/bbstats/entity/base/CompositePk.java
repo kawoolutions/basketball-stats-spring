@@ -1,4 +1,4 @@
-package io.kawoolutions.bbstats.framework.entity;
+package io.kawoolutions.bbstats.entity.base;
 
 import java.io.Serializable;
 import java.util.List;

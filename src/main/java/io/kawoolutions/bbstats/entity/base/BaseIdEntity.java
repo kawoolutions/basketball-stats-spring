@@ -1,4 +1,4 @@
-package io.kawoolutions.bbstats.framework.entity;
+package io.kawoolutions.bbstats.entity.base;
 
 public abstract class BaseIdEntity extends BaseEntity<Integer> implements IdEntity {
     private static final long serialVersionUID = 1L;

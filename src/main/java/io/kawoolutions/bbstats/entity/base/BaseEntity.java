@@ -1,4 +1,4 @@
-package io.kawoolutions.bbstats.framework.entity;
+package io.kawoolutions.bbstats.entity.base;
 
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.Transient;
