@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +17,8 @@ import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -48,40 +49,40 @@ public class Roster extends BaseIdEntity
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "season_start_year")
-    @JsonbTransient
+    @JsonIgnore
     private Season season;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id", referencedColumnName = "club_id")
     @JoinColumn(name = "team_type_code", referencedColumnName = "team_type_code")
     @JoinColumn(name = "team_ordinal_nbr", referencedColumnName = "ordinal_nbr")
-    @JsonbTransient
+    @JsonIgnore
     private Team team;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "primary_jersey_color_name")
-    @JsonbTransient
+    @JsonIgnore
     private Color primaryJerseyColor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "secondary_jersey_color_name")
-    @JsonbTransient
+    @JsonIgnore
     private Color secondaryJerseyColor;
 
     @OneToMany(mappedBy = "roster")
-    @JsonbTransient
+    @JsonIgnore
     private List<GroupMember> groupMembers;
 
     @OneToMany(mappedBy = "roster")
-    @JsonbTransient
+    @JsonIgnore
     private List<Score> scores;
 
     @OneToMany(mappedBy = "roster")
-    @JsonbTransient
+    @JsonIgnore
     private List<StaffMember> staffMembers;
 
     @OneToMany(mappedBy = "roster")
-    @JsonbTransient
+    @JsonIgnore
     private List<TeamMember> teamMembers;
 
     public Roster()

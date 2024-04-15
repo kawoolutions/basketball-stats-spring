@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +14,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -44,17 +45,17 @@ public class Team extends BaseEntity<TeamId> implements Comparable<Team>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Club club;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "team_type_code", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private TeamType teamType;
 
     @OneToMany(mappedBy = "team")
     @OrderBy("season")
-    @JsonbTransient
+    @JsonIgnore
     private List<Roster> rosters;
 
     public Team()

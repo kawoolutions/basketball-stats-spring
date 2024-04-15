@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +15,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -41,11 +42,11 @@ public class Player extends BaseIdEntity
 
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Person person;
 
     @OneToMany(mappedBy = "player")
-    @JsonbTransient
+    @JsonIgnore
     private List<TeamMember> teamMembers;
 
     public Player()

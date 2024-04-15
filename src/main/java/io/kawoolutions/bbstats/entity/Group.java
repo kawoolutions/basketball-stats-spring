@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +19,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -72,29 +73,29 @@ public class Group extends BaseEntity<GroupId>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "round_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Round round;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "code", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private GroupLabel groupLabel;
 
     @ManyToMany
     @JoinTable(name = "GroupLinks", joinColumns = {@JoinColumn(name = "parent_round_id", referencedColumnName = "round_id"), @JoinColumn(name = "parent_group_code", referencedColumnName = "code")}, inverseJoinColumns = {@JoinColumn(name = "child_round_id", referencedColumnName = "round_id"), @JoinColumn(name = "child_group_code", referencedColumnName = "code")})
-    @JsonbTransient
+    @JsonIgnore
     private List<Group> children;
 
     @OneToMany(mappedBy = "group")
-    @JsonbTransient
+    @JsonIgnore
     private List<Game> games;
 
     @OneToMany(mappedBy = "group")
-    @JsonbTransient
+    @JsonIgnore
     private List<GroupMember> groupMembers;
 
     @ManyToMany(mappedBy = "children")
-    @JsonbTransient
+    @JsonIgnore
     private List<Group> parents;
 
     public Group()

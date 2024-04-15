@@ -2,7 +2,6 @@ package io.kawoolutions.bbstats.entity;
 
 import java.util.List;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -19,6 +18,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -50,15 +51,15 @@ public abstract class GeoContext extends BaseIdEntity
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     protected GeoContext parent;
 
     @OneToMany(mappedBy = "parent")
-    @JsonbTransient
+    @JsonIgnore
     protected List<GeoContext> children;
 
     @OneToMany(mappedBy = "geoContext")
-    @JsonbTransient
+    @JsonIgnore
     protected List<Competition> competitions;
 
     protected GeoContext()

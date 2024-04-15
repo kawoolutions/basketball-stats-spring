@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,6 +17,8 @@ import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -56,20 +57,20 @@ public class Competition extends BaseEntity<CompetitionId>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "geo_context_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private GeoContext geoContext;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "team_type_code", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private TeamType teamType;
 
     @OneToMany(mappedBy = "competition")
-    @JsonbTransient
+    @JsonIgnore
     private Set<CompetitionLabel> competitionLabels;
 
     @OneToMany(mappedBy = "competition")
-    @JsonbTransient
+    @JsonIgnore
     private List<Round> rounds;
 
     public Competition()

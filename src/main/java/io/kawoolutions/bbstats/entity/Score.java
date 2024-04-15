@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.Map;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +18,8 @@ import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -50,18 +51,18 @@ public class Score extends BaseEntity<ScoreId>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Game game;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roster_id")
-    @JsonbTransient
+    @JsonIgnore
     private Roster roster;
 
     @OneToMany(mappedBy = "score")
     @MapKey(name = "jerseyNbr")
     @OrderBy("starter DESC, jerseyNbr")
-    @JsonbTransient
+    @JsonIgnore
     private Map<Integer, PlayerStat> playerStats;
 
     public Score()

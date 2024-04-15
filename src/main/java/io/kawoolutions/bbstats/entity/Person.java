@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -19,6 +18,8 @@ import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "\"Persons\"")
@@ -88,7 +89,7 @@ public class Person extends Contact
 
     @ManyToMany(mappedBy = "persons")
     @OrderBy("name")
-    @JsonbTransient
+    @JsonIgnore
     private List<Club> clubs;
 
     public Person()

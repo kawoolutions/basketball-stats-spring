@@ -2,7 +2,6 @@ package io.kawoolutions.bbstats.entity;
 
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -81,7 +82,7 @@ public class CompetitionLabel extends BaseEntity<CompetitionLabelId>
     @JoinColumn(name = "team_type_code", referencedColumnName = "team_type_code", insertable = false, updatable = false)
     @JoinColumn(name = "competition_type", referencedColumnName = "type", insertable = false, updatable = false)
     @JoinColumn(name = "competition_level", referencedColumnName = "level", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Competition competition;
 
     public CompetitionLabel()

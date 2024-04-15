@@ -2,7 +2,6 @@ package io.kawoolutions.bbstats.entity;
 
 import java.util.List;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -19,6 +18,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -52,16 +53,16 @@ public abstract class Round extends BaseIdEntity
     @JoinColumn(name = "team_type_code", referencedColumnName = "team_type_code")
     @JoinColumn(name = "competition_type", referencedColumnName = "type")
     @JoinColumn(name = "competition_level", referencedColumnName = "level")
-    @JsonbTransient
+    @JsonIgnore
     protected Competition competition;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "season_start_year")
-    @JsonbTransient
+    @JsonIgnore
     protected Season season;
 
     @OneToMany(mappedBy = "round")
-    @JsonbTransient
+    @JsonIgnore
     protected List<Group> groups;
 
     protected Round()

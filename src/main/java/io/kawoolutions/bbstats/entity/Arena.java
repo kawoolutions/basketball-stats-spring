@@ -2,7 +2,6 @@ package io.kawoolutions.bbstats.entity;
 
 import java.util.List;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -15,6 +14,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "\"Arenas\"")
@@ -46,12 +47,12 @@ public class Arena extends Contact
     private Integer capacity;
 
     @OneToMany(mappedBy = "arena")
-    @JsonbTransient
+    @JsonIgnore
     private List<Game> games;
 
     @ManyToMany(mappedBy = "arenas")
     @OrderBy
-    @JsonbTransient
+    @JsonIgnore
     private List<Club> clubs;
 
     public Arena()

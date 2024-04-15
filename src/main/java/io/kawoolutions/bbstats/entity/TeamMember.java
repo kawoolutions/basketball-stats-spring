@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +20,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -71,16 +72,16 @@ public class TeamMember extends BaseEntity<TeamMemberId>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Player player;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "roster_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Roster roster;
 
     @OneToMany(mappedBy = "teamMember")
-    @JsonbTransient
+    @JsonIgnore
     private List<PlayerStat> playerStats;
 
     public TeamMember()

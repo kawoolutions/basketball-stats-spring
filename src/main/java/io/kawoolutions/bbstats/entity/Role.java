@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -32,15 +33,15 @@ public class Role extends BaseIdEntity
 
     @ManyToMany
     @JoinTable(name = "RoleLinks", joinColumns = @JoinColumn(name = "parent_role_id"), inverseJoinColumns = @JoinColumn(name = "child_role_id"))
-    @JsonbTransient
+    @JsonIgnore
     private List<Role> children;
 
     @ManyToMany(mappedBy = "children")
-    @JsonbTransient
+    @JsonIgnore
     private Set<Role> parents;
 
     @ManyToMany(mappedBy = "roles")
-    @JsonbTransient
+    @JsonIgnore
     private List<User> users;
 
     public Role()

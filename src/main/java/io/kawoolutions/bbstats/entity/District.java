@@ -2,7 +2,6 @@ package io.kawoolutions.bbstats.entity;
 
 import java.util.List;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.NamedAttributeNode;
@@ -11,6 +10,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "\"Districts\"")
@@ -30,7 +31,7 @@ public class District extends GeoContext
     public static final String FETCH_COUNTRY = "District.fetchCountry";
 
     @OneToMany(mappedBy = "district")
-    @JsonbTransient
+    @JsonIgnore
     private List<Club> clubs;
 
     public District()

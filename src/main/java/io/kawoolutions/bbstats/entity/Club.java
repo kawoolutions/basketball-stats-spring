@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -25,6 +24,8 @@ import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "\"Clubs\"")
@@ -66,41 +67,41 @@ public class Club extends Contact
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "color_name")
-    @JsonbTransient
+    @JsonIgnore
     private Color color;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "district_id")
-    @JsonbTransient
+    @JsonIgnore
     private District district;
 
     @ManyToMany
     @JoinTable(name = "Tenancies", joinColumns = @JoinColumn(name = "club_id"), inverseJoinColumns = @JoinColumn(name = "arena_id"))
     @OrderColumn(name = "ordinal_nbr", nullable = false)
-    @JsonbTransient
+    @JsonIgnore
     private List<Arena> arenas;
 
     @ManyToMany
     @JoinTable(name = "Managers", joinColumns = @JoinColumn(name = "club_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
     @MapKeyColumn(name = "role")
     @MapKeyEnumerated(EnumType.STRING)
-    @JsonbTransient
+    @JsonIgnore
     private Map<ManagerRole, Person> persons;
 
     @OneToMany(mappedBy = "ownerClub")
-    @JsonbTransient
+    @JsonIgnore
     private List<Assignment> ownerAssignments;
 
     @OneToMany(mappedBy = "refClub")
-    @JsonbTransient
+    @JsonIgnore
     private List<Game> refGames;
 
     @OneToMany(mappedBy = "club")
-    @JsonbTransient
+    @JsonIgnore
     private List<RefpoolMember> refpoolMembers;
 
     @OneToMany(mappedBy = "club")
-    @JsonbTransient
+    @JsonIgnore
     private Set<Team> teams;
 
     public Club()

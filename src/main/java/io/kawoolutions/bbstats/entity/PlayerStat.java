@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +15,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -65,18 +66,18 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id", referencedColumnName = "game_id", insertable = false, updatable = false)
     @JoinColumn(name = "is_home", referencedColumnName = "is_home", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Score score;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id", referencedColumnName = "player_id", insertable = false, updatable = false)
     @JoinColumn(name = "roster_id", referencedColumnName = "roster_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private TeamMember teamMember;
 
     @OneToMany(mappedBy = "playerStat")
     @OrderBy("period")
-    @JsonbTransient
+    @JsonIgnore
     private List<Stat> stats;
 
     public PlayerStat()

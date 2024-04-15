@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +16,8 @@ import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -63,12 +64,12 @@ public class User extends BaseEntity<String>
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
-    @JsonbTransient
+    @JsonIgnore
     private Person person;
 
     @ManyToMany
     @JoinTable(name = "UserRoleLinks", joinColumns = @JoinColumn(name = "user_name"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @JsonbTransient
+    @JsonIgnore
     private List<Role> roles;
 
     public User()

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +21,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -113,22 +114,22 @@ public class Game extends BaseIdEntity
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ref_club_id")
-    @JsonbTransient
+    @JsonIgnore
     private Club refClub;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arena_id")
-    @JsonbTransient
+    @JsonIgnore
     private Arena arena;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "round_id", referencedColumnName = "round_id")
     @JoinColumn(name = "group_code", referencedColumnName = "code")
-    @JsonbTransient
+    @JsonIgnore
     private Group group;
 
     @OneToMany(mappedBy = "game")
-    @JsonbTransient
+    @JsonIgnore
     private List<Assignment> assignments;
 
     @OneToMany(mappedBy = "game")

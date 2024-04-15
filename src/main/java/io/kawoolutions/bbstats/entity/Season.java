@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,6 +12,8 @@ import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -32,15 +33,15 @@ public class Season extends BaseIdEntity
     private Integer startYear;
 
     @OneToMany(mappedBy = "season")
-    @JsonbTransient
+    @JsonIgnore
     private List<RefpoolMember> refpoolMembers;
 
     @OneToMany(mappedBy = "season")
-    @JsonbTransient
+    @JsonIgnore
     private Set<Roster> rosters;
 
     @OneToMany(mappedBy = "season")
-    @JsonbTransient
+    @JsonIgnore
     private Set<Round> rounds;
 
     public Season()

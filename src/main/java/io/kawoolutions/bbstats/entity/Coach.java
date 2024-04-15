@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +14,8 @@ import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseIdEntity;
 
@@ -37,11 +38,11 @@ public class Coach extends BaseIdEntity
 
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Person person;
 
     @OneToMany(mappedBy = "coach")
-    @JsonbTransient
+    @JsonIgnore
     private Set<StaffMember> staffMembers;
 
     public Coach()

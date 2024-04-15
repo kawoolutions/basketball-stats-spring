@@ -3,7 +3,6 @@ package io.kawoolutions.bbstats.entity;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -42,21 +43,21 @@ public class RefpoolMember extends BaseEntity<RefpoolMemberId>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "referee_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Referee referee;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "season_start_year", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Season season;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "club_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private Club club;
 
     @OneToMany(mappedBy = "refpoolMember")
-    @JsonbTransient
+    @JsonIgnore
     private Set<Assignment> assignments;
 
     public RefpoolMember()

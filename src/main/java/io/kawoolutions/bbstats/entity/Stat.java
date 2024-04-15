@@ -2,7 +2,6 @@ package io.kawoolutions.bbstats.entity;
 
 import java.util.Objects;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +11,8 @@ import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.kawoolutions.bbstats.framework.entity.BaseEntity;
 
@@ -63,7 +64,7 @@ public class Stat extends BaseEntity<StatId>
     @JoinColumn(name = "is_home", referencedColumnName = "is_home", insertable = false, updatable = false)
     @JoinColumn(name = "player_id", referencedColumnName = "player_id", insertable = false, updatable = false)
     @JoinColumn(name = "roster_id", referencedColumnName = "roster_id", insertable = false, updatable = false)
-    @JsonbTransient
+    @JsonIgnore
     private PlayerStat playerStat;
 
     public Stat()
