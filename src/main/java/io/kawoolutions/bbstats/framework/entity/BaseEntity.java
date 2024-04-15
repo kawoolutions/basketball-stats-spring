@@ -1,18 +1,19 @@
 package io.kawoolutions.bbstats.framework.entity;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public abstract class BaseEntity<K> implements Entity<K> {
     private static final long serialVersionUID = 1L;
 
     @Transient
-    @JsonbTransient
+    @JsonIgnore
     private Integer sequentialNumber;
 
     @Transient
-    @JsonbTransient
+    @JsonIgnore
     private LifecycleState lifecycleState = LifecycleState.LIVE;
 
     protected BaseEntity() {
