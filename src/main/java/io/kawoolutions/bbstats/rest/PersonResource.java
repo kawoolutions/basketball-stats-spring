@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "demo/basics/persons", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "demo/basics/persons", produces = MediaType.APPLICATION_JSON_VALUE);
 public class PersonResource {
 
     private static Logger log = LoggerFactory.getLogger(PersonResource.class);
