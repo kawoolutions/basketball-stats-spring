@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <!-- roster queries -->
+
+    <named-query name="Roster.findTimeShifted">
+        <query>
+            SELECT pro
+            FROM Roster ro
+              JOIN ro.team te
+              JOIN te.rosters pro
+              JOIN pro.season pse
+            WHERE ro.id = :rosterId 
+            ORDER BY pse.startYear DESC
+        </query>
+    </named-query>
+    
+    <!-- group member queries -->
+    
+    <!--named-query name="GroupMember.findByRoster">
+        <query>
+            SELECT gm
+            FROM GroupMember gm
+              JOIN gm.rosters ro
+              JOIN gm.group gr
+              JOIN gr.round rd
+              JOIN rd.competition cm
+              JOIN cm.geoContext gc
+            WHERE ro.id = :rosterId
+            ORDER BY cm.type, gc.type, cm.level
+        </query>
+    </named-query-->
+    <!--
+    -->
+
+    <named-query name="GroupMember.findByPlayerAndSeason">
+        <query>
+            SELECT gm
+            FROM TeamMember tm
+              JOIN tm.player pl
+              JOIN pl.person pe
+              JOIN tm.roster ro
+              JOIN ro.season se
+              JOIN ro.team te
+              JOIN te.teamType tt
+              JOIN te.club cl
+              JOIN ro.groupMembers gm
+              JOIN gm.group gr
+              JOIN gr.round rd
+              JOIN rd.competition cm
+              JOIN cm.geoContext gc
+            WHERE pe.id = :playerId AND se.startYear = :seasonStartYear
+            ORDER BY cm.type, gc.type, cm.level, cl.code, ro.id
+        </query>
+    </named-query>
+
+    <!-- group queries -->    
+    
+    <named-query name="Group.findWithParents">
+        <query>
+            <![CDATA[
+            SELECT gr
+            FROM Group gr
+              JOIN gr.round rd
+              JOIN gr.groupLabel gl
+              LEFT JOIN FETCH gr.parents
+            WHERE rd.id = :roundId AND gl.code = :groupCode
+            ]]>
+        </query>
+    </named-query>
+
+    <named-query name="Group.findWithChildren">
+        <query>
+            <![CDATA[
+            SELECT gr
+            FROM Group gr
+              JOIN gr.round rd
+              JOIN gr.groupLabel gl
+              LEFT JOIN FETCH gr.children
+            WHERE rd.id = :roundId AND gl.code = :groupCode
+            ]]>
+        </query>
+    </named-query>
+    
+    <named-query name="Group.findByRound">
+        <query>
+            <![CDATA[
+            SELECT gr
+            FROM Group gr
+              JOIN gr.groupLabel gl
+              JOIN gr.round rd
+            WHERE rd.id = :roundId
+            ORDER BY gl.code
+            ]]>
+        </query>
+    </named-query>
+    <!--
+              LEFT JOIN gr.groupLabel gl
+    -->
+
+    <named-query name="Group.findTimeShifted">
+        <query>
+            SELECT pgr
+            FROM Group gr
+              JOIN gr.groupLabel gl
+              JOIN gr.round rd
+              JOIN rd.competition cm
+              JOIN cm.rounds prd
+              JOIN prd.groups pgr ON pgr.code = gl.code
+              JOIN pgr.groupLabel pgl
+              JOIN prd.season pse
+            WHERE rd.id = :roundId AND gl.code = :groupCode
+            ORDER BY pse.startYear DESC
+        </query>
+    </named-query>
+    
+    <!-- team member query -->
+    
+    <!--named-query name="TeamMember.findTimeShifted">
+        <query>
+            SELECT tm
+            FROM Player pl
+              JOIN pl.teamMembers tm
+              JOIN tm.roster ro
+              JOIN ro.season se
+            WHERE pl.id = :playerId
+            GROUP BY se.startYear
+            ORDER BY se.startYear DESC
+        </query>
+    </named-query-->
+    <!--
+    -->
+    
+    <!-- player season query -->
+
+    <named-query name="PlayerSeason.findTimeShifted">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.view.navigation.PlayerSeason(
+              pe.id,
+              se.startYear
+            )
+            FROM Player pl
+              JOIN pl.person pe
+              JOIN pl.teamMembers tm
+              JOIN tm.roster ro
+              JOIN ro.season se
+            WHERE pe.id = :playerId
+            GROUP BY se.startYear
+            ORDER BY se.startYear DESC
+        </query>
+    </named-query>
+    <!--
+    -->
+    
+</entity-mappings>

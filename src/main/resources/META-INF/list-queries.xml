@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <!--named-query name="Competition.findDtosBySeason">
+        <query>
+            <![CDATA[
+            SELECT NEW io.kawoolutions.bbstats.dto.TestDto(
+              NULL
+            )
+            FROM Group gr
+            ]]>
+        </query>
+    </named-query-->
+    
+    <!-- competitions admin query -->
+    
+    <named-query name="Competition.findAll">
+        <query>
+            <![CDATA[
+            SELECT cm
+            FROM Competition cm
+              JOIN cm.competitionLabels cml
+              JOIN cm.teamType tt
+              JOIN cm.geoContext gc
+            WHERE cml.seasonStartYear = (SELECT MIN(lbl.seasonStartYear)
+                                        FROM CompetitionLabel lbl
+                                          JOIN lbl.competition cmp
+                                          JOIN cmp.geoContext geo
+                                          JOIN cmp.teamType tet
+                                        WHERE gc.id = geo.id
+                                          AND tt.code = tet.code
+                                          AND cm.type = cmp.type
+                                          AND cm.level = cmp.level
+                                          AND cml.seasonStartYear <= FUNCTION('YEAR', CURRENT_DATE))
+            ORDER BY cm.type, gc.type, tt.ageGroup DESC, tt.gender DESC, cm.level
+            ]]>
+        </query>
+    </named-query>
+    <!-- the seasonStartYear comparison isn't actually needed, it is just for vain... JPA 2.1 introduced FUNCTION and
+         EclipseLink and Hibernate both have the YEAR function
+    
+                                           AND cml.seasonStartYear <= CAST(SUBSTRING(CURRENT_DATE, 1, 4) AS DECIMAL) )
+            GROUP BY cml.code, cml.name
+    -->
+    
+    <!-- competition list query -->
+    
+    <named-query name="Competition.findDtosBySeason">
+        <query>
+            <![CDATA[
+            SELECT NEW io.kawoolutions.bbstats.dto.CompetitionListDto(
+              rd.id,
+              gl.code,
+              gr.officialCode,
+              gl.name,
+              se.startYear,
+              cm.type,
+              cm.level,
+              cml.code,
+              cml.name,
+              tt.code,
+              tt.ageGroup,
+              tt.gender,
+              gc.id,
+              gc.type,
+              COUNT(ro)
+            )
+            FROM Group gr
+              LEFT JOIN gr.groupLabel gl
+              LEFT JOIN gr.groupMembers gm
+              LEFT JOIN gm.roster ro
+              JOIN gr.round rd
+              JOIN rd.season se
+              JOIN rd.competition cm
+              JOIN cm.teamType tt
+              JOIN cm.geoContext gc
+              JOIN cm.competitionLabels cml
+            WHERE se.startYear = :seasonStartYear
+              AND cml.seasonStartYear = (SELECT MAX(lbl.seasonStartYear)
+                                         FROM CompetitionLabel lbl
+                                           JOIN lbl.competition cmp
+                                           JOIN cmp.geoContext geo
+                                           JOIN cmp.teamType tet
+                                         WHERE geo.id = gc.id
+                                           AND tet.code = tt.code
+                                           AND cmp.type = cm.type
+                                           AND cmp.level = cm.level
+                                           AND lbl.seasonStartYear <= :seasonStartYear)
+            GROUP BY rd.id, gl.code, gr.officialCode, gl.name, se.startYear, cm.type, cm.level, cml.code, cml.name
+            ORDER BY se.startYear, gc.type, gc.name, cm.type, tt.ageGroup DESC, tt.gender DESC, rd.id, gl.code
+            ]]>
+        </query>
+    </named-query>
+    <!--
+    -->
+    
+    <!-- team list query -->
+    
+    <named-query name="Team.findDtosBySeason">
+        <query>
+            <![CDATA[
+            SELECT NEW io.kawoolutions.bbstats.dto.TeamListDto(
+              ro.id,
+              cl.name,
+              cl.code,
+              te.ordinalNbr,
+              tt.code,
+              tt.ageGroup,
+              tt.gender,
+              ct,
+              cy,
+              re,
+              st,
+              di
+            )
+            FROM Roster ro
+              JOIN ro.season se
+              JOIN ro.team te
+              JOIN te.teamType tt
+              JOIN te.club cl
+              JOIN cl.district di
+              JOIN di.parent st
+              JOIN st.parent re
+              JOIN re.parent cy
+              JOIN cy.parent ct
+            WHERE se.startYear = :seasonStartYear
+            ORDER BY ct.name, cy.name, re.name, st.name, di.name, cl.code, tt.ageGroup DESC, tt.gender DESC, te.ordinalNbr
+            ]]>
+        </query>
+    </named-query>
+    <!--
+    -->
+    
+    <!-- player list query -->
+    
+    <named-query name="Player.findDtosBySeason">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.PlayerListDto(
+              se.startYear,
+              pl.id,
+              pl,
+              pe.firstName,
+              pe.lastName,
+              pe.gender,
+              pe.birthDate,
+              pe.incognito,
+              ct,
+              cy,
+              re,
+              st,
+              di
+            )
+            FROM Roster ro
+              JOIN ro.teamMembers tm
+              JOIN tm.player pl
+              JOIN pl.person pe
+              JOIN ro.season se
+              JOIN ro.team te
+              JOIN te.teamType tt
+              JOIN te.club cl
+              JOIN cl.district di
+              JOIN di.parent st
+              JOIN st.parent re
+              JOIN re.parent cy
+              JOIN cy.parent ct
+            WHERE se.startYear = :seasonStartYear
+            GROUP BY pl.id, ct.id, cy.id, re.id, st.id, di.id
+            ORDER BY pe.lastName, pe.firstName
+        </query>
+    </named-query>
+    <!-- 
+            GROUP BY pe.id, tm.position, cl.name, cl.code, te.ordinalNbr, tt.code, ct.name, cy.name, re.name, st.name, di.name
+    -->
+    
+    <!-- arena list query -->
+    
+    <named-query name="Arena.findDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.ArenaListDto(
+              ar
+            )
+            FROM Arena ar
+              LEFT JOIN ar.clubs cl
+            GROUP BY ar.id
+            ORDER BY ar.name
+        </query>
+    </named-query>
+    <!--    
+            LEFT JOIN ar.tenancies tn
+            
+              LEFT JOIN cl.district di
+              LEFT JOIN di.parent st
+              LEFT JOIN st.parent re
+              LEFT JOIN re.parent cy
+              LEFT JOIN cy.parent ct
+            
+            ORDER BY ct.name, cy.name, re.name, st.name, di.name, cl.code
+    -->
+
+</entity-mappings>

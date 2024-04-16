@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <named-query name="Group.findStandingsDtos">
+        <query>
+            <![CDATA[
+            SELECT NEW io.kawoolutions.bbstats.dto.StandingsDto(
+                ro.id
+              , cl.name
+              , cl.code
+              , te.ordinalNbr
+              , gm.withdrawn
+              
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL THEN 1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore > sca.finalScore THEN 1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore < sca.finalScore THEN 1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore = 20 AND sca.finalScore =  0 THEN 1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore =  0 AND sca.finalScore = 20 THEN 1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore =  0 AND sca.finalScore =  0 THEN 1 ELSE 0 END)
+              
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL AND NOT (scf.finalScore = 20 AND sca.finalScore = 0 OR scf.finalScore = 0 AND sca.finalScore = 20 OR scf.finalScore = 0 AND sca.finalScore = 0) THEN 1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL AND NOT (scf.finalScore = 20 AND sca.finalScore = 0 OR scf.finalScore = 0 AND sca.finalScore = 20 OR scf.finalScore = 0 AND sca.finalScore = 0) AND scf.finalScore > sca.finalScore THEN 1 ELSE 0 END)
+              
+              ,   SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore > sca.finalScore THEN 2 ELSE 0 END)
+                + SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore = 0 AND sca.finalScore = 20 THEN -1 ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL AND NOT (scf.finalScore = 20 AND sca.finalScore = 0 OR scf.finalScore = 0 AND sca.finalScore = 20 OR scf.finalScore = 0 AND sca.finalScore = 0) AND scf.finalScore > sca.finalScore THEN 1 ELSE 0 END)
+                / SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL AND NOT (scf.finalScore = 20 AND sca.finalScore = 0 OR scf.finalScore = 0 AND sca.finalScore = 20 OR scf.finalScore = 0 AND sca.finalScore = 0) THEN 1.0 ELSE 0.0 END)
+              , CASE WHEN SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL THEN 1 ELSE 0 END) > 0
+                     THEN  (SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore > sca.finalScore THEN 1.0 ELSE 0.0 END)
+                          / SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL THEN 1 ELSE 0 END))
+                     ELSE 0.0 END
+              
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL THEN scf.finalScore ELSE 0 END)
+              , SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND sca.finalScore IS NOT NULL THEN sca.finalScore ELSE 0 END)
+      
+              , MAX(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore NOT IN (0, 20) THEN scf.finalScore ELSE NULL END)
+              , MAX(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore NOT IN (0, 20) THEN scf.game.id ELSE NULL END)
+              , MIN(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore NOT IN (0, 20) THEN scf.finalScore ELSE NULL END)
+              , MIN(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore NOT IN (0, 20) THEN scf.game.id ELSE NULL END)
+            )
+            FROM Club cl
+              JOIN cl.teams te
+              JOIN te.rosters ro
+              JOIN ro.season se
+              JOIN ro.groupMembers gm
+              JOIN gm.group gr
+              JOIN gr.round rd
+              JOIN gr.games ga
+              JOIN ga.scores scf
+              JOIN ga.scores sca
+              JOIN scf.roster rof
+              JOIN sca.roster roa
+              JOIN rof.groupMembers gmf
+              JOIN roa.groupMembers gma
+            WHERE scf.roster.id = ro.id
+              AND sca.roster.id <> ro.id
+              AND gmf.group.round.id = rd.id
+              AND gmf.group.groupLabel.code = gr.groupLabel.code
+              AND gma.group.round.id = rd.id
+              AND gma.group.groupLabel.code = gr.groupLabel.code
+              AND rd.id = :roundId
+              AND gr.groupLabel.code = :groupCode
+            GROUP BY ro.id
+            ORDER BY gm.withdrawn,
+              SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL AND NOT (scf.finalScore = 20 AND sca.finalScore = 0 OR scf.finalScore = 0 AND sca.finalScore = 20 OR scf.finalScore = 0 AND sca.finalScore = 0) AND scf.finalScore > sca.finalScore THEN 1 ELSE 0 END) / SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL AND NOT (scf.finalScore = 20 AND sca.finalScore = 0 OR scf.finalScore = 0 AND sca.finalScore = 20 OR scf.finalScore = 0 AND sca.finalScore = 0) THEN 1.0 ELSE 0.0 END) DESC,
+              SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore > sca.finalScore THEN 1 ELSE 0 END) DESC,
+              SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore =  0 AND sca.finalScore = 20 THEN 1 ELSE 0 END),
+              SUM(CASE WHEN gmf.withdrawn = FALSE AND gma.withdrawn = FALSE AND scf.finalScore IS NOT NULL THEN 1 ELSE 0 END) DESC,
+              cl.code
+            ]]>
+        </query>
+    </named-query>
+    <!--
+    -->
+    
+</entity-mappings>

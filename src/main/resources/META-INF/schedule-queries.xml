@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <named-query name="Group.findScheduleScoreDtos">
+        <query>
+            <![CDATA[
+            SELECT NEW io.kawoolutions.bbstats.dto.ScheduleScoreDto(
+              ga.id,
+              ga.matchdayNbr,
+              ga.officialNbr,
+              ga.scheduledTipoff,
+              ga.actualTipoff,
+              ar.id,
+              ar.name,
+              roh.id,
+              clh.name,
+              clh.code,
+              teh.ordinalNbr,
+              sch.finalScore,
+              roa.id,
+              cla.name,
+              cla.code,
+              tea.ordinalNbr,
+              sca.finalScore,
+              CASE WHEN sch.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL THEN TRUE ELSE FALSE END,
+              CASE WHEN SIZE(psh) > 0 OR SIZE(psa) > 0 THEN TRUE ELSE FALSE END,
+              CASE WHEN gmh.withdrawn = TRUE OR gma.withdrawn = TRUE THEN TRUE ELSE FALSE END,
+              cm.type
+            )
+            FROM Roster ro
+              JOIN ro.season se
+              JOIN ro.groupMembers gm
+              JOIN gm.group gr
+              JOIN gr.groupLabel gl
+              JOIN gr.round rd
+              JOIN rd.competition cm
+              JOIN gr.games ga
+              JOIN ga.arena ar
+              JOIN ga.scores sch
+              JOIN ga.scores sca
+              LEFT JOIN sch.playerStats psh
+              LEFT JOIN sca.playerStats psa
+              JOIN sch.roster roh
+              JOIN sca.roster roa
+              JOIN roh.groupMembers gmh
+              JOIN roa.groupMembers gma
+              JOIN roh.team teh
+              JOIN roa.team tea
+              JOIN teh.club clh
+              JOIN tea.club cla
+            WHERE sch.home = TRUE
+              AND sch.roster.id = ro.id
+              AND sca.home = FALSE
+              AND sca.roster.id <> ro.id
+              AND rd.id = :roundId
+              AND gl.code = :groupCode
+            GROUP BY ga.id, gmh.withdrawn, gma.withdrawn
+            ORDER BY CASE WHEN ga.actualTipoff IS NOT NULL THEN ga.actualTipoff ELSE ga.scheduledTipoff END DESC, ga.matchdayNbr, ga.officialNbr, ga.id
+            ]]>
+        </query>
+    </named-query>
+    
+    <named-query name="Roster.findCompetitionTypeScheduleScoreDtos">
+        <query>
+            <![CDATA[
+            SELECT NEW io.kawoolutions.bbstats.dto.ScheduleScoreDto(
+              ga.id,
+              ga.matchdayNbr,
+              ga.officialNbr,
+              ga.scheduledTipoff,
+              ga.actualTipoff,
+              ar.id,
+              ar.name,
+              roh.id,
+              clh.name,
+              clh.code,
+              teh.ordinalNbr,
+              sch.finalScore,
+              roa.id,
+              cla.name,
+              cla.code,
+              tea.ordinalNbr,
+              sca.finalScore,
+              CASE WHEN sch.finalScore IS NOT NULL AND sca.finalScore IS NOT NULL THEN TRUE ELSE FALSE END,
+              CASE WHEN SIZE(psh) > 0 OR SIZE(psa) > 0 THEN TRUE ELSE FALSE END,
+              CASE WHEN gmh.withdrawn = TRUE OR gma.withdrawn = TRUE THEN TRUE ELSE FALSE END,
+              cm.type
+            )
+            FROM Roster ro
+              JOIN ro.season se
+              JOIN ro.groupMembers gm
+              JOIN gm.group gr
+              JOIN gr.groupLabel gl
+              JOIN gr.round rd
+              JOIN rd.competition cm
+              JOIN gr.games ga
+              JOIN ga.arena ar
+              JOIN ga.scores sch
+              JOIN ga.scores sca
+              LEFT JOIN sch.playerStats psh
+              LEFT JOIN sca.playerStats psa
+              JOIN sch.roster roh
+              JOIN sca.roster roa
+              JOIN roh.groupMembers gmh
+              JOIN roa.groupMembers gma
+              JOIN roh.team teh
+              JOIN roa.team tea
+              JOIN teh.club clh
+              JOIN tea.club cla
+            WHERE sch.home = TRUE
+              AND sch.roster.id = ro.id
+              AND sca.home = FALSE
+              AND sca.roster.id <> ro.id
+              AND (sch.roster.id = :rosterId OR sca.roster.id = :rosterId)
+              AND cm.type = :competitionType
+            GROUP BY ga.id, gmh.withdrawn, gma.withdrawn
+            ORDER BY CASE WHEN ga.actualTipoff IS NOT NULL THEN ga.actualTipoff ELSE ga.scheduledTipoff END DESC, ga.matchdayNbr, ga.officialNbr, ga.id
+            ]]>
+        </query>
+    </named-query>
+    <!--
+    -->
+    
+</entity-mappings>

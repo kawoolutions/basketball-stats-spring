@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <named-query name="Score.findByGame">
+        <query>
+            SELECT sc
+            FROM Game ga
+              JOIN ga.scores sc
+            WHERE ga.id = :gameId
+            ORDER BY sc.home DESC
+        </query>
+    </named-query>
+    
+    <named-query name="Game.findTimelineDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.TimelineDto(
+              cl.name,
+              te.ordinalNbr,
+              sc.home,
+              SUM(q1.pts),
+              SUM(q2.pts),
+              SUM(q3.pts),
+              SUM(q4.pts)
+            )
+            FROM Score sc
+              JOIN sc.roster ro
+              JOIN ro.team te
+              JOIN te.club cl
+              LEFT JOIN sc.playerStats ps
+              LEFT JOIN ps.stats q1
+              LEFT JOIN ps.stats q2
+              LEFT JOIN ps.stats q3
+              LEFT JOIN ps.stats q4
+            WHERE (q1.period = 1 OR q1.period IS NULL)
+              AND (q2.period = 2 OR q2.period IS NULL)
+              AND (q3.period = 3 OR q3.period IS NULL)
+              AND (q4.period = 4 OR q4.period IS NULL)
+              AND sc.game.id = :gameId
+            GROUP BY sc.home
+            ORDER BY sc.home DESC
+        </query>
+    </named-query>
+    
+    <named-query name="GameLog.findIndividualBoxScoreDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.BoxScoreDto(
+              gl.playerId,
+              gl.seasonStartYear,
+              gl.lastName,
+              gl.firstName,
+              gl.incognito,
+              gl.jerseyNbr,
+              gl.hasPlayed,
+              gl.starter,
+              gl.threePointersMade,
+              gl.freeThrowsMade,
+              gl.freeThrowsAttempted,
+              gl.personalFouls,
+              gl.points
+            )
+            FROM GameLog gl
+            WHERE gl.gameId = :gameId AND gl.home = :home
+            GROUP BY gl.playerId
+            ORDER BY gl.starter DESC, gl.jerseyNbr
+        </query>
+    </named-query>
+    
+    <named-query name="GameLog.findTotalBoxScoreDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.BoxScoreDto(
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.gameId = :gameId AND gl.home = :home
+            GROUP BY gl.home
+        </query>
+    </named-query>
+    
+</entity-mappings>

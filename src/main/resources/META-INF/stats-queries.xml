@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <named-query name="GameLog.findPlayerStatDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.PlayerStatDto(
+              gl.playerId,
+              gl.seasonStartYear,
+              gl.lastName,
+              gl.firstName,
+              gl.incognito,
+              COUNT(DISTINCT gl.gameId),
+              SUM(CASE WHEN gl.hasPlayed = FALSE THEN 1 ELSE 0 END),
+              SUM(CASE WHEN gl.starter = TRUE THEN 1 ELSE 0 END),
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(CASE WHEN gl.personalFouls >= 5 THEN 1 ELSE 0 END),
+              SUM(gl.points),
+              MAX(gl.points),
+              MIN(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode AND gl.playerId IN :playerIds
+            GROUP BY
+              gl.playerId,
+              gl.seasonStartYear,
+              gl.lastName,
+              gl.firstName,
+              gl.incognito
+            ORDER BY
+              SUM(CASE WHEN gl.starter = TRUE THEN 1 ELSE 0 END) DESC,
+              COUNT(DISTINCT gl.gameId) DESC,
+              SUM(gl.points) DESC,
+              gl.lastName,
+              gl.firstName
+        </query>
+    </named-query>
+    
+    <named-query name="GameLog.findPlayerStatRosterDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.PlayerStatDto(
+              gl.playerId,
+              gl.seasonStartYear,
+              gl.lastName,
+              gl.firstName,
+              gl.incognito,
+              COUNT(DISTINCT gl.gameId),
+              SUM(CASE WHEN gl.hasPlayed = FALSE THEN 1 ELSE 0 END),
+              SUM(CASE WHEN gl.starter = TRUE THEN 1 ELSE 0 END),
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(CASE WHEN gl.personalFouls >= 5 THEN 1 ELSE 0 END),
+              SUM(gl.points),
+              MAX(gl.points),
+              MIN(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode AND gl.rosterId IN :rosterIds
+            GROUP BY
+              gl.playerId,
+              gl.seasonStartYear,
+              gl.lastName,
+              gl.firstName,
+              gl.incognito
+            ORDER BY
+              SUM(CASE WHEN gl.starter = TRUE THEN 1 ELSE 0 END) DESC,
+              COUNT(DISTINCT gl.gameId) DESC,
+              SUM(gl.points) DESC,
+              gl.lastName,
+              gl.firstName
+        </query>
+    </named-query>
+    <!--
+    -->
+    
+    <named-query name="GameLog.findPlayerStatRosterTotalDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.PlayerStatDto(
+              0,
+              0,
+              '',
+              '',
+              FALSE,
+              COUNT(DISTINCT gl.gameId),
+              SUM(CASE WHEN gl.hasPlayed = FALSE THEN 1 ELSE 0 END),
+              SUM(CASE WHEN gl.starter = TRUE THEN 1 ELSE 0 END),
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(CASE WHEN gl.personalFouls >= 5 THEN 1 ELSE 0 END),
+              SUM(gl.points),
+              MAX(gl.points),
+              MIN(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode AND gl.rosterId IN :rosterIds
+            GROUP BY
+              gl.rosterId
+        </query>
+    </named-query>
+    <!--
+            ORDER BY gl.clubCode, gl.teamOrdinalNbr
+    -->
+    
+    <named-query name="GameLog.findPlayerStatGroupTotalDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.PlayerStatDto(
+              0,
+              0,
+              '',
+              '',
+              FALSE,
+              COUNT(DISTINCT gl.gameId),
+              SUM(CASE WHEN gl.hasPlayed = FALSE THEN 1 ELSE 0 END),
+              SUM(CASE WHEN gl.starter = TRUE THEN 1 ELSE 0 END),
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(CASE WHEN gl.personalFouls >= 5 THEN 1 ELSE 0 END),
+              SUM(gl.points),
+              MAX(gl.points),
+              MIN(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode AND gl.rosterId IN :rosterIds
+            GROUP BY
+              gl.roundId,
+              gl.groupCode
+        </query>
+    </named-query>
+    <!--
+            ORDER BY gamesstarted DESC, games DESC, points DESC, gl.lastName, gl.firstName
+    -->
+
+    <named-query name="GameLog.findTeamStatDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.TeamStatDto(
+              gl.rosterId,
+              gl.clubName,
+              gl.clubCode,
+              gl.teamOrdinalNbr,
+              COUNT(DISTINCT gl.gameId),
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(CASE WHEN gl.personalFouls >= 5 THEN 1 ELSE 0 END),
+              SUM(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode
+            GROUP BY gl.rosterId, gl.clubCode, gl.clubName, gl.teamOrdinalNbr
+            ORDER BY SUM(gl.points) DESC, gl.clubName
+        </query>
+    </named-query>
+    
+    <named-query name="GameLog.findTeamStatGroupTotalDtos">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.dto.TeamStatDto(
+              0,
+              '',
+              '',
+              0,
+              COUNT(DISTINCT gl.gameId),
+              SUM(gl.threePointersMade),
+              SUM(gl.freeThrowsMade),
+              SUM(gl.freeThrowsAttempted),
+              SUM(gl.personalFouls),
+              SUM(CASE WHEN gl.personalFouls >= 5 THEN 1 ELSE 0 END),
+              SUM(gl.points)
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode
+            GROUP BY gl.roundId, gl.groupCode
+        </query>
+    </named-query>
+    
+    <!-- game log queries -->
+    
+    <named-query name="GameLog.findByGroupAndPlayers">
+        <query>
+            SELECT NEW io.kawoolutions.bbstats.entity.GameLog(
+              gl.gameId,
+              gl.home,
+              gl.playerId,
+              gl.rosterId,
+              gl.seasonStartYear,
+              gl.tipoff,
+              gl.scheduledTipoff,
+              gl.gameMatchdayNbr,
+              gl.gameOfficialNbr,
+              gl.clubName,
+              gl.clubCode,
+              gl.teamOrdinalNbr,
+              gl.finalScore,
+              gl.opponentRosterId,
+              gl.opponentClubName,
+              gl.opponentClubCode,
+              gl.opponentTeamOrdinalNbr,
+              gl.opponentFinalScore,
+              gl.roundId,
+              gl.groupCode,
+              gl.competitionType,
+              gl.invalid,
+              gl.withdrawn,
+              gl.lastName,
+              gl.firstName,
+              gl.incognito,
+              gl.jerseyNbr,
+              gl.hasPlayed,
+              gl.starter,
+              gl.fieldGoalsMade,
+              gl.twoPointersMade,
+              gl.threePointersMade,
+              gl.freeThrowsMade,
+              gl.freeThrowsAttempted,
+              gl.freeThrowPercentage,
+              gl.personalFouls,
+              gl.points
+            )
+            FROM GameLog gl
+            WHERE gl.roundId = :roundId AND gl.groupCode = :groupCode AND gl.playerId IN :playerIds
+            ORDER BY gl.lastName, gl.firstName, gl.tipoff DESC
+        </query>
+    </named-query>
+    
+</entity-mappings>
