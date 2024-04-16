@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.kawoolutions.bbstats.entity.Person;
 import io.kawoolutions.bbstats.repository.PersonRepository;
 
+//@CrossOrigin
 @RestController
 @RequestMapping(value = "/person", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PersonResource {
