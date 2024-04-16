@@ -1,38 +1,40 @@
 package io.kawoolutions.bbstats.rest;
 
-import io.kawoolutions.bbstats.entity.Person;
-import io.kawoolutions.bbstats.repository.PersonRepository;
+import java.util.List;
+
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import io.kawoolutions.bbstats.entity.Person;
+import io.kawoolutions.bbstats.repository.PersonRepository;
 
 @RestController
-@RequestMapping(value = "demo/basics/persons", produces = MediaType.APPLICATION_JSON_VALUE);
+@RequestMapping(value = "/person", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PersonResource {
 
-    private static Logger log = LoggerFactory.getLogger(PersonResource.class);
+    @Autowired
+    private Logger log;
 
     @Autowired
     private PersonRepository personRepository;
 
-
-    @GetMapping("findAll")
+    @GetMapping("findall")
     public List<Person> findAll() {
         log.info("----- findAll -----");
 
-        List<Person> persons = personRepository.findAllWithFetchGraph(Person.FETCH_EMAIL_ADDRESSES_PHONE_NUMBERS_AND_ROLES);
+        List<Person> persons = personRepository.findAll();
+
+        persons.forEach(p -> System.out.println("Person found: " + p));
 
         return persons;
     }
 
     @GetMapping("insert")
     public void insert() {
-        this.personRepository.saveAll(this.testCities);
+//        this.personRepository.saveAll(this.testCities);
     }
 }

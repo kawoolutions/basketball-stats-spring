@@ -1,8 +1,19 @@
 spring:
     application:
         name: basketball-stats-spring
+    datasource:
+        url: jdbc:mysql://kawoobase.cnsi2a4g0yx0.eu-central-1.rds.amazonaws.com/bbstats
+        username: root
+        password: MyRoot24#
+        driverClassName: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            show-sql: true
+        open-in-view: false
     devtools:
         restart:
             quiet-period: 900
 server:
-    port: 8090
+    port: 8081
+    servlet:
+        context-path: /rest

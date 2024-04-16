@@ -1,18 +1,17 @@
 package io.kawoolutions.bbstats.entity.base;
 
-import io.kawoolutions.bbstats.application.ProjectGlobals;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class EntityUtils {
+
     public static <T extends Entity<K>, K> String getPkStringFor(T entity) {
         Objects.requireNonNull(entity);
 
         K pk = entity.getPk();
-        String pkString = pk != null ? pk.toString() : "pk=" + ProjectGlobals.NULL_STRING;
+        String pkString = pk != null ? pk.toString() : "pk=NulLi";
         String entityClassName = entity.getClass().getSimpleName();
 
         return entityClassName + "[" + pkString + "]";

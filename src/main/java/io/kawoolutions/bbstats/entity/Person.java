@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "\"Persons\"")
+@Table(name = "Persons")
 @DiscriminatorValue("P")
 @NamedQuery(name = Person.FIND_ALL, query = "SELECT pe FROM Person pe ORDER BY pe.lastName, pe.firstName")
 @NamedQuery(name = Person.FIND_UNLINKED_BY_SEARCH_TERM, query = "SELECT pe FROM Person pe LEFT JOIN FETCH pe.user us WHERE us IS NULL AND (pe.lastName LIKE :searchTerm OR pe.firstName LIKE :searchTerm) ORDER BY pe.lastName, pe.firstName")
