@@ -24,13 +24,7 @@ public class PersonResource {
 
     @GetMapping("findall")
     public List<Person> findAll() {
-        log.info("----- findAll -----");
-
-        List<Person> persons = personRepository.findAll();
-
-        persons.forEach(p -> System.out.println("Person found: " + p));
-
-        return persons;
+        return personRepository.findAll();
     }
 
     @GetMapping("insert")
