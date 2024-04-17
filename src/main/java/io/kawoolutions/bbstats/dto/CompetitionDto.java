@@ -11,7 +11,7 @@ import io.kawoolutions.bbstats.util.NamingUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetitionListDto extends BaseDto {
+public class CompetitionDto extends BaseDto {
     private static final long serialVersionUID = 1L;
 
     private final String groupCode;
@@ -85,11 +85,11 @@ public class CompetitionListDto extends BaseDto {
 //
 //    }
 
-    public CompetitionListDto(Integer roundId, String groupCode, String groupOfficialCode, String groupName, int seasonStartYear,
-                              CompetitionType competitionType, int competitionLevel, String competitionCode, String competitionLabel,
-                              String teamTypeCode, AgeGroup teamTypeAgeGroup, TeamTypeGender teamTypeGender,
-                              Integer geoContextId, GeoContextType geoContextType,
-                              long rosterCount)
+    public CompetitionDto(Integer roundId, String groupCode, String groupOfficialCode, String groupName, int seasonStartYear,
+                          CompetitionType competitionType, int competitionLevel, String competitionCode, String competitionLabel,
+                          String teamTypeCode, AgeGroup teamTypeAgeGroup, TeamTypeGender teamTypeGender,
+                          Integer geoContextId, GeoContextType geoContextType,
+                          long rosterCount)
 //    String continentName, String countryName, String regionName, String stateName, String districtName,
     {
         this.groupCode = groupCode;

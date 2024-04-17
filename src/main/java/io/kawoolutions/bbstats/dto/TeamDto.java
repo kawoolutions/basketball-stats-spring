@@ -7,10 +7,12 @@ import io.kawoolutions.bbstats.entity.GeoContext;
 import io.kawoolutions.bbstats.entity.Region;
 import io.kawoolutions.bbstats.entity.State;
 import io.kawoolutions.bbstats.entity.TeamTypeGender;
+import org.springframework.context.annotation.Bean;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 
-public class TeamListDto extends BaseDto {
+public class TeamDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Integer rosterId;
@@ -38,9 +40,9 @@ public class TeamListDto extends BaseDto {
     private final String stateName;
     private final String districtName;
 
-    public TeamListDto(Integer rosterId, String clubName, String clubCode, Integer teamOrdinalNumber, String teamTypeCode,
-                       AgeGroup teamTypeAgeGroup, TeamTypeGender teamTypeGender,
-                       GeoContext continent, GeoContext country, GeoContext region, GeoContext state, GeoContext district) {
+    public TeamDto(Integer rosterId, String clubName, String clubCode, Integer teamOrdinalNumber, String teamTypeCode,
+                   AgeGroup teamTypeAgeGroup, TeamTypeGender teamTypeGender,
+                   GeoContext continent, GeoContext country, GeoContext region, GeoContext state, GeoContext district) {
         this.rosterId = rosterId;
 
         this.clubName = clubName;
@@ -59,38 +61,6 @@ public class TeamListDto extends BaseDto {
 
         this.teamTypeAgeGroup = teamTypeAgeGroup;
         this.teamTypeGender = teamTypeGender;
-
-//        log.info( "CONTINENT before: class = " + continent.getClass().getName() + " " + continent.getName() + ", " + continent );
-//        log.info( "COUNTRY   before: class = " + country.getClass().getName() + " " + country.getName() + ", " + country );
-//        log.info( "REGION    before: class = " + region.getClass().getName() + " " + region.getName() + ", " + region );
-//        log.info( "STATE     before: class = " + state.getClass().getName() + " " + state.getName() + ", " + state );
-//        log.info( "DISTRICT  before: class = " + district.getClass().getName() + " " + district.getName() + ", " + district );
-//
-//        log.info( "" );
-
-        try {
-            // Hibernate isn't always present on the classpath, use reflection to unproxy when on Hibernate
-//          country = ( Country ) Hibernate.unproxy( country );
-
-            Class<?> cls = Class.forName("org.hibernate.Hibernate");
-            Method unproxyMethod = cls.getMethod("unproxy", new Class[]{Object.class});
-
-            continent = (Continent) unproxyMethod.invoke(null, continent);
-            country = (Country) unproxyMethod.invoke(null, country);
-            region = (Region) unproxyMethod.invoke(null, region);
-            state = (State) unproxyMethod.invoke(null, state);
-        } catch (Throwable t) {
-            // just ignore, we're probably not using Hibernate right now
-//            t.printStackTrace();
-        }
-
-//        log.info( "CONTINENT after: class = " + continent.getClass().getName() + " " + continent.getName() + ", " + continent );
-//        log.info( "COUNTRY   after: class = " + country.getClass().getName() + " " + country.getName() + ", " + country );
-//        log.info( "REGION    after: class = " + region.getClass().getName() + " " + region.getName() + ", " + region );
-//        log.info( "STATE     after: class = " + state.getClass().getName() + " " + state.getName() + ", " + state );
-//        log.info( "DISTRICT  after: class = " + district.getClass().getName() + " " + district.getName() + ", " + district );
-//
-//        log.info( "" );
 
         this.continentName = continent.getName();
         this.countryName = country.getName();

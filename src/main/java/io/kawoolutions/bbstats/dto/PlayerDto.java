@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PlayerListDto extends BaseDto {
+public class PlayerDto extends BaseDto {
     private static final long serialVersionUID = 1L;
 
     //    private final Integer rosterId;
@@ -40,9 +40,9 @@ public class PlayerListDto extends BaseDto {
     private final String stateName;
     private final String districtName;
 
-    public PlayerListDto(Integer seasonStartYear, Integer playerId, Player pl,
-                         String firstName, String lastName, PersonGender gender, LocalDate birthDate, boolean incognito,
-                         GeoContext continent, GeoContext country, GeoContext region, GeoContext state, GeoContext district) {
+    public PlayerDto(Integer seasonStartYear, Integer playerId, Player pl,
+                     String firstName, String lastName, PersonGender gender, LocalDate birthDate, boolean incognito,
+                     GeoContext continent, GeoContext country, GeoContext region, GeoContext state, GeoContext district) {
 //        this.rosterId = rosterId;
         this.playerId = playerId;
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ArenaListDto extends BaseDto {
+public class ArenaDto extends BaseDto {
     private static final long serialVersionUID = 1L;
 
     private Arena arena;
@@ -32,10 +32,10 @@ public class ArenaListDto extends BaseDto {
     private List<String> stateNames;
     private List<String> districtNames;
 
-    public ArenaListDto() {
+    public ArenaDto() {
     }
 
-    public ArenaListDto(Arena arena) {
+    public ArenaDto(Arena arena) {
         this.arena = arena;
         this.clubs = arena.getClubs();
 
