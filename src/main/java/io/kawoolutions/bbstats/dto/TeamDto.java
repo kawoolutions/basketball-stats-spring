@@ -7,38 +7,52 @@ import io.kawoolutions.bbstats.entity.GeoContext;
 import io.kawoolutions.bbstats.entity.Region;
 import io.kawoolutions.bbstats.entity.State;
 import io.kawoolutions.bbstats.entity.TeamTypeGender;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.context.annotation.Bean;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
+@Entity
 public class TeamDto implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private final Integer rosterId;
+    @Id
+    private Integer teamId;
 
-    private final String clubName;
-    private final String clubCode;
-    private final String fullClubName;
+    private Integer rosterId;
 
-    private final Integer teamOrdinalNumber;
-    private final String teamName;
-    private final String fullTeamName;
+    private String clubName;
 
-    private final String teamTypeCode;
+    private String clubCode;
+    private String fullClubName;
 
-    private final AgeGroup teamTypeAgeGroup;
-    private final TeamTypeGender teamTypeGender;
+    private Integer teamOrdinalNumber;
+    private String teamName;
+    private String fullTeamName;
 
-    private final String teamDesc;
-    private final String teamLabel;
+    private String teamTypeCode;
 
-    private final String continentName;
-    private final String countryCode;
-    private final String countryName;
-    private final String regionName;
-    private final String stateName;
-    private final String districtName;
+    private AgeGroup teamTypeAgeGroup;
+    private TeamTypeGender teamTypeGender;
+
+    private String teamDesc;
+    private String teamLabel;
+
+    private String continentName;
+    private String countryCode;
+    private String countryName;
+    private String regionName;
+    private String stateName;
+    private String districtName;
+
+    public TeamDto() {
+
+    }
 
     public TeamDto(Integer rosterId, String clubName, String clubCode, Integer teamOrdinalNumber, String teamTypeCode,
                    AgeGroup teamTypeAgeGroup, TeamTypeGender teamTypeGender,

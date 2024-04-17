@@ -1,26 +1,26 @@
 package io.kawoolutions.bbstats.rest;
 
-import io.kawoolutions.bbstats.dto.TeamDto;
-import io.kawoolutions.bbstats.entity.Person;
-import io.kawoolutions.bbstats.repository.TeamDtoRepository;
-import org.slf4j.Logger;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import io.kawoolutions.bbstats.dto.TeamDto;
+import io.kawoolutions.bbstats.repository.TeamDtoRepository;
 
-    @RestController
-    @RequestMapping(value = "/teamdto", produces = MediaType.APPLICATION_JSON_VALUE)
-    public class TeamDtoResource {
+@RestController
+@RequestMapping(value = "/teamdto", produces = MediaType.APPLICATION_JSON_VALUE)
+public class TeamDtoResource {
 
-        @Autowired
-        private TeamDtoRepository teamDtoRepository;
+    @Autowired
+    private TeamDtoRepository teamDtoRepository;
 
-        @GetMapping("/findall/{seasonStartYear}")
-        public List<TeamDto> findBySeasonStartYear(Integer seasonStartYear) {
-            return teamDtoRepository.findBySeasonStartYear(seasonStartYear);
-        }
+    @GetMapping("/findall/{seasonStartYear}")
+    public List<TeamDto> findBySeasonStartYear(@PathVariable Integer seasonStartYear) {
+        return teamDtoRepository.findBySeasonStartYear(seasonStartYear);
     }
+}
