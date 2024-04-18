@@ -1,12 +1,12 @@
 package io.kawoolutions.bbstats.repository;
 
-import io.kawoolutions.bbstats.dto.TeamDto;
-import io.kawoolutions.bbstats.entity.Person;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import io.kawoolutions.bbstats.dto.TeamDto;
 
 @Repository
 public interface TeamDtoRepository extends JpaRepository<TeamDto, Integer> {
