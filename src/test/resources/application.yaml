@@ -1,12 +1,12 @@
 spring:
     datasource:
-        url: jdbc:h2:mem:bbstats-test
-        username: kawu
-        password: kawu
+        url: jdbc:h2:mem:bbstats
+        username: sa
+        password: sa
         driverClassName: org.h2.Driver
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: none # create-drop
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         open-in-view: false
@@ -14,3 +14,7 @@ spring:
             hibernate:
                 format_sql: true
         show-sql: true
+#        defer-datasource-initialization: true
+    sql:
+        init:
+            mode: always
