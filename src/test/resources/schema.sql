@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS bbstatstest.Seasons (
   start_year INT NOT NULL,
   PRIMARY KEY (start_year));
 
-  
+
 -- -----------------------------------------------------
 -- Table Rounds
 -- -----------------------------------------------------
