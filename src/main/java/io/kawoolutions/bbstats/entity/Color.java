@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Colors\"")
+@Table(name = "Colors")
 @NamedQuery(name = Color.FIND_ALL, query = "SELECT cl FROM Color cl ORDER BY cl.name")
 @NamedQuery(name = Color.FIND_BY_NAME, query = "SELECT cl FROM Color cl WHERE cl.name = :name")
 public class Color extends BaseEntity<String>

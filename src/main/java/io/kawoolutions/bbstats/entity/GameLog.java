@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"GameLogs\"")
+@Table(name = "GameLogs")
 @IdClass(GameLogId.class)
 public class GameLog extends BaseEntity<GameLogId>
 {

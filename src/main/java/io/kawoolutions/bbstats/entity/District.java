@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "\"Districts\"")
+@Table(name = "Districts")
 @DiscriminatorValue("DISTRICT")
 @NamedQuery(name = District.FIND_ALL, query = "SELECT di FROM District di ORDER BY di.name")
 @NamedEntityGraph(name = District.FETCH_COUNTRY,

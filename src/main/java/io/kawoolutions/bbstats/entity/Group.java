@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Groups\"")
+@Table(name = "Groups")
 @IdClass(GroupId.class)
 @NamedQuery(name = Group.FIND_BY_COMPETITION,
             query = "SELECT gr " +

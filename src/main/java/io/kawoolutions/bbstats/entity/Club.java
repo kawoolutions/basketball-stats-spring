@@ -28,7 +28,7 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "\"Clubs\"")
+@Table(name = "Clubs")
 @DiscriminatorValue("C")
 @NamedQuery(name = Club.FIND_ALL, query = "SELECT cl FROM Club cl ORDER BY cl.code, cl.name")
 @NamedEntityGraph(name = Club.FETCH_EMAIL_ADDRESSES_PHONE_NUMBERS_TEAM_TYPES_AND_DISTRICT,

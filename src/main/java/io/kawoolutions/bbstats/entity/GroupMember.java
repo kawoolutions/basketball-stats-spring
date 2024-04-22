@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"GroupMembers\"")
+@Table(name = "GroupMembers")
 @IdClass(GroupMemberId.class)
 @NamedQuery(name = GroupMember.FIND_BY_ROSTER, query = "SELECT gm FROM GroupMember gm JOIN gm.group gr JOIN gr.round rd JOIN rd.competition cm JOIN cm.geoContext gc JOIN gm.roster ro WHERE ro.id = :rosterId ORDER BY cm.type, gc.type, cm.level")
 @NamedQuery(name = GroupMember.FIND_BY_GROUP, query = "SELECT DISTINCT gm FROM GroupMember gm JOIN gm.roster ro JOIN ro.team te JOIN te.club cl JOIN gm.group gr JOIN gr.groupLabel gl JOIN gr.round rd WHERE rd.id = :roundId AND gl.code = :groupCode")

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Players\"")
+@Table(name = "Players")
 @NamedQuery(name = Player.FIND_BY_SEARCH_TERM, query = "SELECT pl FROM Player pl JOIN pl.person pe WHERE pe.lastName LIKE :searchTerm OR pe.firstName LIKE :searchTerm ORDER BY pe.lastName, pe.firstName")
 @NamedEntityGraph(name = Player.FETCH_TEAM_MEMBERS, attributeNodes = {@NamedAttributeNode("teamMembers")})
 public class Player extends BaseIdEntity

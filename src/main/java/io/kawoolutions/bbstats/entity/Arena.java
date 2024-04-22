@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "\"Arenas\"")
+@Table(name = "Arenas")
 @DiscriminatorValue("A")
 @NamedQuery(name = Arena.FIND_ALL, query = "SELECT ar FROM Arena ar ORDER BY ar.name")
 @NamedQuery(name = Arena.FIND_BY_PK, query = "SELECT ar FROM Arena ar WHERE ar.id = :arenaId")

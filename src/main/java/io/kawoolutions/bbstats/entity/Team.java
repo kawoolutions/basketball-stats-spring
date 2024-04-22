@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Teams\"")
+@Table(name = "Teams")
 @IdClass(TeamId.class)
 @NamedQuery(name = Team.FIND_BY_SEARCH_TERM, query = "SELECT te FROM Team te JOIN te.club cl JOIN te.teamType tt WHERE tt.code IN :teamTypeCodes AND ( cl.name LIKE :searchTerm OR cl.code LIKE :searchTerm ) ORDER BY cl.code, cl.name")
 public class Team extends BaseEntity<TeamId> implements Comparable<Team>

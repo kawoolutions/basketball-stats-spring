@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"GeoContexts\"")
+@Table(name = "GeoContexts")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
 public abstract class GeoContext extends BaseIdEntity

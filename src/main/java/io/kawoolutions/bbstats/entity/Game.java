@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Games\"")
+@Table(name = "Games")
 @NamedQuery(name = Game.FIND_BY_PK, query = "SELECT ga FROM Game ga WHERE ga.id = :gameId")
 @NamedQuery(name = Game.FIND_BY_GROUP,
             query = "SELECT DISTINCT ga " +

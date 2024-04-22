@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "\"States\"")
+@Table(name = "States")
 @DiscriminatorValue("STATE")
 public class State extends GeoContext
 {

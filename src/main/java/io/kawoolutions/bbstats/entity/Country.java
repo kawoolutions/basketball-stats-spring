@@ -8,7 +8,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "\"Countries\"")
+@Table(name = "Countries")
 @DiscriminatorValue("COUNTRY")
 @NamedQuery(name = Country.FIND_ALL, query = "SELECT co FROM Country co ORDER BY co.isoCode")
 @NamedQuery(name = Country.FIND_BY_ISO_CODE, query = "SELECT co FROM Country co WHERE co.isoCode = :isoCode")

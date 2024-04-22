@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Coaches\"")
+@Table(name = "Coaches")
 @NamedEntityGraph(name = Coach.FETCH_STAFF_MEMBERS, attributeNodes = {@NamedAttributeNode("staffMembers")})
 public class Coach extends BaseIdEntity
 {

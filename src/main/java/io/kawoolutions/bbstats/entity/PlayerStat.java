@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"PlayerStats\"")
+@Table(name = "PlayerStats")
 @IdClass(PlayerStatId.class)
 @NamedQuery(name = PlayerStat.FIND_BY_INTERVAL_AND_TEAM, query = "SELECT ps FROM PlayerStat ps JOIN ps.teamMember tm JOIN tm.player pl JOIN pl.person pe JOIN ps.score sc JOIN sc.game ga JOIN sc.roster ro JOIN ro.team te JOIN te.teamType tt JOIN te.club cl WHERE CASE WHEN ga.actualTipoff IS NOT NULL THEN ga.actualTipoff ELSE ga.scheduledTipoff END >= :begin AND CASE WHEN ga.actualTipoff IS NOT NULL THEN ga.actualTipoff ELSE ga.scheduledTipoff END <= :end AND pe.id = :playerId AND cl.id = :clubId AND tt.code = :teamTypeCode AND te.ordinalNbr = :ordinalNbr ORDER BY CASE WHEN ga.actualTipoff IS NOT NULL THEN ga.actualTipoff ELSE ga.scheduledTipoff END DESC")
 public class PlayerStat extends BaseEntity<PlayerStatId>

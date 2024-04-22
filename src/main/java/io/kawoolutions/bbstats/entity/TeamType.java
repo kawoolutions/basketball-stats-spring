@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"TeamTypes\"")
+@Table(name = "TeamTypes")
 public class TeamType extends BaseEntity<String>
 {
     private static final long serialVersionUID = 1L;

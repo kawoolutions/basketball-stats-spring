@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "\"RankingRounds\"")
+@Table(name = "RankingRounds")
 @DiscriminatorValue("RANKING_ROUND")
 public class RankingRound extends Round
 {

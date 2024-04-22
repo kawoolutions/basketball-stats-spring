@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Assignments\"")
+@Table(name = "Assignments")
 @IdClass(AssignmentId.class)
 public class Assignment extends BaseEntity<AssignmentId>
 {

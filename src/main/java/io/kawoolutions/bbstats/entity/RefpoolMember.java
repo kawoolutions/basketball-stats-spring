@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"RefpoolMembers\"")
+@Table(name = "RefpoolMembers")
 @IdClass(RefpoolMemberId.class)
 public class RefpoolMember extends BaseEntity<RefpoolMemberId>
 {

@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"GroupLabels\"")
+@Table(name = "GroupLabels")
 public class GroupLabel extends BaseEntity<String>
 {
     private static final long serialVersionUID = 1L;

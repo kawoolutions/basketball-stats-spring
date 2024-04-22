@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"CompetitionLabels\"")
+@Table(name = "CompetitionLabels")
 @IdClass(CompetitionLabelId.class)
 @NamedQuery(name = CompetitionLabel.FIND_BY_COMPETITION_AND_SEASON,
             query = "SELECT cml " +

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Scores\"")
+@Table(name = "Scores")
 @IdClass(ScoreId.class)
 @NamedEntityGraph(name = Score.FETCH_PLAYER_STATS,
                   attributeNodes = {@NamedAttributeNode(value = "playerStats", subgraph = PlayerStat.FETCH_STATS)},

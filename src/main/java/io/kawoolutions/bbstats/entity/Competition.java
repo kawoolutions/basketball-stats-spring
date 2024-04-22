@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Competitions\"")
+@Table(name = "Competitions")
 @IdClass(CompetitionId.class)
 @NamedEntityGraph(name = Competition.FETCH_GEO_CONTEXT_TEAM_TYPE_ROUNDS_AND_COMPETITION_LABELS, attributeNodes = {
         @NamedAttributeNode("geoContext"),

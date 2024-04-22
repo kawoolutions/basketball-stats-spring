@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Rounds\"")
+@Table(name = "Rounds")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
 public abstract class Round extends BaseIdEntity

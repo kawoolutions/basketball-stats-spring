@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"TeamMembers\"")
+@Table(name = "TeamMembers")
 @IdClass(TeamMemberId.class)
 @NamedQuery(name = TeamMember.FIND_BY_ROSTER, query = "SELECT tm FROM TeamMember tm JOIN tm.player pl JOIN pl.person pe JOIN tm.roster ro WHERE ro.id = :rosterId ORDER BY pe.lastName, pe.firstName")
 @NamedEntityGraph(name = TeamMember.FETCH_PERSON_PLAYER_STATS,

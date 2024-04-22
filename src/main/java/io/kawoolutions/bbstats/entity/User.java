@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "\"Users\"")
+@Table(name = "Users")
 @NamedQuery(name = User.FIND_ALL, query = "SELECT us FROM User us ORDER BY us.name")
 @NamedQuery(name = User.FIND_BY_NAME, query = "SELECT us FROM User us LEFT JOIN FETCH us.person WHERE us.name = :name")
 @NamedEntityGraph(name = User.FETCH_PERSON, attributeNodes = @NamedAttributeNode("person"))

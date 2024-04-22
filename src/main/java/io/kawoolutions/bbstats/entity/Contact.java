@@ -26,14 +26,14 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.SecondaryTable;
 import jakarta.persistence.Table;
 
-import io.kawoolutions.bbstats.entity.converter.ContactTypeConverter;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
+import io.kawoolutions.bbstats.entity.converter.ContactTypeConverter;
 
 @Entity
-@Table(name = "\"Contacts\"")
+@Table(name = "Contacts")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@SecondaryTable(name = "\"Addresses\"", pkJoinColumns = @PrimaryKeyJoinColumn(name = "contact_id", referencedColumnName = "id"))
+@SecondaryTable(name = "Addresses", pkJoinColumns = @PrimaryKeyJoinColumn(name = "contact_id", referencedColumnName = "id"))
 public abstract class Contact extends BaseIdEntity
 {
     private static final long serialVersionUID = 1L;
@@ -49,41 +49,41 @@ public abstract class Contact extends BaseIdEntity
     protected ContactType type;
 
     @Basic
-    @Column(name = "country_code", table = "\"Addresses\"")
+    @Column(name = "country_code", table = "Addresses")
     protected String countryCode;
 
     @Basic
-    @Column(name = "zip_code", table = "\"Addresses\"")
+    @Column(name = "zip_code", table = "Addresses")
     protected String zipCode;
 
     @Basic
-    @Column(name = "city_name", table = "\"Addresses\"")
+    @Column(name = "city_name", table = "Addresses")
     protected String cityName;
 
     @Basic
-    @Column(name = "street_name", table = "\"Addresses\"")
+    @Column(name = "street_name", table = "Addresses")
     protected String streetName;
 
     @Basic
-    @Column(name = "house_nbr", table = "\"Addresses\"")
+    @Column(name = "house_nbr", table = "Addresses")
     protected String houseNbr;
 
     @Basic
-    @Column(table = "\"Addresses\"")
+    @Column(table = "Addresses")
     protected Double latitude;
 
     @Basic
-    @Column(table = "\"Addresses\"")
+    @Column(table = "Addresses")
     protected Double longitude;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "\"EmailAddresses\"", joinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id")})
+    @CollectionTable(name = "EmailAddresses", joinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id")})
     @OrderColumn(name = "index")
     @Column(name = "uri")
     protected List<String> emailAddresses;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "\"PhoneNumbers\"", joinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id", insertable = false, updatable = false)})
+    @CollectionTable(name = "PhoneNumbers", joinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id", insertable = false, updatable = false)})
     @MapKeyColumn(name = "type", insertable = false, updatable = false)
     @MapKeyEnumerated(EnumType.STRING)
     protected Map<PhoneNumberType, PhoneNumber> phoneNumbers;

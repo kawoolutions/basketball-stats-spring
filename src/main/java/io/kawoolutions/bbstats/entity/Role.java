@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Roles\"")
+@Table(name = "Roles")
 public class Role extends BaseIdEntity
 {
     private static final long serialVersionUID = 1L;

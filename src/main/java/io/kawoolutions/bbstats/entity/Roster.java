@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Rosters\"")
+@Table(name = "Rosters")
 @NamedQuery(name = Roster.FIND_BY_TEAM_AND_SEASON, query = "SELECT ro FROM Roster ro JOIN ro.team te JOIN te.club cl JOIN te.teamType tt JOIN ro.season se WHERE cl.id = :clubId AND tt.code = :teamTypeCode AND te.ordinalNbr = :ordinalNbr AND se.startYear = :seasonStartYear")
 @NamedQuery(name = Roster.FIND_BY_PLAYER_AND_SEASON, query = "SELECT ro FROM Roster ro JOIN ro.team te JOIN te.club cl JOIN te.teamType tt JOIN ro.season se JOIN ro.teamMembers tm JOIN tm.player pl WHERE pl.id = :playerId AND se.startYear = :seasonStartYear")
 @NamedEntityGraph(name = Roster.FETCH_TEAM_MEMBERS, attributeNodes = @NamedAttributeNode("teamMembers"))

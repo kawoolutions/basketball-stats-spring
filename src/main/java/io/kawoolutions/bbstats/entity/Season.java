@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.kawoolutions.bbstats.entity.base.BaseIdEntity;
 
 @Entity
-@Table(name = "\"Seasons\"")
+@Table(name = "Seasons")
 @NamedQuery(name = Season.FIND_ALL, query = "SELECT se FROM Season se ORDER BY se.startYear DESC")
 @NamedEntityGraph(name = Season.FETCH_ROUNDS_ROSTERS, attributeNodes = {@NamedAttributeNode("rounds"), @NamedAttributeNode("rosters")})
 public class Season extends BaseIdEntity
