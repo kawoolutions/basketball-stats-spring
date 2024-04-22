@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS bbstats.GeoContexts (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX geocontexts_self_idx ON bbstats.GeoContexts (parent_id ASC);
+-- CREATE INDEX geocontexts_self_idx ON bbstats.GeoContexts (parent_id ASC);
 
 -- -----------------------------------------------------
 -- Table Continents
@@ -30,13 +30,14 @@ CREATE TABLE IF NOT EXISTS bbstats.Continents (
   id INT NOT NULL,
   iso_code CHAR(2) NOT NULL,
   PRIMARY KEY (id),
+  CONSTRAINT continents_iso_code_uq UNIQUE (iso_code ASC),
   CONSTRAINT continents_geocontexts_fk
     FOREIGN KEY (id)
     REFERENCES bbstats.GeoContexts (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX continents_iso_code_uq ON bbstats.Continents (iso_code ASC);
+-- CREATE UNIQUE INDEX continents_iso_code_uq ON bbstats.Continents (iso_code ASC);
 
 -- -----------------------------------------------------
 -- Table Countries
@@ -46,15 +47,17 @@ CREATE TABLE IF NOT EXISTS bbstats.Countries (
   iso_code CHAR(2) NOT NULL,
   iso_nbr CHAR(3) NOT NULL,
   PRIMARY KEY (id),
+  CONSTRAINT countries_iso_code_uq UNIQUE (iso_code ASC),
+  CONSTRAINT countries_iso_nbr_uq UNIQUE (iso_nbr ASC),
   CONSTRAINT countries_geocontexts_fk
     FOREIGN KEY (id)
     REFERENCES bbstats.GeoContexts (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX countries_iso_code_uq ON bbstats.Countries (iso_code ASC);
-CREATE UNIQUE INDEX countries_iso_nbr_uq ON bbstats.Countries (iso_nbr ASC);
-CREATE INDEX countries_geoareas_idx ON bbstats.Countries (id ASC);
+-- CREATE UNIQUE INDEX countries_iso_code_uq ON bbstats.Countries (iso_code ASC);
+-- CREATE UNIQUE INDEX countries_iso_nbr_uq ON bbstats.Countries (iso_nbr ASC);
+-- CREATE INDEX countries_geoareas_idx ON bbstats.Countries (id ASC);
 
 -- -----------------------------------------------------
 -- Table Regions
@@ -77,6 +80,7 @@ CREATE TABLE IF NOT EXISTS bbstats.States (
   country_code CHAR(2) NOT NULL,
   iso_code VARCHAR(5) NOT NULL,
   PRIMARY KEY (id),
+  CONSTRAINT states_multi_uq UNIQUE (country_code ASC, iso_code ASC),
   CONSTRAINT states_countries_fk
     FOREIGN KEY (country_code)
     REFERENCES bbstats.Countries (iso_code)
@@ -88,9 +92,9 @@ CREATE TABLE IF NOT EXISTS bbstats.States (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX states_multi_uq ON bbstats.States (country_code ASC, iso_code ASC);
-CREATE INDEX states_countries_idx ON bbstats.States (country_code ASC);
-CREATE INDEX states_geoareas_idx ON bbstats.States (id ASC);
+-- CREATE UNIQUE INDEX states_multi_uq ON bbstats.States (country_code ASC, iso_code ASC);
+-- CREATE INDEX states_countries_idx ON bbstats.States (country_code ASC);
+-- CREATE INDEX states_geoareas_idx ON bbstats.States (id ASC);
 
 -- -----------------------------------------------------
 -- Table Districts
@@ -133,7 +137,7 @@ CREATE TABLE IF NOT EXISTS bbstats.Addresses (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX postaddresses_contacts_idx ON bbstats.Addresses (contact_id ASC);
+-- CREATE INDEX postaddresses_contacts_idx ON bbstats.Addresses (contact_id ASC);
 
 -- -----------------------------------------------------
 -- Table PhoneNumbers
@@ -151,23 +155,23 @@ CREATE TABLE IF NOT EXISTS bbstats.PhoneNumbers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX phonenumbers_contacts_idx ON bbstats.PhoneNumbers (contact_id ASC);
+-- CREATE INDEX phonenumbers_contacts_idx ON bbstats.PhoneNumbers (contact_id ASC);
 
 -- -----------------------------------------------------
 -- Table EmailAddresses
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS bbstats.EmailAddresses (
   contact_id INT NOT NULL,
-  `index` INT NOT NULL,
+  "index" INT NOT NULL,
   uri VARCHAR(64) NOT NULL,
-  PRIMARY KEY (contact_id, `index`),
+  PRIMARY KEY (contact_id, "index"),
   CONSTRAINT emailaddresses_contacts_fk
     FOREIGN KEY (contact_id)
     REFERENCES bbstats.Contacts (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX emailaddresses_contacts_idx ON bbstats.EmailAddresses (contact_id ASC);
+-- CREATE INDEX emailaddresses_contacts_idx ON bbstats.EmailAddresses (contact_id ASC);
 
 -- -----------------------------------------------------
 -- Table Colors
@@ -175,7 +179,8 @@ CREATE INDEX emailaddresses_contacts_idx ON bbstats.EmailAddresses (contact_id A
 CREATE TABLE IF NOT EXISTS bbstats.Colors (
   name VARCHAR(25) NOT NULL,
   rgb BINARY(3) NOT NULL,
-  PRIMARY KEY (name));
+  PRIMARY KEY (name),
+  CONSTRAINT colors_rgb_uq UNIQUE (rgb ASC));
 
 CREATE UNIQUE INDEX colors_rgb_uq ON bbstats.Colors (rgb ASC);
 
@@ -191,6 +196,7 @@ CREATE TABLE IF NOT EXISTS bbstats.Clubs (
   website_url VARCHAR(64) NULL DEFAULT NULL,
   logo MEDIUMBLOB NULL DEFAULT NULL,
   PRIMARY KEY (id),
+  CONSTRAINT clubs_multi_uq UNIQUE (district_id ASC, code ASC),
   CONSTRAINT clubs_colors_fk
     FOREIGN KEY (color_name)
     REFERENCES bbstats.Colors (name)
@@ -207,9 +213,9 @@ CREATE TABLE IF NOT EXISTS bbstats.Clubs (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX clubs_multi_uq ON bbstats.Clubs (district_id ASC, code ASC);
-CREATE INDEX clubs_colors_idx ON bbstats.Clubs (color_name ASC);
-CREATE INDEX clubs_districts_idx ON bbstats.Clubs (district_id ASC);
+-- CREATE UNIQUE INDEX clubs_multi_uq ON bbstats.Clubs (district_id ASC, code ASC);
+-- CREATE INDEX clubs_colors_idx ON bbstats.Clubs (color_name ASC);
+-- CREATE INDEX clubs_districts_idx ON bbstats.Clubs (district_id ASC);
 
 -- -----------------------------------------------------
 -- Table Arenas
@@ -245,8 +251,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Tenancies (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX tenancies_clubs_idx ON bbstats.Tenancies (club_id ASC);
-CREATE INDEX tenancies_arenas_idx ON bbstats.Tenancies (arena_id ASC);
+-- CREATE INDEX tenancies_clubs_idx ON bbstats.Tenancies (club_id ASC);
+-- CREATE INDEX tenancies_arenas_idx ON bbstats.Tenancies (arena_id ASC);
 
 -- -----------------------------------------------------
 -- Table Persons
@@ -279,7 +285,7 @@ CREATE TABLE IF NOT EXISTS bbstats.Referees (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX referees_persons_idx ON bbstats.Referees (id ASC);
+-- CREATE INDEX referees_persons_idx ON bbstats.Referees (id ASC);
 
 -- -----------------------------------------------------
 -- Table Coaches
@@ -316,7 +322,8 @@ CREATE TABLE IF NOT EXISTS bbstats.TeamTypes (
   code CHAR(4) NOT NULL,
   age_group ENUM('O20', 'O30', 'O35', 'O40', 'O45', 'O50', 'O55', 'O60', 'O65', 'U20', 'U19', 'U18', 'U17', 'U16', 'U15', 'U14', 'U13', 'U12', 'U11', 'U10', 'U09', 'U08') NOT NULL DEFAULT 'O20',
   gender ENUM('MALE', 'FEMALE', 'MIXED') NOT NULL DEFAULT 'MALE',
-  PRIMARY KEY (code));
+  PRIMARY KEY (code),
+  CONSTRAINT teamtypes_multi_uq UNIQUE (age_group ASC, gender ASC));
 
 CREATE UNIQUE INDEX teamtypes_multi_uq ON bbstats.TeamTypes (age_group ASC, gender ASC);
 
@@ -339,8 +346,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Teams (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX teams_clubs_idx ON bbstats.Teams (club_id ASC);
-CREATE INDEX teams_teamtypes_idx ON bbstats.Teams (team_type_code ASC);
+-- CREATE INDEX teams_clubs_idx ON bbstats.Teams (club_id ASC);
+-- CREATE INDEX teams_teamtypes_idx ON bbstats.Teams (team_type_code ASC);
 
 -- -----------------------------------------------------
 -- Table Competitions
@@ -362,8 +369,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Competitions (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX competitions_teamtypes_idx ON bbstats.Competitions (team_type_code ASC);
-CREATE INDEX competitions_geocontexts_idx ON bbstats.Competitions (geo_context_id ASC);
+-- CREATE INDEX competitions_teamtypes_idx ON bbstats.Competitions (team_type_code ASC);
+-- CREATE INDEX competitions_geocontexts_idx ON bbstats.Competitions (geo_context_id ASC);
 
 -- -----------------------------------------------------
 -- Table CompetitionLabels
@@ -415,8 +422,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Rounds (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX rounds_seasons_idx ON bbstats.Rounds (season_start_year ASC);
-CREATE INDEX rounds_competitions_idx ON bbstats.Rounds (geo_context_id ASC, team_type_code ASC, competition_type ASC, competition_level ASC);
+-- CREATE INDEX rounds_seasons_idx ON bbstats.Rounds (season_start_year ASC);
+-- CREATE INDEX rounds_competitions_idx ON bbstats.Rounds (geo_context_id ASC, team_type_code ASC, competition_type ASC, competition_level ASC);
 
 -- -----------------------------------------------------
 -- Table RankingRounds
@@ -458,6 +465,7 @@ CREATE TABLE IF NOT EXISTS bbstats.Rosters (
   secondary_jersey_color_name VARCHAR(25) NULL,
   image_path VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (id),
+  CONSTRAINT rosters_multi_uq UNIQUE (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC, season_start_year ASC),
   CONSTRAINT rosters_seasons_fk
     FOREIGN KEY (season_start_year)
     REFERENCES bbstats.Seasons (start_year)
@@ -479,11 +487,11 @@ CREATE TABLE IF NOT EXISTS bbstats.Rosters (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX rosters_multi_uq ON bbstats.Rosters (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC, season_start_year ASC);
-CREATE INDEX rosters_seasons_idx ON bbstats.Rosters (season_start_year ASC);
-CREATE INDEX rosters_teams_idx ON bbstats.Rosters (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC);
-CREATE INDEX rosters_primary_jersey_colors_idx ON bbstats.Rosters (primary_jersey_color_name ASC);
-CREATE INDEX rosters_secondary_jersey_colors_idx ON bbstats.Rosters (secondary_jersey_color_name ASC);
+-- CREATE UNIQUE INDEX rosters_multi_uq ON bbstats.Rosters (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC, season_start_year ASC);
+-- CREATE INDEX rosters_seasons_idx ON bbstats.Rosters (season_start_year ASC);
+-- CREATE INDEX rosters_teams_idx ON bbstats.Rosters (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC);
+-- CREATE INDEX rosters_primary_jersey_colors_idx ON bbstats.Rosters (primary_jersey_color_name ASC);
+-- CREATE INDEX rosters_secondary_jersey_colors_idx ON bbstats.Rosters (secondary_jersey_color_name ASC);
 
 -- -----------------------------------------------------
 -- Table RefpoolMembers
@@ -510,9 +518,9 @@ CREATE TABLE IF NOT EXISTS bbstats.RefpoolMembers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX refpoolmembers_referees_idx ON bbstats.RefpoolMembers (referee_id ASC);
-CREATE INDEX refpoolmembers_seasons_idx ON bbstats.RefpoolMembers (season_start_year ASC);
-CREATE INDEX refpoolmembers_clubs_idx ON bbstats.RefpoolMembers (club_id ASC);
+-- CREATE INDEX refpoolmembers_referees_idx ON bbstats.RefpoolMembers (referee_id ASC);
+-- CREATE INDEX refpoolmembers_seasons_idx ON bbstats.RefpoolMembers (season_start_year ASC);
+-- CREATE INDEX refpoolmembers_clubs_idx ON bbstats.RefpoolMembers (club_id ASC);
 
 -- -----------------------------------------------------
 -- Table StaffMembers
@@ -534,8 +542,8 @@ CREATE TABLE IF NOT EXISTS bbstats.StaffMembers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX staffmembers_coaches_idx ON bbstats.StaffMembers (coach_id ASC);
-CREATE INDEX staffmembers_rosters_idx ON bbstats.StaffMembers (roster_id ASC);
+-- CREATE INDEX staffmembers_coaches_idx ON bbstats.StaffMembers (coach_id ASC);
+-- CREATE INDEX staffmembers_rosters_idx ON bbstats.StaffMembers (roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table TeamMembers
@@ -558,8 +566,8 @@ CREATE TABLE IF NOT EXISTS bbstats.TeamMembers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX teammembers_players_idx ON bbstats.TeamMembers (player_id ASC);
-CREATE INDEX teammembers_rosters_idx ON bbstats.TeamMembers (roster_id ASC);
+-- CREATE INDEX teammembers_players_idx ON bbstats.TeamMembers (player_id ASC);
+-- CREATE INDEX teammembers_rosters_idx ON bbstats.TeamMembers (roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table GroupLabels
@@ -567,7 +575,8 @@ CREATE INDEX teammembers_rosters_idx ON bbstats.TeamMembers (roster_id ASC);
 CREATE TABLE IF NOT EXISTS bbstats.GroupLabels (
   code VARCHAR(6) NOT NULL,
   name VARCHAR(50) NULL,
-  PRIMARY KEY (code));
+  PRIMARY KEY (code),
+  CONSTRAINT grouplabels_code_uq UNIQUE (code ASC));
 
 
 -- -----------------------------------------------------
@@ -577,7 +586,7 @@ CREATE TABLE IF NOT EXISTS bbstats.Groups (
   round_id INT NOT NULL,
   code VARCHAR(6) NOT NULL,
   official_code VARCHAR(6) NULL DEFAULT NULL,
-  max_members TINYINT(2) NULL DEFAULT NULL,
+  max_members TINYINT NULL DEFAULT NULL,
   PRIMARY KEY (round_id, code),
   CONSTRAINT groups_rounds_fk
     FOREIGN KEY (round_id)
@@ -590,8 +599,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Groups (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX groups_rounds_idx ON bbstats.Groups (round_id ASC);
-CREATE INDEX groups_grouplabels_idx ON bbstats.Groups (code ASC);
+-- CREATE INDEX groups_rounds_idx ON bbstats.Groups (round_id ASC);
+-- CREATE INDEX groups_grouplabels_idx ON bbstats.Groups (code ASC);
 
 -- -----------------------------------------------------
 -- Table GroupMembers
@@ -613,8 +622,8 @@ CREATE TABLE IF NOT EXISTS bbstats.GroupMembers (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX groupmembers_rosters_idx ON bbstats.GroupMembers (roster_id ASC);
-CREATE INDEX groupmembers_groups_idx ON bbstats.GroupMembers (round_id ASC, group_code ASC);
+-- CREATE INDEX groupmembers_rosters_idx ON bbstats.GroupMembers (roster_id ASC);
+-- CREATE INDEX groupmembers_groups_idx ON bbstats.GroupMembers (round_id ASC, group_code ASC);
 
 -- -----------------------------------------------------
 -- Table Games
@@ -648,9 +657,9 @@ CREATE TABLE IF NOT EXISTS bbstats.Games (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX games_ref_clubs_idx ON bbstats.Games (ref_club_id ASC);
-CREATE INDEX games_arenas_idx ON bbstats.Games (arena_id ASC);
-CREATE INDEX games_groups_idx ON bbstats.Games (round_id ASC, group_code ASC);
+-- CREATE INDEX games_ref_clubs_idx ON bbstats.Games (ref_club_id ASC);
+-- CREATE INDEX games_arenas_idx ON bbstats.Games (arena_id ASC);
+-- CREATE INDEX games_groups_idx ON bbstats.Games (round_id ASC, group_code ASC);
 
 -- -----------------------------------------------------
 -- Table Scores
@@ -672,8 +681,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Scores (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX scores_games_idx ON bbstats.Scores(game_id ASC);
-CREATE INDEX scores_rosters_idx ON bbstats.Scores (roster_id ASC);
+-- CREATE INDEX scores_games_idx ON bbstats.Scores(game_id ASC);
+-- CREATE INDEX scores_rosters_idx ON bbstats.Scores (roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table PlayerStats
@@ -688,6 +697,7 @@ CREATE TABLE IF NOT EXISTS bbstats.PlayerStats (
   is_starter BOOLEAN NULL DEFAULT NULL,
   pf TINYINT NOT NULL,
   PRIMARY KEY (game_id, is_home, player_id, roster_id),
+  CONSTRAINT playerstats_multi_uq UNIQUE (game_id ASC, is_home ASC, jersey_nbr ASC),
   CONSTRAINT playerstats_scores_fk
     FOREIGN KEY (game_id , is_home)
     REFERENCES bbstats.Scores (game_id , is_home)
@@ -699,9 +709,9 @@ CREATE TABLE IF NOT EXISTS bbstats.PlayerStats (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX playerstats_multi_uq ON bbstats.PlayerStats (game_id ASC, is_home ASC, jersey_nbr ASC);
-CREATE INDEX playerstats_scores_idx ON bbstats.PlayerStats (game_id ASC, is_home ASC);
-CREATE INDEX playerstats_teammembers_idx ON bbstats.PlayerStats (player_id ASC, roster_id ASC);
+-- CREATE UNIQUE INDEX playerstats_multi_uq ON bbstats.PlayerStats (game_id ASC, is_home ASC, jersey_nbr ASC);
+-- CREATE INDEX playerstats_scores_idx ON bbstats.PlayerStats (game_id ASC, is_home ASC);
+-- CREATE INDEX playerstats_teammembers_idx ON bbstats.PlayerStats (player_id ASC, roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table Stats
@@ -711,39 +721,19 @@ CREATE TABLE IF NOT EXISTS bbstats.Stats (
   is_home BOOLEAN NOT NULL,
   player_id INT NOT NULL,
   roster_id INT NOT NULL,
-  `period` TINYINT NOT NULL,
+  "period" TINYINT NOT NULL,
   tpm TINYINT NOT NULL,
   ftm TINYINT NOT NULL,
   fta TINYINT NOT NULL,
   pts TINYINT NOT NULL,
-  PRIMARY KEY (game_id, is_home, `period`, player_id, roster_id),
+  PRIMARY KEY (game_id, is_home, "period", player_id, roster_id),
   CONSTRAINT stats_playerstats_fk
     FOREIGN KEY (game_id , is_home , player_id , roster_id)
     REFERENCES bbstats.PlayerStats (game_id , is_home , player_id , roster_id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX stats_playerstats_idx ON bbstats.Stats (game_id ASC, is_home ASC, player_id ASC, roster_id ASC);
-
--- -----------------------------------------------------
--- Table Actions
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS bbstats.Actions (
-  game_id INT NOT NULL,
-  is_home BOOLEAN NOT NULL,
-  player_id INT NOT NULL,
-  roster_id INT NOT NULL,
-  minute TINYINT NOT NULL,
-  nbr TINYINT NOT NULL,
-  type ENUM('TWO_POINTER_MADE', 'THREE_POINTER_MADE', 'FREE_THROW_MADE', 'FREE_THROW_MISSED', 'NON_SHOOTING_FOUL', 'SHOOTING_FOUL', 'TECHNICAL_FOUL', 'FLAGRANT_FOUL', 'DISQUALIFYING_FOUL') NOT NULL,
-  PRIMARY KEY (game_id, is_home, minute, player_id, roster_id, nbr),
-  CONSTRAINT actions_playerstats_fk
-    FOREIGN KEY (game_id , is_home , player_id , roster_id)
-    REFERENCES bbstats.PlayerStats (game_id , is_home , player_id , roster_id)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE);
-
-CREATE INDEX actions_playerstats_idx ON bbstats.Actions (game_id ASC, is_home ASC, player_id ASC, roster_id ASC);
+-- CREATE INDEX stats_playerstats_idx ON bbstats.Stats (game_id ASC, is_home ASC, player_id ASC, roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table Assignments
@@ -772,9 +762,9 @@ CREATE TABLE IF NOT EXISTS bbstats.Assignments (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX assignments_games_idx ON bbstats.Assignments (game_id ASC);
-CREATE INDEX assignments_owner_clubs_idx ON bbstats.Assignments (owner_club_id ASC);
-CREATE INDEX assignments_refpoolmembers_idx ON bbstats.Assignments (referee_id ASC, club_id ASC, season_start_year ASC);
+-- CREATE INDEX assignments_games_idx ON bbstats.Assignments (game_id ASC);
+-- CREATE INDEX assignments_owner_clubs_idx ON bbstats.Assignments (owner_club_id ASC);
+-- CREATE INDEX assignments_refpoolmembers_idx ON bbstats.Assignments (referee_id ASC, club_id ASC, season_start_year ASC);
 
 -- -----------------------------------------------------
 -- Table Managers
@@ -795,8 +785,8 @@ CREATE TABLE IF NOT EXISTS bbstats.Managers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-CREATE INDEX managers_clubs_idx ON bbstats.Managers (club_id ASC);
-CREATE INDEX managers_persons_idx ON bbstats.Managers (person_id ASC);
+-- CREATE INDEX managers_clubs_idx ON bbstats.Managers (club_id ASC);
+-- CREATE INDEX managers_persons_idx ON bbstats.Managers (person_id ASC);
 
 -- -----------------------------------------------------
 -- Table GroupLinks
@@ -818,8 +808,8 @@ CREATE TABLE IF NOT EXISTS bbstats.GroupLinks (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX grouplinks_child_groups_idx ON bbstats.GroupLinks (child_round_id ASC, child_group_code ASC);
-CREATE INDEX grouplinks_parent_groups_idx ON bbstats.GroupLinks (parent_round_id ASC, parent_group_code ASC);
+-- CREATE INDEX grouplinks_child_groups_idx ON bbstats.GroupLinks (child_round_id ASC, child_group_code ASC);
+-- CREATE INDEX grouplinks_parent_groups_idx ON bbstats.GroupLinks (parent_round_id ASC, parent_group_code ASC);
 
 -- -----------------------------------------------------
 -- Table Users
@@ -834,13 +824,14 @@ CREATE TABLE IF NOT EXISTS bbstats.Users (
   locale_code VARCHAR(5) NOT NULL DEFAULT 'de',
   theme_name VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (name),
+  CONSTRAINT users_person_id_uq UNIQUE (person_id ASC),
   CONSTRAINT users_persons_fk
     FOREIGN KEY (person_id)
     REFERENCES bbstats.Persons (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE UNIQUE INDEX users_person_id_uq ON bbstats.Users (person_id ASC);
+-- CREATE UNIQUE INDEX users_person_id_uq ON bbstats.Users (person_id ASC);
 
 -- -----------------------------------------------------
 -- Table Roles
@@ -848,9 +839,10 @@ CREATE UNIQUE INDEX users_person_id_uq ON bbstats.Users (person_id ASC);
 CREATE TABLE IF NOT EXISTS bbstats.Roles (
   id INT NOT NULL,
   name VARCHAR(20) NOT NULL,
-  PRIMARY KEY (id));
+  PRIMARY KEY (id),
+  CONSTRAINT roles_name_uq UNIQUE (name ASC));
 
-CREATE UNIQUE INDEX roles_name_uq ON bbstats.Roles (name ASC);
+-- CREATE UNIQUE INDEX roles_name_uq ON bbstats.Roles (name ASC);
 
 -- -----------------------------------------------------
 -- Table UserRoleLinks
@@ -870,7 +862,7 @@ CREATE TABLE IF NOT EXISTS bbstats.UserRoleLinks (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX userrolelinks_roles_idx ON bbstats.UserRoleLinks (role_id ASC);
+-- CREATE INDEX userrolelinks_roles_idx ON bbstats.UserRoleLinks (role_id ASC);
 
 -- -----------------------------------------------------
 -- Table RoleLinks
@@ -890,45 +882,5 @@ CREATE TABLE IF NOT EXISTS bbstats.RoleLinks (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-CREATE INDEX rolelinks_parent_roles_idx ON bbstats.RoleLinks (parent_role_id ASC);
-CREATE INDEX rolelinks_child_roles_idx ON bbstats.RoleLinks (child_role_id ASC);
-
--- -----------------------------------------------------
--- Table AltRoles
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS bbstats.AltRoles (
-  name VARCHAR(10) NOT NULL,
-  parent_name VARCHAR(10) NULL,
-  PRIMARY KEY (name),
-  CONSTRAINT altroles_self_fk
-    FOREIGN KEY (parent_name)
-    REFERENCES bbstats.AltRoles (name)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE);
-
-CREATE INDEX altroles_self_idx ON bbstats.AltRoles (parent_name ASC);
-
-
--- -----------------------------------------------------
--- Table AltUsers
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS bbstats.AltUsers (
-  id INT NOT NULL,
-  name VARCHAR(20) NOT NULL,
-  pass VARCHAR(16) NOT NULL,
-  is_enabled BOOLEAN NULL,
-  role_name VARCHAR(10) NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT altusers_persons_fk
-    FOREIGN KEY (id)
-    REFERENCES bbstats.Persons (id)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE,
-  CONSTRAINT altusers_altroles_fk
-    FOREIGN KEY (role_name)
-    REFERENCES AltRoles (name)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE);
-
-CREATE INDEX altusers_altroles_idx ON bbstats.AltUsers (role_name ASC);
-
+-- CREATE INDEX rolelinks_parent_roles_idx ON bbstats.RoleLinks (parent_role_id ASC);
+-- CREATE INDEX rolelinks_child_roles_idx ON bbstats.RoleLinks (child_role_id ASC);
