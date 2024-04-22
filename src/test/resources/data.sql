@@ -1657,7 +1657,7 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 
 ( 101, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 1, 2002),
 ( 102, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 2, 2002),
-    
+
 ( 103, 'RANKING_ROUND'    , 248, 'REGULAR_SEASON', 'O20M', 1, 2002),
 ( 104, 'RANKING_ROUND'    , 248, 'REGULAR_SEASON', 'O20M', 2, 2002),
 ( 105, 'RANKING_ROUND'    , 249, 'REGULAR_SEASON', 'O20M', 1, 2002),
@@ -1666,10 +1666,10 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 ( 108, 'RANKING_ROUND'    , 250, 'REGULAR_SEASON', 'O20M', 2, 2002),
 ( 109, 'RANKING_ROUND'    , 251, 'REGULAR_SEASON', 'O20M', 1, 2002),
 ( 110, 'RANKING_ROUND'    , 251, 'REGULAR_SEASON', 'O20M', 2, 2002),
-    
+
 ( 111, 'RANKING_ROUND'    , 258, 'REGULAR_SEASON', 'O20M', 1, 2002),
 ( 112, 'RANKING_ROUND'    , 258, 'REGULAR_SEASON', 'O20M', 2, 2002),
-    
+
 ( 151, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 1, 2002),
 ( 152, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 2, 2002),
 ( 153, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 3, 2002),
@@ -1683,7 +1683,7 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 
 ( 201, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 1, 2003),
 ( 202, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 2, 2003),
-    
+
 ( 203, 'RANKING_ROUND'    , 248, 'REGULAR_SEASON', 'O20M', 1, 2003),
 ( 204, 'RANKING_ROUND'    , 248, 'REGULAR_SEASON', 'O20M', 2, 2003),
 ( 205, 'RANKING_ROUND'    , 249, 'REGULAR_SEASON', 'O20M', 1, 2003),
@@ -1692,10 +1692,10 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 ( 208, 'RANKING_ROUND'    , 250, 'REGULAR_SEASON', 'O20M', 2, 2003),
 ( 209, 'RANKING_ROUND'    , 251, 'REGULAR_SEASON', 'O20M', 1, 2003),
 ( 210, 'RANKING_ROUND'    , 251, 'REGULAR_SEASON', 'O20M', 2, 2003),
-    
+
 ( 211, 'RANKING_ROUND'    , 258, 'REGULAR_SEASON', 'O20M', 1, 2003),
 ( 212, 'RANKING_ROUND'    , 258, 'REGULAR_SEASON', 'O20M', 2, 2003),
-    
+
 ( 251, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 1, 2003),
 ( 252, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 2, 2003),
 ( 253, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 3, 2003),
@@ -1711,7 +1711,7 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 (1801, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 1, 2019),
 (1802, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 2, 2019),
 (1803, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 3, 2019),
-    
+
 (1804, 'RANKING_ROUND'    , 248, 'REGULAR_SEASON', 'O20M', 1, 2019),
 (1805, 'RANKING_ROUND'    , 248, 'REGULAR_SEASON', 'O20M', 2, 2019),
 (1806, 'RANKING_ROUND'    , 249, 'REGULAR_SEASON', 'O20M', 1, 2019),
@@ -1720,10 +1720,10 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 (1809, 'RANKING_ROUND'    , 250, 'REGULAR_SEASON', 'O20M', 2, 2019),
 (1810, 'RANKING_ROUND'    , 251, 'REGULAR_SEASON', 'O20M', 1, 2019),
 (1811, 'RANKING_ROUND'    , 251, 'REGULAR_SEASON', 'O20M', 2, 2019),
-    
+
 (1812, 'RANKING_ROUND'    , 258, 'REGULAR_SEASON', 'O20M', 1, 2019),
 (1813, 'RANKING_ROUND'    , 258, 'REGULAR_SEASON', 'O20M', 2, 2019),
-    
+
 (1851, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 1, 2019),
 (1852, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 2, 2019),
 (1853, 'RANKING_ROUND'    , 268, 'REGULAR_SEASON', 'O20M', 3, 2019),
@@ -4724,22 +4724,22 @@ FROM bbstatstest.Persons pe
   INNER JOIN bbstatstest.TeamMembers tm       ON pl.id = tm.player_id
   INNER JOIN bbstatstest.PlayerStats ps       ON tm.player_id = ps.player_id AND tm.roster_id = ps.roster_id
   INNER JOIN bbstatstest.Stats st             ON ps.game_id = st.game_id AND ps.is_home = st.is_home AND ps.player_id = st.player_id AND ps.roster_id = st.roster_id
-  
+
   INNER JOIN bbstatstest.Scores scf           ON ps.game_id = scf.game_id AND ps.is_home = scf.is_home
   INNER JOIN bbstatstest.Rosters rof          ON scf.roster_id = rof.id
   INNER JOIN bbstatstest.Teams tef            ON rof.club_id = tef.club_id AND rof.team_type_code = tef.team_type_code AND rof.team_ordinal_nbr = tef.ordinal_nbr
   INNER JOIN bbstatstest.Clubs clf            ON tef.club_id = clf.id
-  
+
   INNER JOIN bbstatstest.Games ga             ON scf.game_id = ga.id
   INNER JOIN bbstatstest.Groups gr            ON ga.round_id = gr.round_id AND ga.group_code = gr.code
   INNER JOIN bbstatstest.Rounds rd            ON gr.round_id = rd.id
   INNER JOIN bbstatstest.Competitions cm      ON rd.geo_context_id = cm.geo_context_id AND rd.team_type_code = cm.team_type_code AND rd.competition_type = cm.type AND rd.competition_level = cm.level
-  
+
   INNER JOIN bbstatstest.Scores sca           ON ps.game_id = sca.game_id AND ps.is_home <> sca.is_home
   INNER JOIN bbstatstest.Rosters roa          ON sca.roster_id = roa.id
   INNER JOIN bbstatstest.Teams tea            ON roa.club_id = tea.club_id AND roa.team_type_code = tea.team_type_code AND roa.team_ordinal_nbr = tea.ordinal_nbr
   INNER JOIN bbstatstest.Clubs cla            ON tea.club_id = cla.id
-  
+
   INNER JOIN bbstatstest.GroupMembers gmf     ON rof.id = gmf.roster_id AND rd.id = gmf.round_id AND gr.code = gmf.group_code
   INNER JOIN bbstatstest.GroupMembers gma     ON roa.id = gma.roster_id AND rd.id = gma.round_id AND gr.code = gma.group_code
 
