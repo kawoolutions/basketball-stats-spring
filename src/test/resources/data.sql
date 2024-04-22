@@ -1,5 +1,5 @@
 
-INSERT INTO bbstatstest.GeoContexts (id, parent_id, name) VALUES
+INSERT INTO GeoContexts (id, parent_id, name) VALUES
 (1, NULL, 'Africa'),
 (2, NULL, 'Antarctica'),
 (3, NULL, 'Asia'),
@@ -272,7 +272,7 @@ INSERT INTO bbstatstest.GeoContexts (id, parent_id, name) VALUES
 (270, 258, 'Gießen'),
 (271, 258, 'Kassel');
 
-INSERT INTO bbstatstest.Continents (`id`, `iso_code`) VALUES
+INSERT INTO Continents (`id`, `iso_code`) VALUES
 (1, 'AF'),
 (2, 'AN'),
 (3, 'AS'),
@@ -281,7 +281,7 @@ INSERT INTO bbstatstest.Continents (`id`, `iso_code`) VALUES
 (6, 'OC'),
 (7, 'SA');
 
-INSERT INTO bbstatstest.Countries (`id`, `iso_code`, `iso_nbr`) VALUES
+INSERT INTO Countries (`id`, `iso_code`, `iso_nbr`) VALUES
 (  8, 'AF', '004'),
 (  9, 'AL', '008'),
 ( 10, 'DZ', '012'),
@@ -520,19 +520,19 @@ INSERT INTO bbstatstest.Countries (`id`, `iso_code`, `iso_nbr`) VALUES
 (246, 'ZM', '894'),
 (247, 'ZW', '716');
 
-INSERT INTO bbstatstest.Districts (`id`) VALUES
+INSERT INTO Districts (`id`) VALUES
 (268),
 (269),
 (270),
 (271);
 
-INSERT INTO bbstatstest.Regions (`id`) VALUES
+INSERT INTO Regions (`id`) VALUES
 (248),
 (249),
 (250),
 (251);
 
-INSERT INTO bbstatstest.States (`id`, `country_code`, `iso_code`) VALUES
+INSERT INTO States (`id`, `country_code`, `iso_code`) VALUES
 (252, 'DE', 'BW'),
 (253, 'DE', 'BY'),
 (254, 'DE', 'BE'),
@@ -550,15 +550,15 @@ INSERT INTO bbstatstest.States (`id`, `country_code`, `iso_code`) VALUES
 (266, 'DE', 'SH'),
 (267, 'DE', 'TH');
 
-UPDATE bbstatstest.GeoContexts SET type = 'COUNTRY' WHERE id >= 8 AND id <= 247;
-UPDATE bbstatstest.GeoContexts SET type = 'REGION' WHERE id >= 248 AND id <= 251;
-UPDATE bbstatstest.GeoContexts SET type = 'STATE' WHERE id >= 252 AND id <= 267;
-UPDATE bbstatstest.GeoContexts SET type = 'DISTRICT' WHERE id >= 268 AND id <= 271;
+UPDATE GeoContexts SET type = 'COUNTRY' WHERE id >= 8 AND id <= 247;
+UPDATE GeoContexts SET type = 'REGION' WHERE id >= 248 AND id <= 251;
+UPDATE GeoContexts SET type = 'STATE' WHERE id >= 252 AND id <= 267;
+UPDATE GeoContexts SET type = 'DISTRICT' WHERE id >= 268 AND id <= 271;
 
 -- -----------------------------------------------------
 -- Data for table `Seasons`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Seasons (`start_year`) VALUES
+INSERT INTO Seasons (`start_year`) VALUES
 (2001),
 (2002),
 (2003),
@@ -569,7 +569,7 @@ INSERT INTO bbstatstest.Seasons (`start_year`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Contacts`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Contacts (id, type) VALUES
+INSERT INTO Contacts (id, type) VALUES
 (1,'P'),
 (2,'P'),
 (3,'P'),
@@ -760,7 +760,7 @@ INSERT INTO bbstatstest.Contacts (id, type) VALUES
 -- -----------------------------------------------------
 -- Data for table `Clubs`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Clubs (`id`, `district_id`, `color_name`, `name`, `code`, `website_url`, `logo`) VALUES
+INSERT INTO Clubs (`id`, `district_id`, `color_name`, `name`, `code`, `website_url`, `logo`) VALUES
 (101,268,NULL,'TV Dieburg','DIEB','https://dieburg-blues.club/',NULL),
 (102,268,NULL,'TV Babenhausen','BABH','https://www.tvb-basketball.de/',NULL),
 (103,268,NULL,'TSV Ginsheim','GINS','https://www.tsv-ginsheim.de/index.php/sportangebot/freizeitsport',NULL),
@@ -813,7 +813,7 @@ INSERT INTO bbstatstest.Clubs (`id`, `district_id`, `color_name`, `name`, `code`
 -- -----------------------------------------------------
 -- Data for table `Arenas`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Arenas (`id`, `name`, `capacity`) VALUES
+INSERT INTO Arenas (`id`, `name`, `capacity`) VALUES
 (201,'Schlossgartenhalle',NULL),
 (202,'FH Telekom Halle',NULL),
 (203,'ABC-Halle',NULL),
@@ -913,7 +913,7 @@ INSERT INTO bbstatstest.Arenas (`id`, `name`, `capacity`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Persons`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Persons (`id`, `first_name`, `last_name`, `gender`, `birth_date`, `is_incognito`) VALUES
+INSERT INTO Persons (`id`, `first_name`, `last_name`, `gender`, `birth_date`, `is_incognito`) VALUES
 (1,'Karsten','Wutzke','MALE','1976-03-03',0),
 (2,'Johannes','Loczewski','MALE','1975-09-14',0),
 (3,'Ahmed','Al-Thiab','MALE',NULL,0),
@@ -960,7 +960,7 @@ INSERT INTO bbstatstest.Persons (`id`, `first_name`, `last_name`, `gender`, `bir
 -- -----------------------------------------------------
 -- Data for table `Referees`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Referees (`id`, `license_nbr`) VALUES
+INSERT INTO Referees (`id`, `license_nbr`) VALUES
 ( 1, '33161'),
 ( 5, NULL),
 ( 7, NULL),
@@ -974,7 +974,7 @@ INSERT INTO bbstatstest.Referees (`id`, `license_nbr`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Coaches`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Coaches (`id`, `license_nbr`) VALUES
+INSERT INTO Coaches (`id`, `license_nbr`) VALUES
 (7, 'CKRAUS'),
 (12, 'B1607'),
 (245,NULL),
@@ -984,7 +984,7 @@ INSERT INTO bbstatstest.Coaches (`id`, `license_nbr`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Players`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Players (`id`, `registration_nbr`) VALUES
+INSERT INTO Players (`id`, `registration_nbr`) VALUES
 ( 1, '029'),
 ( 2, '032'),
 ( 3, NULL),
@@ -1030,7 +1030,7 @@ INSERT INTO bbstatstest.Players (`id`, `registration_nbr`) VALUES
 -- -----------------------------------------------------
 -- Data for table `TeamTypes`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.TeamTypes (`code`, `age_group`, `gender`) VALUES
+INSERT INTO TeamTypes (`code`, `age_group`, `gender`) VALUES
 ('O65M', 'O65', 'MALE'  ),
 ('O60M', 'O60', 'MALE'  ),
 ('O55M', 'O55', 'MALE'  ),
@@ -1103,7 +1103,7 @@ INSERT INTO bbstatstest.TeamTypes (`code`, `age_group`, `gender`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Teams`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Teams (`club_id`, `team_type_code`, `ordinal_nbr`) VALUES
+INSERT INTO Teams (`club_id`, `team_type_code`, `ordinal_nbr`) VALUES
 (101,'O20M',1),
 (101,'O20M',2),
 (102,'O20M',1),
@@ -1185,7 +1185,7 @@ INSERT INTO bbstatstest.Teams (`club_id`, `team_type_code`, `ordinal_nbr`) VALUE
 -- -----------------------------------------------------
 -- Data for table `Competitions`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Competitions (`geo_context_id`, `type`, `team_type_code`, `level`) VALUES
+INSERT INTO Competitions (`geo_context_id`, `type`, `team_type_code`, `level`) VALUES
 
 ( 88, 'REGULAR_SEASON', 'O20M', 1),
 ( 88, 'REGULAR_SEASON', 'O20M', 2),
@@ -1233,7 +1233,7 @@ INSERT INTO bbstatstest.Competitions (`geo_context_id`, `type`, `team_type_code`
 -- -----------------------------------------------------
 -- Data for table `CompetitionLabels`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.CompetitionLabels (`geo_context_id`, `competition_type`, `team_type_code`, `competition_level`, `season_start_year`, `code`, `name`) VALUES
+INSERT INTO CompetitionLabels (`geo_context_id`, `competition_type`, `team_type_code`, `competition_level`, `season_start_year`, `code`, `name`) VALUES
 
 ( 88, 'REGULAR_SEASON', 'O20M', 1, 1966, 'BBL'   , 'Basketball-Bundesliga'),
 ( 88, 'REGULAR_SEASON', 'O20M', 1, 1992, 'BBL'   , 'Veltins Basketball-Bundesliga'),
@@ -1284,7 +1284,7 @@ INSERT INTO bbstatstest.CompetitionLabels (`geo_context_id`, `competition_type`,
 -- -----------------------------------------------------
 -- Data for table `GroupLabels`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.GroupLabels (`code`, `name`) VALUES
+INSERT INTO GroupLabels (`code`, `name`) VALUES
 ('NO', 'Nord'),
 ('EA', 'Ost'),
 ('SO', 'Süd'),
@@ -1300,7 +1300,7 @@ INSERT INTO bbstatstest.GroupLabels (`code`, `name`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Tenancies`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Tenancies (`club_id`, `arena_id`, `ordinal_nbr`) VALUES
+INSERT INTO Tenancies (`club_id`, `arena_id`, `ordinal_nbr`) VALUES
 (101,201,0),
 (101,202,4),
 (101,203,2),
@@ -1410,7 +1410,7 @@ INSERT INTO bbstatstest.Tenancies (`club_id`, `arena_id`, `ordinal_nbr`) VALUES
 -- -----------------------------------------------------
 -- Data for table `Addresses`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Addresses (`contact_id`, `country_code`, `zip_code`, `city_name`, `street_name`, `house_nbr`, `latitude`, `longitude`) VALUES
+INSERT INTO Addresses (`contact_id`, `country_code`, `zip_code`, `city_name`, `street_name`, `house_nbr`, `latitude`, `longitude`) VALUES
 (1,'DE','22880','Wedel','Am Rosengarten','6',NULL,NULL),
 (2,'DE','64895','Darmstadt','','',NULL,NULL),
 (3,'DE','','','','',NULL,NULL),
@@ -1594,19 +1594,19 @@ INSERT INTO bbstatstest.Addresses (`contact_id`, `country_code`, `zip_code`, `ci
 (344,'DE',NULL,NULL,NULL,NULL,NULL,NULL),
 (345,'DE',NULL,NULL,NULL,NULL,NULL,NULL);
 
-INSERT INTO bbstatstest.PhoneNumbers (`contact_id`, `type`, `country_code`, `area_code`, `subscriber_nbr`) VALUES
+INSERT INTO PhoneNumbers (`contact_id`, `type`, `country_code`, `area_code`, `subscriber_nbr`) VALUES
 (1, 'MOBILE', 49,  172, 5183395),
 (1, 'FIXED' , 49, 6071,  749015),
 (1, 'FAX'   , 49, 6071,  749016);
 
-INSERT INTO bbstatstest.EmailAddresses (`contact_id`, "index", `uri`) VALUES
+INSERT INTO EmailAddresses (`contact_id`, "index", `uri`) VALUES
 (1, 0, 'kwutzke@yahoo.de'),
 (1, 1, 'kasi@nba.com');
 
 -- -----------------------------------------------------
 -- Data for table `Users`
 -- -----------------------------------------------------
-INSERT INTO bbstatstest.Users (`name`, `person_id`, `password`, `new_password`, `salt`, `is_enabled`, `locale_code`, `theme_name`) VALUES
+INSERT INTO Users (`name`, `person_id`, `password`, `new_password`, `salt`, `is_enabled`, `locale_code`, `theme_name`) VALUES
 ('kwutzke',  1, 'pippo76', NULL, NULL, 1, 'de_DE', NULL),
 ('jimmel' ,  2, 'jimmel' , NULL, NULL, 1, 'en_US', NULL),
 ('mkrause',  7, 'mkrause', NULL, NULL, 1, 'en_GB', NULL),
@@ -1615,7 +1615,7 @@ INSERT INTO bbstatstest.Users (`name`, `person_id`, `password`, `new_password`, 
 ('test'   , 99, 'test'   , NULL, NULL, 1, 'de_DE', NULL);
 
 
-INSERT INTO bbstatstest.Colors (`name`, `rgb`) VALUES
+INSERT INTO Colors (`name`, `rgb`) VALUES
 ('black'  , X'000000'),
 ('red'    , X'FF0000'),
 ('green'  , X'00FF00'),
@@ -1628,7 +1628,7 @@ INSERT INTO bbstatstest.Colors (`name`, `rgb`) VALUES
 ('purple' , X'8C00C8');
 
 
-INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_type`, `team_type_code`, `competition_level`, `season_start_year`) VALUES
+INSERT INTO Rounds (`id`, `type`, `geo_context_id`, `competition_type`, `team_type_code`, `competition_level`, `season_start_year`) VALUES
 (   1, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 1, 2001),
 (   2, 'RANKING_ROUND'    ,  88, 'REGULAR_SEASON', 'O20M', 2, 2001),
 
@@ -1736,7 +1736,7 @@ INSERT INTO bbstatstest.Rounds (`id`, `type`, `geo_context_id`, `competition_typ
 (1860, 'ELIMINATION_ROUND', 268, 'CUP'           , 'O20M', 6, 2019);
 
 
-INSERT INTO bbstatstest.RankingRounds (`id`) VALUES
+INSERT INTO RankingRounds (`id`) VALUES
 (  1),
 (  2),
 (  3),
@@ -1806,7 +1806,7 @@ INSERT INTO bbstatstest.RankingRounds (`id`) VALUES
 (1853),
 (1854);
 
-INSERT INTO bbstatstest.EliminationRounds (`id`, `best_of`) VALUES
+INSERT INTO EliminationRounds (`id`, `best_of`) VALUES
 (  55, 1),
 (  56, 1),
 (  57, 1),
@@ -1836,7 +1836,7 @@ INSERT INTO bbstatstest.EliminationRounds (`id`, `best_of`) VALUES
 (1860, 1);
 
 
-INSERT INTO bbstatstest.Groups (`round_id`, `code`, `official_code`, `max_members`) VALUES
+INSERT INTO Groups (`round_id`, `code`, `official_code`, `max_members`) VALUES
 (  1, '1' , NULL    , 14),
 (  2, 'NO', '2BLN'  , 16),
 (  2, 'SO', '2BLS'  , 16),
@@ -1947,7 +1947,7 @@ INSERT INTO bbstatstest.Groups (`round_id`, `code`, `official_code`, `max_member
 (1860, '1' , 'HPD-R1', NULL);
 
 
-INSERT INTO bbstatstest.GroupLinks (`parent_round_id`, `parent_group_code`, `child_round_id`, `child_group_code`) VALUES
+INSERT INTO GroupLinks (`parent_round_id`, `parent_group_code`, `child_round_id`, `child_group_code`) VALUES
 (   1, '1' ,   2, 'NO'),
 (   1, '1' ,   2, 'SO'),
 (   2, 'NO',   3, '1' ),
@@ -2059,7 +2059,7 @@ INSERT INTO bbstatstest.GroupLinks (`parent_round_id`, `parent_group_code`, `chi
 ;
 
 
-INSERT INTO bbstatstest.Games (`id`, `round_id`, `group_code`, `arena_id`, `ref_club_id`, `scheduled_tipoff`, `actual_tipoff`, `matchday_nbr`, `official_nbr`, `attendance`, `recap`) VALUES
+INSERT INTO Games (`id`, `round_id`, `group_code`, `arena_id`, `ref_club_id`, `scheduled_tipoff`, `actual_tipoff`, `matchday_nbr`, `official_nbr`, `attendance`, `recap`) VALUES
 (  1,  54, 'EA', 209, NULL, '2001-09-08 17:15:00', NULL, NULL, '4', NULL, NULL),
 (  2,  54, 'EA', 205, NULL, '2001-09-09 11:00:00', NULL, NULL, '5', NULL, NULL),
 (  3,  54, 'EA', 201, NULL, '2001-09-09 18:00:00', NULL, NULL, '2', NULL, NULL),
@@ -2337,7 +2337,7 @@ INSERT INTO bbstatstest.Games (`id`, `round_id`, `group_code`, `arena_id`, `ref_
 (276,1853,'WE',232,NULL,'2020-03-22 15:00:00',NULL,NULL,'90',NULL,NULL),
 (277,1853,'WE',219,NULL,'2020-03-22 15:45:00',NULL,NULL,'86',NULL,NULL);
 
-INSERT INTO bbstatstest.Rosters (`id`, `club_id`, `team_type_code`, `team_ordinal_nbr`, `season_start_year`, `primary_jersey_color_name`, `secondary_jersey_color_name`, `image_path`) VALUES
+INSERT INTO Rosters (`id`, `club_id`, `team_type_code`, `team_ordinal_nbr`, `season_start_year`, `primary_jersey_color_name`, `secondary_jersey_color_name`, `image_path`) VALUES
 (1,101,'O20M',1,2001,'blue',NULL,NULL),
 (2,102,'O20M',3,2001,'red',NULL,NULL),
 (3,103,'O20M',2,2001,'white',NULL,NULL),
@@ -2389,7 +2389,7 @@ INSERT INTO bbstatstest.Rosters (`id`, `club_id`, `team_type_code`, `team_ordina
 (66,335,'O20M',1,2019,NULL,NULL,NULL),
 (67,335,'O20M',2,2019,'yellow',NULL,NULL);
 
-INSERT INTO bbstatstest.GroupMembers (`roster_id`, `round_id`, `group_code`, `withdrawn`) VALUES
+INSERT INTO GroupMembers (`roster_id`, `round_id`, `group_code`, `withdrawn`) VALUES
 (1,54,'EA',0),
 (1,60,'1',0),
 (2,54,'EA',0),
@@ -2440,7 +2440,7 @@ INSERT INTO bbstatstest.GroupMembers (`roster_id`, `round_id`, `group_code`, `wi
 (65,1854,'EA',0),
 (67,1854,'EA',0);
 
-INSERT INTO bbstatstest.TeamMembers (player_id, roster_id, position, eligible_to_play_since, image_path) VALUES
+INSERT INTO TeamMembers (player_id, roster_id, position, eligible_to_play_since, image_path) VALUES
 (1,1,'SHOOTING_GUARD',NULL,NULL),
 (1,10,'SHOOTING_GUARD',NULL,NULL),
 (1,32,'SHOOTING_GUARD',NULL,NULL),
@@ -2510,11 +2510,11 @@ INSERT INTO bbstatstest.TeamMembers (player_id, roster_id, position, eligible_to
 (259,42,'POWER_FORWARD',NULL,NULL)
 ;
 
-INSERT INTO bbstatstest.StaffMembers (`coach_id`, `roster_id`, `role`, `image_path`) VALUES
+INSERT INTO StaffMembers (`coach_id`, `roster_id`, `role`, `image_path`) VALUES
 (12, 10, 'HEAD_COACH', NULL),
 (12, 32, 'HEAD_COACH', NULL);
 
-INSERT INTO bbstatstest.Scores (`game_id`, `is_home`, `roster_id`, `final_score`) VALUES
+INSERT INTO Scores (`game_id`, `is_home`, `roster_id`, `final_score`) VALUES
 (1, 0, 7, 60),
 (1, 1, 6, 97),
 (2, 0, 4, 38),
@@ -3068,7 +3068,7 @@ INSERT INTO bbstatstest.Scores (`game_id`, `is_home`, `roster_id`, `final_score`
 (277,0,44,NULL),
 (277,1,43,NULL);
 
-INSERT INTO bbstatstest.PlayerStats (`game_id`, `is_home`, `player_id`, `roster_id`, `jersey_nbr`, `has_played`, `is_starter`, `pf`) VALUES
+INSERT INTO PlayerStats (`game_id`, `is_home`, `player_id`, `roster_id`, `jersey_nbr`, `has_played`, `is_starter`, `pf`) VALUES
 (5, 0, 1, 1, 10, 1, 1, 2),
 (5, 0, 2, 1, 14, 1, 1, 3),
 (5, 0, 3, 1, 6, 1, 0, 3),
@@ -3391,7 +3391,7 @@ INSERT INTO bbstatstest.PlayerStats (`game_id`, `is_home`, `player_id`, `roster_
 (172, 1, 20, 32, 15, 1, 0, 3),
 (172, 1, 26, 32, 6, 1, 0, 4);
 
-INSERT INTO bbstatstest.Stats (`game_id`, `is_home`, `player_id`, `roster_id`, "period", `tpm`, `ftm`, `fta`, `pts`) VALUES
+INSERT INTO Stats (`game_id`, `is_home`, `player_id`, `roster_id`, "period", `tpm`, `ftm`, `fta`, `pts`) VALUES
 (5, 0, 1, 1, 1, 1, 3, 7, 10),
 (5, 0, 2, 1, 1, 1, 0, 0, 3),
 (5, 0, 3, 1, 1, 0, 0, 0, 0),
@@ -4719,28 +4719,28 @@ SELECT
   , SUM(st.ftm) / SUM(st.fta)                                                                      AS free_throw_percentage
   , SUM(CASE WHEN st."period"=1 THEN ps.pf ELSE 0 END)                                             AS personal_fouls
   , SUM(st.pts)                                                                                    AS points
-FROM bbstatstest.Persons pe
-  INNER JOIN bbstatstest.Players pl           ON pe.id = pl.id
-  INNER JOIN bbstatstest.TeamMembers tm       ON pl.id = tm.player_id
-  INNER JOIN bbstatstest.PlayerStats ps       ON tm.player_id = ps.player_id AND tm.roster_id = ps.roster_id
-  INNER JOIN bbstatstest.Stats st             ON ps.game_id = st.game_id AND ps.is_home = st.is_home AND ps.player_id = st.player_id AND ps.roster_id = st.roster_id
+FROM Persons pe
+  INNER JOIN Players pl           ON pe.id = pl.id
+  INNER JOIN TeamMembers tm       ON pl.id = tm.player_id
+  INNER JOIN PlayerStats ps       ON tm.player_id = ps.player_id AND tm.roster_id = ps.roster_id
+  INNER JOIN Stats st             ON ps.game_id = st.game_id AND ps.is_home = st.is_home AND ps.player_id = st.player_id AND ps.roster_id = st.roster_id
 
-  INNER JOIN bbstatstest.Scores scf           ON ps.game_id = scf.game_id AND ps.is_home = scf.is_home
-  INNER JOIN bbstatstest.Rosters rof          ON scf.roster_id = rof.id
-  INNER JOIN bbstatstest.Teams tef            ON rof.club_id = tef.club_id AND rof.team_type_code = tef.team_type_code AND rof.team_ordinal_nbr = tef.ordinal_nbr
-  INNER JOIN bbstatstest.Clubs clf            ON tef.club_id = clf.id
+  INNER JOIN Scores scf           ON ps.game_id = scf.game_id AND ps.is_home = scf.is_home
+  INNER JOIN Rosters rof          ON scf.roster_id = rof.id
+  INNER JOIN Teams tef            ON rof.club_id = tef.club_id AND rof.team_type_code = tef.team_type_code AND rof.team_ordinal_nbr = tef.ordinal_nbr
+  INNER JOIN Clubs clf            ON tef.club_id = clf.id
 
-  INNER JOIN bbstatstest.Games ga             ON scf.game_id = ga.id
-  INNER JOIN bbstatstest.Groups gr            ON ga.round_id = gr.round_id AND ga.group_code = gr.code
-  INNER JOIN bbstatstest.Rounds rd            ON gr.round_id = rd.id
-  INNER JOIN bbstatstest.Competitions cm      ON rd.geo_context_id = cm.geo_context_id AND rd.team_type_code = cm.team_type_code AND rd.competition_type = cm.type AND rd.competition_level = cm.level
+  INNER JOIN Games ga             ON scf.game_id = ga.id
+  INNER JOIN Groups gr            ON ga.round_id = gr.round_id AND ga.group_code = gr.code
+  INNER JOIN Rounds rd            ON gr.round_id = rd.id
+  INNER JOIN Competitions cm      ON rd.geo_context_id = cm.geo_context_id AND rd.team_type_code = cm.team_type_code AND rd.competition_type = cm.type AND rd.competition_level = cm.level
 
-  INNER JOIN bbstatstest.Scores sca           ON ps.game_id = sca.game_id AND ps.is_home <> sca.is_home
-  INNER JOIN bbstatstest.Rosters roa          ON sca.roster_id = roa.id
-  INNER JOIN bbstatstest.Teams tea            ON roa.club_id = tea.club_id AND roa.team_type_code = tea.team_type_code AND roa.team_ordinal_nbr = tea.ordinal_nbr
-  INNER JOIN bbstatstest.Clubs cla            ON tea.club_id = cla.id
+  INNER JOIN Scores sca           ON ps.game_id = sca.game_id AND ps.is_home <> sca.is_home
+  INNER JOIN Rosters roa          ON sca.roster_id = roa.id
+  INNER JOIN Teams tea            ON roa.club_id = tea.club_id AND roa.team_type_code = tea.team_type_code AND roa.team_ordinal_nbr = tea.ordinal_nbr
+  INNER JOIN Clubs cla            ON tea.club_id = cla.id
 
-  INNER JOIN bbstatstest.GroupMembers gmf     ON rof.id = gmf.roster_id AND rd.id = gmf.round_id AND gr.code = gmf.group_code
-  INNER JOIN bbstatstest.GroupMembers gma     ON roa.id = gma.roster_id AND rd.id = gma.round_id AND gr.code = gma.group_code
+  INNER JOIN GroupMembers gmf     ON rof.id = gmf.roster_id AND rd.id = gmf.round_id AND gr.code = gmf.group_code
+  INNER JOIN GroupMembers gma     ON roa.id = gma.roster_id AND rd.id = gma.round_id AND gr.code = gma.group_code
 
 GROUP BY ga.id, pl.id;

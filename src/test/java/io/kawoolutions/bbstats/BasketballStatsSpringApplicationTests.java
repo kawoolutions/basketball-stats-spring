@@ -19,7 +19,7 @@ class BasketballStatsSpringApplicationTests {
 
     @Test
     void contextLoads() {
-//        List<Continent> continents = continentRepository.findAll();
-//        assertEquals(continents.size(), 7);
+        List<Continent> continents = continentRepository.findAll();
+        assertEquals(continents.size(), 7);
     }
 }
