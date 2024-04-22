@@ -1,15 +1,25 @@
 package io.kawoolutions.bbstats;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
+
+import io.kawoolutions.bbstats.entity.Continent;
+import io.kawoolutions.bbstats.repository.ContinentRepository;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@Sql({"/schema.sql", "/data.sql"}) // put files into src/test/resources dir
 class BasketballStatsSpringApplicationTests {
+
+    @Autowired
+    private ContinentRepository continentRepository;
 
     @Test
     void contextLoads() {
+//        List<Continent> continents = continentRepository.findAll();
+//        assertEquals(continents.size(), 7);
     }
-
 }
