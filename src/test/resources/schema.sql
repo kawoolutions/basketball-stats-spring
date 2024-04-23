@@ -21,8 +21,6 @@ CREATE TABLE IF NOT EXISTS GeoContexts (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX geocontexts_self_idx ON GeoContexts (parent_id ASC);
-
 -- -----------------------------------------------------
 -- Table Continents
 -- -----------------------------------------------------
@@ -36,8 +34,6 @@ CREATE TABLE IF NOT EXISTS Continents (
     REFERENCES GeoContexts (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
--- CREATE UNIQUE INDEX continents_iso_code_uq ON Continents (iso_code ASC);
 
 -- -----------------------------------------------------
 -- Table Countries
@@ -55,10 +51,6 @@ CREATE TABLE IF NOT EXISTS Countries (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE UNIQUE INDEX countries_iso_code_uq ON Countries (iso_code ASC);
--- CREATE UNIQUE INDEX countries_iso_nbr_uq ON Countries (iso_nbr ASC);
--- CREATE INDEX countries_geoareas_idx ON Countries (id ASC);
-
 -- -----------------------------------------------------
 -- Table Regions
 -- -----------------------------------------------------
@@ -70,7 +62,6 @@ CREATE TABLE IF NOT EXISTS Regions (
     REFERENCES GeoContexts (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
 
 -- -----------------------------------------------------
 -- Table States
@@ -92,10 +83,6 @@ CREATE TABLE IF NOT EXISTS States (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE UNIQUE INDEX states_multi_uq ON States (country_code ASC, iso_code ASC);
--- CREATE INDEX states_countries_idx ON States (country_code ASC);
--- CREATE INDEX states_geoareas_idx ON States (id ASC);
-
 -- -----------------------------------------------------
 -- Table Districts
 -- -----------------------------------------------------
@@ -108,7 +95,6 @@ CREATE TABLE IF NOT EXISTS Districts (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table Contacts
 -- -----------------------------------------------------
@@ -116,7 +102,6 @@ CREATE TABLE IF NOT EXISTS Contacts (
   id INT NOT NULL AUTO_INCREMENT,
   type ENUM('P', 'C', 'A') NOT NULL,
   PRIMARY KEY (id));
-
 
 -- -----------------------------------------------------
 -- Table Addresses
@@ -137,8 +122,6 @@ CREATE TABLE IF NOT EXISTS Addresses (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX postaddresses_contacts_idx ON Addresses (contact_id ASC);
-
 -- -----------------------------------------------------
 -- Table PhoneNumbers
 -- -----------------------------------------------------
@@ -155,8 +138,6 @@ CREATE TABLE IF NOT EXISTS PhoneNumbers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX phonenumbers_contacts_idx ON PhoneNumbers (contact_id ASC);
-
 -- -----------------------------------------------------
 -- Table EmailAddresses
 -- -----------------------------------------------------
@@ -171,8 +152,6 @@ CREATE TABLE IF NOT EXISTS EmailAddresses (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX emailaddresses_contacts_idx ON EmailAddresses (contact_id ASC);
-
 -- -----------------------------------------------------
 -- Table Colors
 -- -----------------------------------------------------
@@ -181,8 +160,6 @@ CREATE TABLE IF NOT EXISTS Colors (
   rgb BINARY(3) NOT NULL,
   PRIMARY KEY (name),
   CONSTRAINT colors_rgb_uq UNIQUE (rgb ASC));
-
--- CREATE UNIQUE INDEX colors_rgb_uq ON Colors (rgb ASC);
 
 -- -----------------------------------------------------
 -- Table Clubs
@@ -213,10 +190,6 @@ CREATE TABLE IF NOT EXISTS Clubs (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE UNIQUE INDEX clubs_multi_uq ON Clubs (district_id ASC, code ASC);
--- CREATE INDEX clubs_colors_idx ON Clubs (color_name ASC);
--- CREATE INDEX clubs_districts_idx ON Clubs (district_id ASC);
-
 -- -----------------------------------------------------
 -- Table Arenas
 -- -----------------------------------------------------
@@ -230,7 +203,6 @@ CREATE TABLE IF NOT EXISTS Arenas (
     REFERENCES Contacts (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
 
 -- -----------------------------------------------------
 -- Table Tenancies
@@ -251,9 +223,6 @@ CREATE TABLE IF NOT EXISTS Tenancies (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX tenancies_clubs_idx ON Tenancies (club_id ASC);
--- CREATE INDEX tenancies_arenas_idx ON Tenancies (arena_id ASC);
-
 -- -----------------------------------------------------
 -- Table Persons
 -- -----------------------------------------------------
@@ -271,7 +240,6 @@ CREATE TABLE IF NOT EXISTS Persons (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table Referees
 -- -----------------------------------------------------
@@ -284,8 +252,6 @@ CREATE TABLE IF NOT EXISTS Referees (
     REFERENCES Persons (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
--- CREATE INDEX referees_persons_idx ON Referees (id ASC);
 
 -- -----------------------------------------------------
 -- Table Coaches
@@ -300,7 +266,6 @@ CREATE TABLE IF NOT EXISTS Coaches (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table Players
 -- -----------------------------------------------------
@@ -314,7 +279,6 @@ CREATE TABLE IF NOT EXISTS Players (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 -- -----------------------------------------------------
 -- Table TeamTypes
 -- -----------------------------------------------------
@@ -324,8 +288,6 @@ CREATE TABLE IF NOT EXISTS TeamTypes (
   gender ENUM('MALE', 'FEMALE', 'MIXED') NOT NULL DEFAULT 'MALE',
   PRIMARY KEY (code),
   CONSTRAINT teamtypes_multi_uq UNIQUE (age_group ASC, gender ASC));
-
--- CREATE UNIQUE INDEX teamtypes_multi_uq ON TeamTypes (age_group ASC, gender ASC);
 
 -- -----------------------------------------------------
 -- Table Teams
@@ -346,9 +308,6 @@ CREATE TABLE IF NOT EXISTS Teams (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX teams_clubs_idx ON Teams (club_id ASC);
--- CREATE INDEX teams_teamtypes_idx ON Teams (team_type_code ASC);
-
 -- -----------------------------------------------------
 -- Table Competitions
 -- -----------------------------------------------------
@@ -368,9 +327,6 @@ CREATE TABLE IF NOT EXISTS Competitions (
     REFERENCES TeamTypes (code)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
--- CREATE INDEX competitions_teamtypes_idx ON Competitions (team_type_code ASC);
--- CREATE INDEX competitions_geocontexts_idx ON Competitions (geo_context_id ASC);
 
 -- -----------------------------------------------------
 -- Table CompetitionLabels
@@ -397,7 +353,6 @@ CREATE TABLE IF NOT EXISTS Seasons (
   start_year INT NOT NULL,
   PRIMARY KEY (start_year));
 
-
 -- -----------------------------------------------------
 -- Table Rounds
 -- -----------------------------------------------------
@@ -422,9 +377,6 @@ CREATE TABLE IF NOT EXISTS Rounds (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX rounds_seasons_idx ON Rounds (season_start_year ASC);
--- CREATE INDEX rounds_competitions_idx ON Rounds (geo_context_id ASC, team_type_code ASC, competition_type ASC, competition_level ASC);
-
 -- -----------------------------------------------------
 -- Table RankingRounds
 -- -----------------------------------------------------
@@ -436,7 +388,6 @@ CREATE TABLE IF NOT EXISTS RankingRounds (
     REFERENCES Rounds (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
 
 -- -----------------------------------------------------
 -- Table EliminationRounds
@@ -450,7 +401,6 @@ CREATE TABLE IF NOT EXISTS EliminationRounds (
     REFERENCES Rounds (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
 
 -- -----------------------------------------------------
 -- Table Rosters
@@ -487,12 +437,6 @@ CREATE TABLE IF NOT EXISTS Rosters (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE UNIQUE INDEX rosters_multi_uq ON Rosters (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC, season_start_year ASC);
--- CREATE INDEX rosters_seasons_idx ON Rosters (season_start_year ASC);
--- CREATE INDEX rosters_teams_idx ON Rosters (club_id ASC, team_type_code ASC, team_ordinal_nbr ASC);
--- CREATE INDEX rosters_primary_jersey_colors_idx ON Rosters (primary_jersey_color_name ASC);
--- CREATE INDEX rosters_secondary_jersey_colors_idx ON Rosters (secondary_jersey_color_name ASC);
-
 -- -----------------------------------------------------
 -- Table RefpoolMembers
 -- -----------------------------------------------------
@@ -518,10 +462,6 @@ CREATE TABLE IF NOT EXISTS RefpoolMembers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX refpoolmembers_referees_idx ON RefpoolMembers (referee_id ASC);
--- CREATE INDEX refpoolmembers_seasons_idx ON RefpoolMembers (season_start_year ASC);
--- CREATE INDEX refpoolmembers_clubs_idx ON RefpoolMembers (club_id ASC);
-
 -- -----------------------------------------------------
 -- Table StaffMembers
 -- -----------------------------------------------------
@@ -541,9 +481,6 @@ CREATE TABLE IF NOT EXISTS StaffMembers (
     REFERENCES Rosters (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
--- CREATE INDEX staffmembers_coaches_idx ON StaffMembers (coach_id ASC);
--- CREATE INDEX staffmembers_rosters_idx ON StaffMembers (roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table TeamMembers
@@ -566,9 +503,6 @@ CREATE TABLE IF NOT EXISTS TeamMembers (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX teammembers_players_idx ON TeamMembers (player_id ASC);
--- CREATE INDEX teammembers_rosters_idx ON TeamMembers (roster_id ASC);
-
 -- -----------------------------------------------------
 -- Table GroupLabels
 -- -----------------------------------------------------
@@ -577,7 +511,6 @@ CREATE TABLE IF NOT EXISTS GroupLabels (
   name VARCHAR(50) NULL,
   PRIMARY KEY (code),
   CONSTRAINT grouplabels_code_uq UNIQUE (code ASC));
-
 
 -- -----------------------------------------------------
 -- Table Groups
@@ -599,9 +532,6 @@ CREATE TABLE IF NOT EXISTS Groups (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX groups_rounds_idx ON Groups (round_id ASC);
--- CREATE INDEX groups_grouplabels_idx ON Groups (code ASC);
-
 -- -----------------------------------------------------
 -- Table GroupMembers
 -- -----------------------------------------------------
@@ -621,9 +551,6 @@ CREATE TABLE IF NOT EXISTS GroupMembers (
     REFERENCES Groups (round_id , code)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
--- CREATE INDEX groupmembers_rosters_idx ON GroupMembers (roster_id ASC);
--- CREATE INDEX groupmembers_groups_idx ON GroupMembers (round_id ASC, group_code ASC);
 
 -- -----------------------------------------------------
 -- Table Games
@@ -657,10 +584,6 @@ CREATE TABLE IF NOT EXISTS Games (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX games_ref_clubs_idx ON Games (ref_club_id ASC);
--- CREATE INDEX games_arenas_idx ON Games (arena_id ASC);
--- CREATE INDEX games_groups_idx ON Games (round_id ASC, group_code ASC);
-
 -- -----------------------------------------------------
 -- Table Scores
 -- -----------------------------------------------------
@@ -680,9 +603,6 @@ CREATE TABLE IF NOT EXISTS Scores (
     REFERENCES Rosters (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
--- CREATE INDEX scores_games_idx ON Scores(game_id ASC);
--- CREATE INDEX scores_rosters_idx ON Scores (roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table PlayerStats
@@ -709,10 +629,6 @@ CREATE TABLE IF NOT EXISTS PlayerStats (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE UNIQUE INDEX playerstats_multi_uq ON PlayerStats (game_id ASC, is_home ASC, jersey_nbr ASC);
--- CREATE INDEX playerstats_scores_idx ON PlayerStats (game_id ASC, is_home ASC);
--- CREATE INDEX playerstats_teammembers_idx ON PlayerStats (player_id ASC, roster_id ASC);
-
 -- -----------------------------------------------------
 -- Table Stats
 -- -----------------------------------------------------
@@ -732,8 +648,6 @@ CREATE TABLE IF NOT EXISTS Stats (
     REFERENCES PlayerStats (game_id , is_home , player_id , roster_id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
--- CREATE INDEX stats_playerstats_idx ON Stats (game_id ASC, is_home ASC, player_id ASC, roster_id ASC);
 
 -- -----------------------------------------------------
 -- Table Assignments
@@ -762,10 +676,6 @@ CREATE TABLE IF NOT EXISTS Assignments (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE INDEX assignments_games_idx ON Assignments (game_id ASC);
--- CREATE INDEX assignments_owner_clubs_idx ON Assignments (owner_club_id ASC);
--- CREATE INDEX assignments_refpoolmembers_idx ON Assignments (referee_id ASC, club_id ASC, season_start_year ASC);
-
 -- -----------------------------------------------------
 -- Table Managers
 -- -----------------------------------------------------
@@ -784,9 +694,6 @@ CREATE TABLE IF NOT EXISTS Managers (
     REFERENCES Persons (id)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
--- CREATE INDEX managers_clubs_idx ON Managers (club_id ASC);
--- CREATE INDEX managers_persons_idx ON Managers (person_id ASC);
 
 -- -----------------------------------------------------
 -- Table GroupLinks
@@ -808,9 +715,6 @@ CREATE TABLE IF NOT EXISTS GroupLinks (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX grouplinks_child_groups_idx ON GroupLinks (child_round_id ASC, child_group_code ASC);
--- CREATE INDEX grouplinks_parent_groups_idx ON GroupLinks (parent_round_id ASC, parent_group_code ASC);
-
 -- -----------------------------------------------------
 -- Table Users
 -- -----------------------------------------------------
@@ -831,8 +735,6 @@ CREATE TABLE IF NOT EXISTS Users (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE UNIQUE INDEX users_person_id_uq ON Users (person_id ASC);
-
 -- -----------------------------------------------------
 -- Table Roles
 -- -----------------------------------------------------
@@ -841,8 +743,6 @@ CREATE TABLE IF NOT EXISTS Roles (
   name VARCHAR(20) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT roles_name_uq UNIQUE (name ASC));
-
--- CREATE UNIQUE INDEX roles_name_uq ON Roles (name ASC);
 
 -- -----------------------------------------------------
 -- Table UserRoleLinks
@@ -862,8 +762,6 @@ CREATE TABLE IF NOT EXISTS UserRoleLinks (
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
--- CREATE INDEX userrolelinks_roles_idx ON UserRoleLinks (role_id ASC);
-
 -- -----------------------------------------------------
 -- Table RoleLinks
 -- -----------------------------------------------------
@@ -881,6 +779,3 @@ CREATE TABLE IF NOT EXISTS RoleLinks (
     REFERENCES Roles (id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
-
--- CREATE INDEX rolelinks_parent_roles_idx ON RoleLinks (parent_role_id ASC);
--- CREATE INDEX rolelinks_child_roles_idx ON RoleLinks (child_role_id ASC);
