@@ -1,6 +1,7 @@
 spring:
     datasource:
-        url: jdbc:h2:mem:bbstatstest;DB_CLOSE_DELAY=-1
+#        url: jdbc:h2:mem:bbstatstest;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+        url: jdbc:h2:mem:bbstatstest
         username: sa
         password: sa
         driverClassName: org.h2.Driver
