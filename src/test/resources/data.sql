@@ -550,6 +550,7 @@ INSERT INTO States (`id`, `country_code`, `iso_code`) VALUES
 (266, 'DE', 'SH'),
 (267, 'DE', 'TH');
 
+UPDATE GeoContexts SET type = 'CONTINENT' WHERE id >= 1 AND id <= 7;
 UPDATE GeoContexts SET type = 'COUNTRY' WHERE id >= 8 AND id <= 247;
 UPDATE GeoContexts SET type = 'REGION' WHERE id >= 248 AND id <= 251;
 UPDATE GeoContexts SET type = 'STATE' WHERE id >= 252 AND id <= 267;
