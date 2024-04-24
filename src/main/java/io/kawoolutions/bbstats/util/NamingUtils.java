@@ -337,10 +337,6 @@ public class NamingUtils {
         int homeFinalScore = homeScore != null && homeScore.getFinalScore() != null ? homeScore.getFinalScore().intValue() : -1;
         int awayFinalScore = awayScore != null && awayScore.getFinalScore() != null ? awayScore.getFinalScore().intValue() : -1;
 
-//        Date scheduledTipoff = game.getScheduledTipoff();
-//        Date actualTipoff = game.getActualTipoff();
-//        Date tipoff = actualTipoff != null ? actualTipoff : scheduledTipoff;
-
         LocalDateTime scheduledTipoff = game.getScheduledTipoff();
         LocalDateTime actualTipoff = game.getActualTipoff();
         LocalDateTime tipoff = actualTipoff != null ? actualTipoff : scheduledTipoff;
@@ -352,10 +348,10 @@ public class NamingUtils {
      * @param gameId Game ID, mostly for debugging
      */
     public static FinalScoreStatus getFinalScoreStatusFor(int gameId, int homeFinalScore, int awayFinalScore, boolean withdrawn, LocalDateTime tipoff) {
+
         boolean hasFinalScore = homeFinalScore > -1 && awayFinalScore > -1;
 
         // "now" differs slightly per line instance
-//        Date now = new Date();
         LocalDateTime now = LocalDateTime.now();
 
         if (!hasFinalScore) {
@@ -363,14 +359,11 @@ public class NamingUtils {
                 return NEVER_PLAYED;
             }
 
-//            if ( now.before( tipoff ) )
             if (now.isBefore(tipoff)) {
                 // we are before the game has started
 
-//                Date oneWeekBeforeTipoff = new Date( tipoff.getTime() - 7 * 24L * 3600000 );
                 LocalDateTime oneWeekBeforeTipoff = tipoff.minusDays(7);
 
-//                if ( now.after( oneWeekBeforeTipoff ) )
                 if (now.isAfter(oneWeekBeforeTipoff)) {
                     return PREVIEW;
                 } else {
@@ -380,11 +373,9 @@ public class NamingUtils {
                 // game was tipped off
 
                 // determine end of game
-//                Date endOfGame = new Date( tipoff.getTime() + 2L * 3600000 );
                 LocalDateTime endOfGame = tipoff.plusHours(2);
 
                 // if now is before game end, the game is in progress
-//                if ( now.before( endOfGame ) )
                 if (now.isBefore(endOfGame)) {
                     return IN_PROGRESS;
                 }
@@ -392,10 +383,8 @@ public class NamingUtils {
                 // not in progress, some state after end of game
 
                 // determine 24 hours after end of game
-//                Date twentyFourHoursAfterEndOfGame = new Date( endOfGame.getTime() + 24L * 3600000 );
                 LocalDateTime twentyFourHoursAfterEndOfGame = endOfGame.plusHours(24);
 
-//                if ( now.before( twentyFourHoursAfterEndOfGame ) )
                 if (now.isBefore(twentyFourHoursAfterEndOfGame)) {
                     return PENDING;
                 } else {
