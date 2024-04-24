@@ -1,6 +1,6 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 public abstract class MultiGameLogDto extends BaseGameLogDto {
     private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public abstract class MultiGameLogDto extends BaseGameLogDto {
     // per player, multiple games
     protected MultiGameLogDto(String lastName, String firstName, boolean incognito, long games, long threePointersMade,
                               long freeThrowsMade, long freeThrowsAttempted, long personalFouls, long foulOuts, long points) {
-        this(NamingUtils.getFormalPersonNameFor(lastName, firstName, incognito), games, threePointersMade, freeThrowsMade,
+        this(NamingUtil.getFormalPersonNameFor(lastName, firstName, incognito), games, threePointersMade, freeThrowsMade,
                 freeThrowsAttempted, personalFouls, foulOuts, points);
     }
 

@@ -1,6 +1,6 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 public abstract class SingleGameLogDto extends BaseGameLogDto {
     private static final long serialVersionUID = 1L;
@@ -12,7 +12,7 @@ public abstract class SingleGameLogDto extends BaseGameLogDto {
     // per player, single game -> watch out for BoxScoreDto(): must be nullable!
     protected SingleGameLogDto(String lastName, String firstName, boolean incognito, long threePointersMade, long freeThrowsMade,
                                long freeThrowsAttempted, long personalFouls, long points) {
-        this(NamingUtils.getFormalPersonNameFor(lastName, firstName, incognito), threePointersMade, freeThrowsMade,
+        this(NamingUtil.getFormalPersonNameFor(lastName, firstName, incognito), threePointersMade, freeThrowsMade,
                 freeThrowsAttempted, personalFouls, points);
     }
 

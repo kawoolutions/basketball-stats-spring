@@ -1,6 +1,6 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ public class TeamStatDto extends MultiGameLogDto {
 
     public TeamStatDto(Integer rosterId, String clubName, String clubCode, int teamNumber, long games, long threePointersMade, long freeThrowsMade,
                        long freeThrowsAttempted, long personalFouls, long foulOuts, long points) {
-        super(NamingUtils.getShortTeamLabelFor(clubName, teamNumber), games, threePointersMade, freeThrowsMade, freeThrowsAttempted,
+        super(NamingUtil.getShortTeamLabelFor(clubName, teamNumber), games, threePointersMade, freeThrowsMade, freeThrowsAttempted,
                 personalFouls, foulOuts, points);
 
         this.rosterId = rosterId;

@@ -9,7 +9,7 @@ import io.kawoolutions.bbstats.entity.Region;
 import io.kawoolutions.bbstats.entity.Roster;
 import io.kawoolutions.bbstats.entity.State;
 import io.kawoolutions.bbstats.entity.TeamMember;
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 import java.lang.reflect.Method;
 import java.time.LocalDate;
@@ -50,7 +50,7 @@ public class PlayerDto extends BaseDto {
         this.lastName = lastName;
         this.incognito = incognito;
 
-        this.name = NamingUtils.getFormalPersonNameFor(lastName, firstName, incognito);
+        this.name = NamingUtil.getFormalPersonNameFor(lastName, firstName, incognito);
 
         this.gender = gender;
         this.birthDate = birthDate;

@@ -1,6 +1,6 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +48,7 @@ public class PlayerStatDto extends MultiGameLogDto {
         this.firstName = firstName;
         this.incognito = incognito;
 
-        this.formalName = NamingUtils.getFormalPersonNameFor(lastName, firstName, incognito);
+        this.formalName = NamingUtil.getFormalPersonNameFor(lastName, firstName, incognito);
 
         // per player only
         this.gamesNotPlayed = gamesNotPlayed;

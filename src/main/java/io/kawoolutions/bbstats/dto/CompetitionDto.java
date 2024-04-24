@@ -6,7 +6,7 @@ import io.kawoolutions.bbstats.entity.Country;
 import io.kawoolutions.bbstats.entity.GeoContext;
 import io.kawoolutions.bbstats.entity.GeoContextType;
 import io.kawoolutions.bbstats.entity.TeamTypeGender;
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +158,7 @@ public class CompetitionDto extends BaseDto {
 
         this.countryHierarchyLevel = countryHierarchyLevel;
 
-        this.seasonLabel = NamingUtils.getSeasonLabelForStartYear(seasonStartYear);
+        this.seasonLabel = NamingUtil.getSeasonLabelForStartYear(seasonStartYear);
 
         this.teamTypeCode = teamTypeCode;
         this.teamTypeGender = teamTypeGender;
@@ -168,7 +168,7 @@ public class CompetitionDto extends BaseDto {
 
         this.competitionType = competitionType;
 
-        this.groupLabel = NamingUtils.getGroupLabelFor(competitionCode, competitionLabel, groupCode, groupOfficialCode, groupName) + ", {0}";
+        this.groupLabel = NamingUtil.getGroupLabelFor(competitionCode, competitionLabel, groupCode, groupOfficialCode, groupName) + ", {0}";
 
         // produce "10th league" etc.
 //        Group g = group;

@@ -1,7 +1,8 @@
 package io.kawoolutions.bbstats.dto;
 
 import io.kawoolutions.bbstats.entity.CompetitionType;
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.GameUtil;
+import io.kawoolutions.bbstats.util.NamingUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DecimalFormat;
@@ -96,12 +97,12 @@ public class ScheduleScoreDto extends BaseDto {
         this.arenaName = arenaName;
 
         this.homeRosterId = homeRosterId;
-        this.homeTeamName = NamingUtils.getTeamLabelFor(homeClubName, homeTeamOrdinalNumber, homeClubCode);
+        this.homeTeamName = NamingUtil.getTeamLabelFor(homeClubName, homeTeamOrdinalNumber, homeClubCode);
         this.homeTeamCode = homeClubCode + homeTeamOrdinalNumber;
         this.homeFinalScore = homeFinalScore != null ? homeFinalScore.intValue() : -1;
 
         this.awayRosterId = awayRosterId;
-        this.awayTeamName = NamingUtils.getTeamLabelFor(awayClubName, awayTeamOrdinalNumber, awayClubCode);
+        this.awayTeamName = NamingUtil.getTeamLabelFor(awayClubName, awayTeamOrdinalNumber, awayClubCode);
         this.awayTeamCode = awayClubCode + " " + awayTeamOrdinalNumber;
         this.awayFinalScore = awayFinalScore != null ? awayFinalScore.intValue() : -1;
 
@@ -252,7 +253,7 @@ public class ScheduleScoreDto extends BaseDto {
     }
 
     public FinalScoreStatus getFinalScoreStatus() {
-        return NamingUtils.getFinalScoreStatusFor(gameId.intValue(), homeFinalScore, awayFinalScore, withdrawn, tipoff);
+        return GameUtil.getFinalScoreStatusFor(gameId.intValue(), homeFinalScore, awayFinalScore, withdrawn, tipoff);
     }
 
     public boolean filterBothTeamNames(Object row, Object filter, @SuppressWarnings("unused") Locale locale) {

@@ -1,6 +1,6 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.util.NamingUtils;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -98,7 +98,7 @@ public class StandingsDto extends BaseDto {
         this.clubName = clubName;
         this.clubCode = clubCode;
 
-        this.teamName = NamingUtils.getTeamLabelFor(clubName, teamOrdinalNumber, clubCode);
+        this.teamName = NamingUtil.getTeamLabelFor(clubName, teamOrdinalNumber, clubCode);
         this.teamCode = clubCode + teamOrdinalNumber;
         this.withdrawn = withdrawn;
 

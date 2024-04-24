@@ -1,6 +1,5 @@
 package io.kawoolutions.bbstats.util;
 
-import io.kawoolutions.bbstats.dto.FinalScoreStatus;
 import io.kawoolutions.bbstats.entity.AgeGroup;
 import io.kawoolutions.bbstats.entity.Club;
 import io.kawoolutions.bbstats.entity.Competition;
@@ -19,20 +18,9 @@ import io.kawoolutions.bbstats.entity.Team;
 import io.kawoolutions.bbstats.entity.TeamMember;
 import io.kawoolutions.bbstats.entity.TeamTypeGender;
 
-import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Objects;
 
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FUTURE;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.IN_PROGRESS;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.NEVER_PLAYED;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PENDING;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PLAYED;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PREVIEW;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.RATED;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.SCORE_OVERDUE;
-
-public class NamingUtils {
+public abstract class NamingUtil {
 
     public static String getSeasonLabelFor(Season season) {
         return getSeasonLabelForStartYear(season.getStartYear().intValue());
@@ -49,19 +37,18 @@ public class NamingUtils {
         return startYear + "/" + Integer.valueOf(startYear + 1).toString().substring(2);
     }
 
-    public static String englishOrdinalFor(int number) {
-        if (number <= 0) {
-            return number + "th";
+    public static String englishOrdinalStringFor(int number) {
+        if (number < 0) {
+            throw new IllegalArgumentException("Number is negative!");
         }
 
-        String[] suffixes = new String[]{"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
+        String[] suffixes = new String[] {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
 
         switch (number % 100) {
             case 11:
             case 12:
             case 13:
                 return number + "th";
-
             default:
                 return number + suffixes[number % 10];
         }
@@ -76,7 +63,7 @@ public class NamingUtils {
 
         switch (localeString) {
             case "en_US":
-                ordinal = NamingUtils.englishOrdinalFor(number);
+                ordinal = NamingUtil.englishOrdinalStringFor(number);
                 break;
 
             case "de_DE":
@@ -121,7 +108,7 @@ public class NamingUtils {
     }
 
     public static String getShortTeamLabelFor(String clubName, int teamNumber) {
-        return NamingUtils.getTeamLabelFor(clubName, teamNumber, null);
+        return NamingUtil.getTeamLabelFor(clubName, teamNumber, null);
     }
 
     public static String getTeamLabelFor(String clubName, int teamNumber, String clubCode) {
@@ -160,7 +147,7 @@ public class NamingUtils {
     public static String getFormalPersonNameFor(String lastName, String firstName, boolean incognito) {
         if (incognito && lastName != null) {
             // overwrite param, no good practice :-)
-            lastName = NamingUtils.abbreviateLastName(lastName);
+            lastName = NamingUtil.abbreviateLastName(lastName);
         }
 
         // setting only last or first name leaves off comma
@@ -235,7 +222,7 @@ public class NamingUtils {
 
 //        System.out.println( "PARAMS: " + competitionCode + ", " + competitionName + ", " + groupCode + ", " + groupOfficialCode + ", " + groupName );
 
-        String label = NamingUtils.getGroupLabelFor(competitionCode, competitionName, groupCode, groupOfficialCode, groupName);
+        String label = NamingUtil.getGroupLabelFor(competitionCode, competitionName, groupCode, groupOfficialCode, groupName);
 //        String label = NamingUtils.getGroupLabelFor( "honky", "tonky", groupCode, groupOfficialCode, "HONKYTONKY" );
 
         return label;
@@ -316,97 +303,10 @@ public class NamingUtils {
         return getGroupIdentifierFor(group) + ":" + getTeamIdentifierForRoster(homeRoster) + "-" + getTeamIdentifierForRoster(awayRoster);
     }
 
-    public static FinalScoreStatus getFinalScoreStatusFor(Game game) {
-//        System.out.println( "getFinalScoreStatusFor(): " + game );
-
-        Map<Boolean, Score> scores = game.getScores();
-
-        if (scores == null) {
-            return FinalScoreStatus.IN_PROGRESS;
-        }
-
-//        System.out.println( "Scores: " + scores );
-
-        Score homeScore = scores.get(Boolean.TRUE);
-        Score awayScore = scores.get(Boolean.FALSE);
-
-//        System.out.println( "Score home: " + homeScore );
-//        System.out.println( "Score away: " + awayScore );
-
-        // scores may be null for games that haven't been played yet
-        int homeFinalScore = homeScore != null && homeScore.getFinalScore() != null ? homeScore.getFinalScore().intValue() : -1;
-        int awayFinalScore = awayScore != null && awayScore.getFinalScore() != null ? awayScore.getFinalScore().intValue() : -1;
-
-        LocalDateTime scheduledTipoff = game.getScheduledTipoff();
-        LocalDateTime actualTipoff = game.getActualTipoff();
-        LocalDateTime tipoff = actualTipoff != null ? actualTipoff : scheduledTipoff;
-
-        return getFinalScoreStatusFor(game.getId().intValue(), homeFinalScore, awayFinalScore, false, tipoff);
-    }
-
-    /**
-     * @param gameId Game ID, mostly for debugging
-     */
-    public static FinalScoreStatus getFinalScoreStatusFor(int gameId, int homeFinalScore, int awayFinalScore, boolean withdrawn, LocalDateTime tipoff) {
-
-        boolean hasFinalScore = homeFinalScore > -1 && awayFinalScore > -1;
-
-        // "now" differs slightly per line instance
-        LocalDateTime now = LocalDateTime.now();
-
-        if (!hasFinalScore) {
-            if (withdrawn) {
-                return NEVER_PLAYED;
-            }
-
-            if (now.isBefore(tipoff)) {
-                // we are before the game has started
-
-                LocalDateTime oneWeekBeforeTipoff = tipoff.minusDays(7);
-
-                if (now.isAfter(oneWeekBeforeTipoff)) {
-                    return PREVIEW;
-                } else {
-                    return FUTURE;
-                }
-            } else {
-                // game was tipped off
-
-                // determine end of game
-                LocalDateTime endOfGame = tipoff.plusHours(2);
-
-                // if now is before game end, the game is in progress
-                if (now.isBefore(endOfGame)) {
-                    return IN_PROGRESS;
-                }
-
-                // not in progress, some state after end of game
-
-                // determine 24 hours after end of game
-                LocalDateTime twentyFourHoursAfterEndOfGame = endOfGame.plusHours(24);
-
-                if (now.isBefore(twentyFourHoursAfterEndOfGame)) {
-                    return PENDING;
-                } else {
-                    return SCORE_OVERDUE;
-                }
-            }
-        }
-
-        // game was played and entered... means either regular score or formal decision (score of 0:20, 20:0, or 0:0)
-        if (homeFinalScore == 0 && awayFinalScore == 0 ||
-                homeFinalScore == 20 && awayFinalScore == 0 ||
-                homeFinalScore == 0 && awayFinalScore == 20) {
-            return RATED;
-        }
-
-        return PLAYED;
-    }
-
     public static String getPlayerStatLabelFor(PlayerStat playerStat) {
         TeamMember teamMember = playerStat.getTeamMember();
         Player player = teamMember.getPlayer();
-        String playerLabel = NamingUtils.getFormalPersonNameFor(player);
+        String playerLabel = NamingUtil.getFormalPersonNameFor(player);
 
         return playerLabel;
     }
