@@ -22,6 +22,25 @@ import java.util.Objects;
 
 public abstract class NamingUtil {
 
+    public static final String NEGATIVE_NUMBER_MESSAGE = "Number is negative!";
+
+    public static String convertToEnglishOrdinalStringFor(int number) {
+        if (number < 0) {
+            throw new IllegalArgumentException(NEGATIVE_NUMBER_MESSAGE);
+        }
+
+        String[] suffixes = new String[] {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
+
+        switch (number % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return number + "th";
+            default:
+                return number + suffixes[number % 10];
+        }
+    }
+
     public static String getSeasonLabelFor(Season season) {
         return getSeasonLabelForStartYear(season.getStartYear().intValue());
     }
@@ -37,23 +56,6 @@ public abstract class NamingUtil {
         return startYear + "/" + Integer.valueOf(startYear + 1).toString().substring(2);
     }
 
-    public static String englishOrdinalStringFor(int number) {
-        if (number < 0) {
-            throw new IllegalArgumentException("Number is negative!");
-        }
-
-        String[] suffixes = new String[] {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
-
-        switch (number % 100) {
-            case 11:
-            case 12:
-            case 13:
-                return number + "th";
-            default:
-                return number + suffixes[number % 10];
-        }
-    }
-
     public static String localeOrdinalFor(int number, String localeString) {
         if (number <= 0) {
             return number + "th";
@@ -63,7 +65,7 @@ public abstract class NamingUtil {
 
         switch (localeString) {
             case "en_US":
-                ordinal = NamingUtil.englishOrdinalStringFor(number);
+                ordinal = NamingUtil.convertToEnglishOrdinalStringFor(number);
                 break;
 
             case "de_DE":

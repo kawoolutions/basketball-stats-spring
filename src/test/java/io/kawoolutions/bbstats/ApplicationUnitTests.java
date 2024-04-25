@@ -13,15 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ApplicationUnitTests {
 
     @Nested
-    class GameUtilTests {
+    class NamingUtilTests {
 
         @Test
         @DisplayName("Test English number strings 1st, 2nd, 3rd, 4th, 100th, 101st, 102nd, 103rd, 104th, ...")
-        public void testEnglishNumberStrings() {
+        public void givenWholeNumber_whenConvertingToEnglishNumberString_thenVerifyCorrectness() {
 
             // given
-            int minusOne = -1;
-
             int zero = 0;
             int one = 1;
             int two = 2;
@@ -43,29 +41,27 @@ class ApplicationUnitTests {
             int oneHundredFourteen = 114;
 
             // when
-            Exception minusOneException = assertThrows(IllegalArgumentException.class, () -> NamingUtil.englishOrdinalStringFor(minusOne));
-            String zeroth = NamingUtil.englishOrdinalStringFor(zero);
-            String first = NamingUtil.englishOrdinalStringFor(one);
-            String second = NamingUtil.englishOrdinalStringFor(two);
-            String third = NamingUtil.englishOrdinalStringFor(three);
-            String fourth = NamingUtil.englishOrdinalStringFor(four);
-            String eleventh = NamingUtil.englishOrdinalStringFor(eleven);
-            String twelfth = NamingUtil.englishOrdinalStringFor(twelve);
-            String thirteenth = NamingUtil.englishOrdinalStringFor(thirteen);
-            String fourteenth = NamingUtil.englishOrdinalStringFor(fourteen);
+            String zeroth = NamingUtil.convertToEnglishOrdinalStringFor(zero);
+            String first = NamingUtil.convertToEnglishOrdinalStringFor(one);
+            String second = NamingUtil.convertToEnglishOrdinalStringFor(two);
+            String third = NamingUtil.convertToEnglishOrdinalStringFor(three);
+            String fourth = NamingUtil.convertToEnglishOrdinalStringFor(four);
+            String eleventh = NamingUtil.convertToEnglishOrdinalStringFor(eleven);
+            String twelfth = NamingUtil.convertToEnglishOrdinalStringFor(twelve);
+            String thirteenth = NamingUtil.convertToEnglishOrdinalStringFor(thirteen);
+            String fourteenth = NamingUtil.convertToEnglishOrdinalStringFor(fourteen);
 
-            String oneHundredth = NamingUtil.englishOrdinalStringFor(oneHundred);
-            String oneHundredFirst = NamingUtil.englishOrdinalStringFor(oneHundredOne);
-            String oneHundredSecond = NamingUtil.englishOrdinalStringFor(oneHundredTwo);
-            String oneHundredThird = NamingUtil.englishOrdinalStringFor(oneHundredThree);
-            String oneHundredFourth = NamingUtil.englishOrdinalStringFor(oneHundredFour);
-            String oneHundredEleventh = NamingUtil.englishOrdinalStringFor(oneHundredEleven);
-            String oneHundredTwelfth = NamingUtil.englishOrdinalStringFor(oneHundredTwelve);
-            String oneHundredThirteenth = NamingUtil.englishOrdinalStringFor(oneHundredThirteen);
-            String oneHundredFourteenth = NamingUtil.englishOrdinalStringFor(oneHundredFourteen);
+            String oneHundredth = NamingUtil.convertToEnglishOrdinalStringFor(oneHundred);
+            String oneHundredFirst = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredOne);
+            String oneHundredSecond = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredTwo);
+            String oneHundredThird = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredThree);
+            String oneHundredFourth = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredFour);
+            String oneHundredEleventh = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredEleven);
+            String oneHundredTwelfth = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredTwelve);
+            String oneHundredThirteenth = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredThirteen);
+            String oneHundredFourteenth = NamingUtil.convertToEnglishOrdinalStringFor(oneHundredFourteen);
 
             // then
-            assertEquals("Number is negative!", minusOneException.getMessage()); // https://stackoverflow.com/a/46514550/396732
             assertEquals("0th", zeroth);
             assertEquals("1st", first);
             assertEquals("2nd", second);
@@ -86,10 +82,24 @@ class ApplicationUnitTests {
             assertEquals("113th", oneHundredThirteenth);
             assertEquals("114th", oneHundredFourteenth);
         }
+
+        @Test
+        @DisplayName("Test English number strings for negative numbers")
+        public void givenNegativeNumber_whenConvertingToEnglishNumberString_thenThrowException() {
+
+            // given
+            int minusOne = -1;
+
+            // when
+            Exception minusOneException = assertThrows(IllegalArgumentException.class, () -> NamingUtil.convertToEnglishOrdinalStringFor(minusOne));
+
+            // then
+            assertEquals(NamingUtil.NEGATIVE_NUMBER_MESSAGE, minusOneException.getMessage()); // https://stackoverflow.com/a/46514550/396732
+        }
     }
 
     @Nested
-    class NamingUtilTests {
+    class GameUtilTests {
 
     }
 }
