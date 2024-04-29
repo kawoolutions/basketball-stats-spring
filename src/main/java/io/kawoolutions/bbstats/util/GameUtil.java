@@ -16,7 +16,10 @@ import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PREVIEW;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.RATED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.SCORE_OVERDUE;
 
-public abstract class GameUtil {
+public final class GameUtil {
+
+    private GameUtil() {
+    }
 
     public static FinalScoreStatus getFinalScoreStatusFor(Game game) {
 //        System.out.println( "getFinalScoreStatusFor(): " + game );

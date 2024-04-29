@@ -20,25 +20,22 @@ import io.kawoolutions.bbstats.entity.TeamTypeGender;
 
 import java.util.Objects;
 
-public abstract class NamingUtil {
+public final class NamingUtil {
 
-    public static final String NEGATIVE_NUMBER_MESSAGE = "Number is negative!";
+    private NamingUtil() {
+    }
 
     public static String convertToEnglishOrdinalStringFor(int number) {
         if (number < 0) {
-            throw new IllegalArgumentException(NEGATIVE_NUMBER_MESSAGE);
+            throw new IllegalArgumentException("Number is negative!");
         }
 
         String[] suffixes = new String[] {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
 
-        switch (number % 100) {
-            case 11:
-            case 12:
-            case 13:
-                return number + "th";
-            default:
-                return number + suffixes[number % 10];
-        }
+        return switch (number % 100) {
+            case 11, 12, 13 -> number + "th";
+            default -> number + suffixes[number % 10];
+        };
     }
 
     public static String getSeasonLabelFor(Season season) {
@@ -57,26 +54,11 @@ public abstract class NamingUtil {
     }
 
     public static String localeOrdinalFor(int number, String localeString) {
-        if (number <= 0) {
-            return number + "th";
-        }
-
-        String ordinal = null;
-
-        switch (localeString) {
-            case "en_US":
-                ordinal = NamingUtil.convertToEnglishOrdinalStringFor(number);
-                break;
-
-            case "de_DE":
-                ordinal = number + ".";
-                break;
-
-            default:
-                throw new RuntimeException("Unsupported locale: " + localeString);
-        }
-
-        return ordinal;
+        return switch (localeString) {
+            case "en_US" -> NamingUtil.convertToEnglishOrdinalStringFor(number);
+            case "de_DE" -> number + ".";
+            default -> throw new RuntimeException("Unsupported locale: " + localeString);
+        };
     }
 
     public static String getClubLabelFor(Club club) {
