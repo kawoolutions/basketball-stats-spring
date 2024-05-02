@@ -26,8 +26,9 @@ public class GameLog extends BaseEntity<GameLogId>
     private Integer gameId;
 
     @Id
-    @Column(name = "is_home")
-    private Boolean home;
+    @Column(name = "score_home_away")
+    @Enumerated(EnumType.STRING)
+    private HomeAway scoreHomeAway;
 
     @Id
     @Column(name = "player_id")
@@ -176,17 +177,17 @@ public class GameLog extends BaseEntity<GameLogId>
 
     public GameLog(GameLog g)
     {
-        this(g.getGameId(), g.getHome(), g.getPlayerId(), g.getRosterId(), g.getSeasonStartYear(), g.getTipoff(), g.getScheduledTipoff(), g.getGameMatchdayNbr(), g.getGameOfficialNbr(), g.getClubName(), g.getClubCode(), g.getTeamOrdinalNbr(), g.getFinalScore(), g.getOpponentRosterId(), g.getOpponentClubName(), g.getOpponentClubCode(), g.getOpponentTeamOrdinalNbr(), g.getOpponentFinalScore(), g.getRoundId(), g.getGroupCode(), g.getCompetitionType(), g.getInvalid(), g.getWithdrawn(), g.getLastName(), g.getFirstName(), g.getIncognito(), g.getJerseyNbr(), g.getHasPlayed(), g.getStarter(), g.getFieldGoalsMade(), g.getTwoPointersMade(), g.getThreePointersMade(), g.getFreeThrowsMade(), g.getFreeThrowsAttempted(), g.getFreeThrowPercentage(), g.getPersonalFouls(), g.getPoints());
+        this(g.getGameId(), g.getScoreHomeAway(), g.getPlayerId(), g.getRosterId(), g.getSeasonStartYear(), g.getTipoff(), g.getScheduledTipoff(), g.getGameMatchdayNbr(), g.getGameOfficialNbr(), g.getClubName(), g.getClubCode(), g.getTeamOrdinalNbr(), g.getFinalScore(), g.getOpponentRosterId(), g.getOpponentClubName(), g.getOpponentClubCode(), g.getOpponentTeamOrdinalNbr(), g.getOpponentFinalScore(), g.getRoundId(), g.getGroupCode(), g.getCompetitionType(), g.getInvalid(), g.getWithdrawn(), g.getLastName(), g.getFirstName(), g.getIncognito(), g.getJerseyNbr(), g.getHasPlayed(), g.getStarter(), g.getFieldGoalsMade(), g.getTwoPointersMade(), g.getThreePointersMade(), g.getFreeThrowsMade(), g.getFreeThrowsAttempted(), g.getFreeThrowPercentage(), g.getPersonalFouls(), g.getPoints());
     }
 
-    public GameLog(Integer gameId, Boolean home, Integer playerId, Integer rosterId)
+    public GameLog(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId)
     {
-        this(gameId, home, playerId, rosterId, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this(gameId, scoreHomeAway, playerId, rosterId, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-    public GameLog(Integer gameId, Boolean home, Integer playerId, Integer rosterId, Integer seasonStartYear, LocalDateTime tipoff, LocalDateTime scheduledTipoff, String clubName, String clubCode, Integer teamOrdinalNbr, Integer finalScore, Integer opponentRosterId, String opponentClubName, String opponentClubCode, Integer opponentTeamOrdinalNbr, Integer opponentFinalScore, Integer roundId, String groupCode, CompetitionType competitionType, Boolean invalid, Boolean withdrawn, String lastName, String firstName, Boolean incognito, Integer jerseyNbr, Boolean hasPlayed, Integer fieldGoalsMade, Integer twoPointersMade, Integer threePointersMade, Integer freeThrowsMade, Integer freeThrowsAttempted, Integer personalFouls, Integer points)
+    public GameLog(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId, Integer seasonStartYear, LocalDateTime tipoff, LocalDateTime scheduledTipoff, String clubName, String clubCode, Integer teamOrdinalNbr, Integer finalScore, Integer opponentRosterId, String opponentClubName, String opponentClubCode, Integer opponentTeamOrdinalNbr, Integer opponentFinalScore, Integer roundId, String groupCode, CompetitionType competitionType, Boolean invalid, Boolean withdrawn, String lastName, String firstName, Boolean incognito, Integer jerseyNbr, Boolean hasPlayed, Integer fieldGoalsMade, Integer twoPointersMade, Integer threePointersMade, Integer freeThrowsMade, Integer freeThrowsAttempted, Integer personalFouls, Integer points)
     {
-        this(gameId, home, playerId, rosterId, seasonStartYear, tipoff, scheduledTipoff, null, null, clubName, clubCode, teamOrdinalNbr, finalScore, opponentRosterId, opponentClubName, opponentClubCode, opponentTeamOrdinalNbr, opponentFinalScore, roundId, groupCode, competitionType, invalid, withdrawn, lastName, firstName, incognito, jerseyNbr, hasPlayed, null, fieldGoalsMade, twoPointersMade, threePointersMade, freeThrowsMade, freeThrowsAttempted, null, personalFouls, points);
+        this(gameId, scoreHomeAway, playerId, rosterId, seasonStartYear, tipoff, scheduledTipoff, null, null, clubName, clubCode, teamOrdinalNbr, finalScore, opponentRosterId, opponentClubName, opponentClubCode, opponentTeamOrdinalNbr, opponentFinalScore, roundId, groupCode, competitionType, invalid, withdrawn, lastName, firstName, incognito, jerseyNbr, hasPlayed, null, fieldGoalsMade, twoPointersMade, threePointersMade, freeThrowsMade, freeThrowsAttempted, null, personalFouls, points);
     }
 
     public GameLog(Integer seasonStartYear, LocalDateTime tipoff, LocalDateTime scheduledTipoff, Integer gameMatchdayNbr, String gameOfficialNbr, String clubName, String clubCode, Integer teamOrdinalNbr, Integer finalScore, Integer opponentRosterId, String opponentClubName, String opponentClubCode, Integer opponentTeamOrdinalNbr, Integer opponentFinalScore, Integer roundId, String groupCode, CompetitionType competitionType, Boolean invalid, Boolean withdrawn, String lastName, String firstName, Boolean incognito, Integer jerseyNbr, Boolean hasPlayed, Boolean starter, Integer fieldGoalsMade, Integer twoPointersMade, Integer threePointersMade, Integer freeThrowsMade, Integer freeThrowsAttempted, Double freeThrowPercentage, Integer personalFouls, Integer points)
@@ -194,10 +195,10 @@ public class GameLog extends BaseEntity<GameLogId>
         this(null, null, null, null, seasonStartYear, tipoff, scheduledTipoff, gameMatchdayNbr, gameOfficialNbr, clubName, clubCode, teamOrdinalNbr, finalScore, opponentRosterId, opponentClubName, opponentClubCode, opponentTeamOrdinalNbr, opponentFinalScore, roundId, groupCode, competitionType, invalid, withdrawn, lastName, firstName, incognito, jerseyNbr, hasPlayed, starter, fieldGoalsMade, twoPointersMade, threePointersMade, freeThrowsMade, freeThrowsAttempted, freeThrowPercentage, personalFouls, points);
     }
 
-    public GameLog(Integer gameId, Boolean home, Integer playerId, Integer rosterId, Integer seasonStartYear, LocalDateTime tipoff, LocalDateTime scheduledTipoff, Integer gameMatchdayNbr, String gameOfficialNbr, String clubName, String clubCode, Integer teamOrdinalNbr, Integer finalScore, Integer opponentRosterId, String opponentClubName, String opponentClubCode, Integer opponentTeamOrdinalNbr, Integer opponentFinalScore, Integer roundId, String groupCode, CompetitionType competitionType, Boolean invalid, Boolean withdrawn, String lastName, String firstName, Boolean incognito, Integer jerseyNbr, Boolean hasPlayed, Boolean starter, Integer fieldGoalsMade, Integer twoPointersMade, Integer threePointersMade, Integer freeThrowsMade, Integer freeThrowsAttempted, Double freeThrowPercentage, Integer personalFouls, Integer points)
+    public GameLog(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId, Integer seasonStartYear, LocalDateTime tipoff, LocalDateTime scheduledTipoff, Integer gameMatchdayNbr, String gameOfficialNbr, String clubName, String clubCode, Integer teamOrdinalNbr, Integer finalScore, Integer opponentRosterId, String opponentClubName, String opponentClubCode, Integer opponentTeamOrdinalNbr, Integer opponentFinalScore, Integer roundId, String groupCode, CompetitionType competitionType, Boolean invalid, Boolean withdrawn, String lastName, String firstName, Boolean incognito, Integer jerseyNbr, Boolean hasPlayed, Boolean starter, Integer fieldGoalsMade, Integer twoPointersMade, Integer threePointersMade, Integer freeThrowsMade, Integer freeThrowsAttempted, Double freeThrowPercentage, Integer personalFouls, Integer points)
     {
         this.gameId = Objects.requireNonNull(gameId);
-        this.home = Objects.requireNonNull(home);
+        this.scoreHomeAway = Objects.requireNonNull(scoreHomeAway);
         this.playerId = Objects.requireNonNull(playerId);
         this.rosterId = Objects.requireNonNull(rosterId);
         this.seasonStartYear = seasonStartYear;
@@ -238,14 +239,14 @@ public class GameLog extends BaseEntity<GameLogId>
     @Override
     public GameLogId getPk()
     {
-        return new GameLogId(gameId, home, playerId, rosterId);
+        return new GameLogId(gameId, scoreHomeAway, playerId, rosterId);
     }
 
     @Override
     public void setPk(GameLogId pk)
     {
         this.gameId = pk.getGameId();
-        this.home = pk.getHome();
+        this.scoreHomeAway = pk.getScoreHomeAway();
         this.playerId = pk.getPlayerId();
         this.rosterId = pk.getRosterId();
     }
@@ -255,9 +256,9 @@ public class GameLog extends BaseEntity<GameLogId>
         return gameId;
     }
 
-    public Boolean getHome()
+    public HomeAway getScoreHomeAway()
     {
-        return home;
+        return scoreHomeAway;
     }
 
     public Integer getPlayerId()
@@ -441,9 +442,9 @@ public class GameLog extends BaseEntity<GameLogId>
         final int prime = 31;
         int result = 1;
         result = prime * result + ( (gameId == null) ? 0 : gameId.hashCode() );
-        result = prime * result + ( (home == null) ? 0 : home.hashCode() );
         result = prime * result + ( (playerId == null) ? 0 : playerId.hashCode() );
         result = prime * result + ( (rosterId == null) ? 0 : rosterId.hashCode() );
+        result = prime * result + ( (scoreHomeAway == null) ? 0 : scoreHomeAway.hashCode() );
         return result;
     }
 
@@ -464,13 +465,6 @@ public class GameLog extends BaseEntity<GameLogId>
         }
         else if ( !gameId.equals( other.gameId ) )
             return false;
-        if ( home == null )
-        {
-            if ( other.home != null )
-                return false;
-        }
-        else if ( !home.equals( other.home ) )
-            return false;
         if ( playerId == null )
         {
             if ( other.playerId != null )
@@ -485,12 +479,14 @@ public class GameLog extends BaseEntity<GameLogId>
         }
         else if ( !rosterId.equals( other.rosterId ) )
             return false;
+        if ( scoreHomeAway != other.scoreHomeAway )
+            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + gameId + ", " + home + ", " + playerId + ", " + rosterId + ", " + seasonStartYear + ", " + tipoff + ", " + scheduledTipoff + ", " + gameMatchdayNbr + ", " + gameOfficialNbr + ", " + clubName + ", " + clubCode + ", " + teamOrdinalNbr + ", " + finalScore + ", " + opponentRosterId + ", " + opponentClubName + ", " + opponentClubCode + ", " + opponentTeamOrdinalNbr + ", " + opponentFinalScore + ", " + roundId + ", " + groupCode + ", " + competitionType + ", " + invalid + ", " + withdrawn + ", " + lastName + ", " + firstName + ", " + incognito + ", " + jerseyNbr + ", " + hasPlayed + ", " + starter + ", " + fieldGoalsMade + ", " + twoPointersMade + ", " + threePointersMade + ", " + freeThrowsMade + ", " + freeThrowsAttempted + ", " + freeThrowPercentage + ", " + personalFouls + ", " + points + "]";
+        return "[" + gameId + ", " + scoreHomeAway + ", " + playerId + ", " + rosterId + ", " + seasonStartYear + ", " + tipoff + ", " + scheduledTipoff + ", " + gameMatchdayNbr + ", " + gameOfficialNbr + ", " + clubName + ", " + clubCode + ", " + teamOrdinalNbr + ", " + finalScore + ", " + opponentRosterId + ", " + opponentClubName + ", " + opponentClubCode + ", " + opponentTeamOrdinalNbr + ", " + opponentFinalScore + ", " + roundId + ", " + groupCode + ", " + competitionType + ", " + invalid + ", " + withdrawn + ", " + lastName + ", " + firstName + ", " + incognito + ", " + jerseyNbr + ", " + hasPlayed + ", " + starter + ", " + fieldGoalsMade + ", " + twoPointersMade + ", " + threePointersMade + ", " + freeThrowsMade + ", " + freeThrowsAttempted + ", " + freeThrowPercentage + ", " + personalFouls + ", " + points + "]";
     }
 }

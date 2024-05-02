@@ -10,7 +10,7 @@
             FROM Game ga
               JOIN ga.scores sc
             WHERE ga.id = :gameId
-            ORDER BY sc.home DESC
+            ORDER BY sc.homeAway DESC
         </query>
     </named-query>
     
@@ -19,7 +19,7 @@
             SELECT NEW io.kawoolutions.bbstats.dto.TimelineDto(
               cl.name,
               te.ordinalNbr,
-              sc.home,
+              sc.homeAway,
               SUM(q1.pts),
               SUM(q2.pts),
               SUM(q3.pts),
@@ -39,8 +39,8 @@
               AND (q3.period = 3 OR q3.period IS NULL)
               AND (q4.period = 4 OR q4.period IS NULL)
               AND sc.game.id = :gameId
-            GROUP BY sc.home
-            ORDER BY sc.home DESC
+            GROUP BY sc.homeAway
+            ORDER BY sc.homeAway DESC
         </query>
     </named-query>
     
@@ -62,7 +62,7 @@
               gl.points
             )
             FROM GameLog gl
-            WHERE gl.gameId = :gameId AND gl.home = :home
+            WHERE gl.gameId = :gameId AND gl.scoreHomeAway = :homeAway
             GROUP BY gl.playerId
             ORDER BY gl.starter DESC, gl.jerseyNbr
         </query>
@@ -78,8 +78,8 @@
               SUM(gl.points)
             )
             FROM GameLog gl
-            WHERE gl.gameId = :gameId AND gl.home = :home
-            GROUP BY gl.home
+            WHERE gl.gameId = :gameId AND gl.homeAway = :homeAway
+            GROUP BY gl.homeAway
         </query>
     </named-query>
     

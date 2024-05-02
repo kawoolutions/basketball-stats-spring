@@ -51,9 +51,9 @@
               JOIN roa.team tea
               JOIN teh.club clh
               JOIN tea.club cla
-            WHERE sch.home = TRUE
+            WHERE sch.homeAway = 'HOME'
               AND sch.roster.id = ro.id
-              AND sca.home = FALSE
+              AND sca.homeAway = 'AWAY'
               AND sca.roster.id <> ro.id
               AND rd.id = :roundId
               AND gl.code = :groupCode
@@ -110,9 +110,9 @@
               JOIN roa.team tea
               JOIN teh.club clh
               JOIN tea.club cla
-            WHERE sch.home = TRUE
+            WHERE sch.homeAwy = 'HOME'
               AND sch.roster.id = ro.id
-              AND sca.home = FALSE
+              AND sca.homeAway = 'AWAY'
               AND sca.roster.id <> ro.id
               AND (sch.roster.id = :rosterId OR sca.roster.id = :rosterId)
               AND cm.type = :competitionType

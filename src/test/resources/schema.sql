@@ -341,8 +341,8 @@ CREATE TABLE IF NOT EXISTS CompetitionLabels (
   code VARCHAR(6) NULL DEFAULT NULL,
   PRIMARY KEY (geo_context_id, team_type_code, competition_type, competition_level, season_start_year),
   CONSTRAINT competitionlabels_competitions_fk
-    FOREIGN KEY (geo_context_id , team_type_code , competition_type , competition_level)
-    REFERENCES Competitions (geo_context_id , team_type_code , type , level)
+    FOREIGN KEY (geo_context_id, team_type_code, competition_type, competition_level)
+    REFERENCES Competitions (geo_context_id, team_type_code, type, level)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
@@ -367,8 +367,8 @@ CREATE TABLE IF NOT EXISTS Rounds (
   nbr VARCHAR(10) NULL,
   PRIMARY KEY (id),
   CONSTRAINT rounds_competitions_fk
-    FOREIGN KEY (geo_context_id , team_type_code , competition_type , competition_level)
-    REFERENCES Competitions (geo_context_id , team_type_code , type , level)
+    FOREIGN KEY (geo_context_id, team_type_code, competition_type, competition_level)
+    REFERENCES Competitions (geo_context_id, team_type_code, type, level)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT rounds_seasons_fk
@@ -422,8 +422,8 @@ CREATE TABLE IF NOT EXISTS Rosters (
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT rosters_teams_fk
-    FOREIGN KEY (club_id , team_type_code , team_ordinal_nbr)
-    REFERENCES Teams (club_id , team_type_code , ordinal_nbr)
+    FOREIGN KEY (club_id, team_type_code, team_ordinal_nbr)
+    REFERENCES Teams (club_id, team_type_code, ordinal_nbr)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT rosters_primary_jersey_colors_fk
@@ -547,8 +547,8 @@ CREATE TABLE IF NOT EXISTS GroupMembers (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT groupmembers_groups_fk
-    FOREIGN KEY (round_id , group_code)
-    REFERENCES Groups (round_id , code)
+    FOREIGN KEY (round_id, group_code)
+    REFERENCES Groups (round_id, code)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
@@ -579,8 +579,8 @@ CREATE TABLE IF NOT EXISTS Games (
     ON DELETE SET NULL
     ON UPDATE CASCADE,
   CONSTRAINT games_groups_fk
-    FOREIGN KEY (round_id , group_code)
-    REFERENCES Groups (round_id , code)
+    FOREIGN KEY (round_id, group_code)
+    REFERENCES Groups (round_id, code)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
@@ -589,10 +589,10 @@ CREATE TABLE IF NOT EXISTS Games (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Scores (
   game_id INT NOT NULL,
-  is_home BOOLEAN NOT NULL,
+  home_away ENUM('HOME', 'AWAY') NOT NULL,
   roster_id INT NOT NULL,
   final_score SMALLINT NULL DEFAULT NULL,
-  PRIMARY KEY (game_id, is_home),
+  PRIMARY KEY (game_id, home_away),
   CONSTRAINT scores_games_fk
     FOREIGN KEY (game_id)
     REFERENCES Games (id)
@@ -609,23 +609,23 @@ CREATE TABLE IF NOT EXISTS Scores (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS PlayerStats (
   game_id INT NOT NULL,
-  is_home BOOLEAN NOT NULL,
+  score_home_away ENUM('HOME', 'AWAY') NOT NULL,
   player_id INT NOT NULL,
   roster_id INT NOT NULL,
   jersey_nbr TINYINT NOT NULL,
   has_played BOOLEAN NOT NULL DEFAULT TRUE,
   is_starter BOOLEAN NULL DEFAULT NULL,
   pf TINYINT NOT NULL,
-  PRIMARY KEY (game_id, is_home, player_id, roster_id),
-  CONSTRAINT playerstats_multi_uq UNIQUE (game_id ASC, is_home ASC, jersey_nbr ASC),
+  PRIMARY KEY (game_id, score_home_away, player_id, roster_id),
+  CONSTRAINT playerstats_multi_uq UNIQUE (game_id ASC, score_home_away ASC, jersey_nbr ASC),
   CONSTRAINT playerstats_scores_fk
-    FOREIGN KEY (game_id , is_home)
-    REFERENCES Scores (game_id , is_home)
+    FOREIGN KEY (game_id, score_home_away)
+    REFERENCES Scores (game_id, home_away)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT playerstats_teammembers_fk
-    FOREIGN KEY (player_id , roster_id)
-    REFERENCES TeamMembers (player_id , roster_id)
+    FOREIGN KEY (player_id, roster_id)
+    REFERENCES TeamMembers (player_id, roster_id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
@@ -634,7 +634,7 @@ CREATE TABLE IF NOT EXISTS PlayerStats (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Stats (
   game_id INT NOT NULL,
-  is_home BOOLEAN NOT NULL,
+  score_home_away ENUM('HOME', 'AWAY') NOT NULL,
   player_id INT NOT NULL,
   roster_id INT NOT NULL,
   "period" TINYINT NOT NULL,
@@ -642,10 +642,10 @@ CREATE TABLE IF NOT EXISTS Stats (
   ftm TINYINT NOT NULL,
   fta TINYINT NOT NULL,
   pts TINYINT NOT NULL,
-  PRIMARY KEY (game_id, is_home, "period", player_id, roster_id),
+  PRIMARY KEY (game_id, score_home_away, "period", player_id, roster_id),
   CONSTRAINT stats_playerstats_fk
-    FOREIGN KEY (game_id , is_home , player_id , roster_id)
-    REFERENCES PlayerStats (game_id , is_home , player_id , roster_id)
+    FOREIGN KEY (game_id, score_home_away, player_id, roster_id)
+    REFERENCES PlayerStats (game_id, score_home_away, player_id, roster_id)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 
@@ -671,8 +671,8 @@ CREATE TABLE IF NOT EXISTS Assignments (
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT assignments_refpoolmembers_fk
-    FOREIGN KEY (referee_id , club_id , season_start_year)
-    REFERENCES RefpoolMembers (referee_id , club_id , season_start_year)
+    FOREIGN KEY (referee_id, club_id, season_start_year)
+    REFERENCES RefpoolMembers (referee_id, club_id, season_start_year)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
@@ -705,13 +705,13 @@ CREATE TABLE IF NOT EXISTS GroupLinks (
   child_group_code VARCHAR(6) NOT NULL,
   PRIMARY KEY (parent_round_id, parent_group_code, child_round_id, child_group_code),
   CONSTRAINT grouplinks_parent_groups_fk
-    FOREIGN KEY (parent_round_id , parent_group_code)
-    REFERENCES Groups (round_id , code)
+    FOREIGN KEY (parent_round_id, parent_group_code)
+    REFERENCES Groups (round_id, code)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
   CONSTRAINT grouplinks_child_groups_fk
-    FOREIGN KEY (child_round_id , child_group_code)
-    REFERENCES Groups (round_id , code)
+    FOREIGN KEY (child_round_id, child_group_code)
+    REFERENCES Groups (round_id, code)
     ON DELETE NO ACTION
     ON UPDATE CASCADE);
 

@@ -9,7 +9,7 @@ public class ScoreId implements Serializable
 
     private Integer gameId;
 
-    private Boolean home;
+    private HomeAway homeAway;
 
     public ScoreId()
     {
@@ -17,13 +17,13 @@ public class ScoreId implements Serializable
 
     public ScoreId(ScoreId s)
     {
-        this(s.getGameId(), s.getHome());
+        this(s.getGameId(), s.getHomeAway());
     }
 
-    public ScoreId(Integer gameId, Boolean home)
+    public ScoreId(Integer gameId, HomeAway homeAway)
     {
         this.gameId = Objects.requireNonNull(gameId);
-        this.home = Objects.requireNonNull(home);
+        this.homeAway = Objects.requireNonNull(homeAway);
     }
 
     public Integer getGameId()
@@ -36,14 +36,14 @@ public class ScoreId implements Serializable
         this.gameId = gameId;
     }
 
-    public Boolean getHome()
+    public HomeAway getHomeAway()
     {
-        return home;
+        return homeAway;
     }
 
-    public void setHome(Boolean home)
+    public void setHomeAway(HomeAway homeAway)
     {
-        this.home = home;
+        this.homeAway = homeAway;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ScoreId implements Serializable
         final int prime = 31;
         int result = 1;
         result = prime * result + ( (gameId == null) ? 0 : gameId.hashCode() );
-        result = prime * result + ( (home == null) ? 0 : home.hashCode() );
+        result = prime * result + ( (homeAway == null) ? 0 : homeAway.hashCode() );
         return result;
     }
 
@@ -73,12 +73,7 @@ public class ScoreId implements Serializable
         }
         else if ( !gameId.equals( other.gameId ) )
             return false;
-        if ( home == null )
-        {
-            if ( other.home != null )
-                return false;
-        }
-        else if ( !home.equals( other.home ) )
+        if ( homeAway != other.homeAway )
             return false;
         return true;
     }
@@ -86,6 +81,6 @@ public class ScoreId implements Serializable
     @Override
     public String toString()
     {
-        return "[" + gameId + ", " + home + "]";
+        return "[" + gameId + ", " + homeAway + "]";
     }
 }

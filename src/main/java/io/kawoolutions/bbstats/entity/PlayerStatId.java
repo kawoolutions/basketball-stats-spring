@@ -9,7 +9,7 @@ public class PlayerStatId implements Serializable
 
     private Integer gameId;
 
-    private Boolean home;
+    private HomeAway scoreHomeAway;
 
     private Integer playerId;
 
@@ -21,13 +21,13 @@ public class PlayerStatId implements Serializable
 
     public PlayerStatId(PlayerStatId p)
     {
-        this(p.getGameId(), p.getHome(), p.getPlayerId(), p.getRosterId());
+        this(p.getGameId(), p.getScoreHomeAway(), p.getPlayerId(), p.getRosterId());
     }
 
-    public PlayerStatId(Integer gameId, Boolean home, Integer playerId, Integer rosterId)
+    public PlayerStatId(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId)
     {
         this.gameId = Objects.requireNonNull(gameId);
-        this.home = Objects.requireNonNull(home);
+        this.scoreHomeAway = Objects.requireNonNull(scoreHomeAway);
         this.playerId = Objects.requireNonNull(playerId);
         this.rosterId = Objects.requireNonNull(rosterId);
     }
@@ -42,14 +42,14 @@ public class PlayerStatId implements Serializable
         this.gameId = gameId;
     }
 
-    public Boolean getHome()
+    public HomeAway getScoreHomeAway()
     {
-        return home;
+        return scoreHomeAway;
     }
 
-    public void setHome(Boolean home)
+    public void setScoreHomeAway(HomeAway scoreHomeAway)
     {
-        this.home = home;
+        this.scoreHomeAway = scoreHomeAway;
     }
 
     public Integer getPlayerId()
@@ -78,9 +78,9 @@ public class PlayerStatId implements Serializable
         final int prime = 31;
         int result = 1;
         result = prime * result + ( (gameId == null) ? 0 : gameId.hashCode() );
-        result = prime * result + ( (home == null) ? 0 : home.hashCode() );
         result = prime * result + ( (playerId == null) ? 0 : playerId.hashCode() );
         result = prime * result + ( (rosterId == null) ? 0 : rosterId.hashCode() );
+        result = prime * result + ( (scoreHomeAway == null) ? 0 : scoreHomeAway.hashCode() );
         return result;
     }
 
@@ -101,13 +101,6 @@ public class PlayerStatId implements Serializable
         }
         else if ( !gameId.equals( other.gameId ) )
             return false;
-        if ( home == null )
-        {
-            if ( other.home != null )
-                return false;
-        }
-        else if ( !home.equals( other.home ) )
-            return false;
         if ( playerId == null )
         {
             if ( other.playerId != null )
@@ -122,12 +115,14 @@ public class PlayerStatId implements Serializable
         }
         else if ( !rosterId.equals( other.rosterId ) )
             return false;
+        if ( scoreHomeAway != other.scoreHomeAway )
+            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + gameId + ", " + home + ", " + playerId + ", " + rosterId + "]";
+        return "[" + gameId + ", " + scoreHomeAway + ", " + playerId + ", " + rosterId + "]";
     }
 }

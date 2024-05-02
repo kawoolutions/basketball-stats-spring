@@ -36,8 +36,8 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
     private Integer gameId;
 
     @Id
-    @Column(name = "is_home")
-    private Boolean home;
+    @Column(name = "score_home_away")
+    private HomeAway scoreHomeAway;
 
     @Id
     @Column(name = "player_id")
@@ -65,7 +65,7 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id", referencedColumnName = "game_id", insertable = false, updatable = false)
-    @JoinColumn(name = "is_home", referencedColumnName = "is_home", insertable = false, updatable = false)
+    @JoinColumn(name = "score_home_away", referencedColumnName = "home_away", insertable = false, updatable = false)
     @JsonIgnore
     private Score score;
 
@@ -86,7 +86,7 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
 
     public PlayerStat(PlayerStat p)
     {
-        this(p.getGameId(), p.getHome(), p.getPlayerId(), p.getRosterId(), p.getJerseyNbr(), p.getStarter(), p.getPf());
+        this(p.getGameId(), p.getScoreHomeAway(), p.getPlayerId(), p.getRosterId(), p.getJerseyNbr(), p.getStarter(), p.getPf());
 
         this.hasPlayed = p.getHasPlayed();
     }
@@ -96,41 +96,41 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
         this(null, null, null, null, jerseyNbr, starter, pf);
     }
 
-    public PlayerStat(Integer gameId, Boolean home, Integer playerId, Integer rosterId)
+    public PlayerStat(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId)
     {
-        this(gameId, home, playerId, rosterId, null, null);
+        this(gameId, scoreHomeAway, playerId, rosterId, null, null);
     }
 
-    public PlayerStat(Integer gameId, Boolean home, Integer playerId, Integer rosterId, Integer jerseyNbr, Integer pf)
+    public PlayerStat(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId, Integer jerseyNbr, Integer pf)
     {
-        this(gameId, home, playerId, rosterId, jerseyNbr, null, pf);
+        this(gameId, scoreHomeAway, playerId, rosterId, jerseyNbr, null, pf);
     }
 
-    public PlayerStat(Integer gameId, Boolean home, Integer playerId, Integer rosterId, Integer jerseyNbr, Boolean starter, Integer pf)
+    public PlayerStat(Integer gameId, HomeAway scoreHomeAway, Integer playerId, Integer rosterId, Integer jerseyNbr, Boolean starter, Integer pf)
     {
         this.gameId = Objects.requireNonNull(gameId);
-        this.home = Objects.requireNonNull(home);
+        this.scoreHomeAway = Objects.requireNonNull(scoreHomeAway);
         this.playerId = Objects.requireNonNull(playerId);
         this.rosterId = Objects.requireNonNull(rosterId);
         this.jerseyNbr = jerseyNbr;
         this.starter = starter;
         this.pf = pf;
 
-        this.score = new Score(gameId, home);
+        this.score = new Score(gameId, scoreHomeAway);
         this.teamMember = new TeamMember(playerId, rosterId);
     }
 
     @Override
     public PlayerStatId getPk()
     {
-        return new PlayerStatId(gameId, home, playerId, rosterId);
+        return new PlayerStatId(gameId, scoreHomeAway, playerId, rosterId);
     }
 
     @Override
     public void setPk(PlayerStatId pk)
     {
         this.gameId = pk.getGameId();
-        this.home = pk.getHome();
+        this.scoreHomeAway = pk.getScoreHomeAway();
         this.playerId = pk.getPlayerId();
         this.rosterId = pk.getRosterId();
     }
@@ -145,14 +145,14 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
         this.gameId = gameId;
     }
 
-    public Boolean getHome()
+    public HomeAway getScoreHomeAway()
     {
-        return home;
+        return scoreHomeAway;
     }
 
-    public void setHome(Boolean home)
+    public void setScoreHomeAway(HomeAway scoreHomeAway)
     {
-        this.home = home;
+        this.scoreHomeAway = scoreHomeAway;
     }
 
     public Integer getPlayerId()
@@ -251,9 +251,9 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
         final int prime = 31;
         int result = 1;
         result = prime * result + ( (gameId == null) ? 0 : gameId.hashCode() );
-        result = prime * result + ( (home == null) ? 0 : home.hashCode() );
         result = prime * result + ( (playerId == null) ? 0 : playerId.hashCode() );
         result = prime * result + ( (rosterId == null) ? 0 : rosterId.hashCode() );
+        result = prime * result + ( (scoreHomeAway == null) ? 0 : scoreHomeAway.hashCode() );
         return result;
     }
 
@@ -274,13 +274,6 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
         }
         else if ( !gameId.equals( other.gameId ) )
             return false;
-        if ( home == null )
-        {
-            if ( other.home != null )
-                return false;
-        }
-        else if ( !home.equals( other.home ) )
-            return false;
         if ( playerId == null )
         {
             if ( other.playerId != null )
@@ -295,12 +288,14 @@ public class PlayerStat extends BaseEntity<PlayerStatId>
         }
         else if ( !rosterId.equals( other.rosterId ) )
             return false;
+        if ( scoreHomeAway != other.scoreHomeAway )
+            return false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "[" + gameId + ", " + home + ", " + playerId + ", " + rosterId + ", " + jerseyNbr + ", " + hasPlayed + ", " + starter + ", " + pf + "]";
+        return "[" + gameId + ", " + scoreHomeAway + ", " + playerId + ", " + rosterId + ", " + jerseyNbr + ", " + hasPlayed + ", " + starter + ", " + pf + "]";
     }
 }

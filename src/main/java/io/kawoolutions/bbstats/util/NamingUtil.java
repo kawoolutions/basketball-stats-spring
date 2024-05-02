@@ -6,6 +6,7 @@ import io.kawoolutions.bbstats.entity.Competition;
 import io.kawoolutions.bbstats.entity.CompetitionLabel;
 import io.kawoolutions.bbstats.entity.Game;
 import io.kawoolutions.bbstats.entity.Group;
+import io.kawoolutions.bbstats.entity.HomeAway;
 import io.kawoolutions.bbstats.entity.Person;
 import io.kawoolutions.bbstats.entity.Player;
 import io.kawoolutions.bbstats.entity.PlayerStat;
@@ -276,7 +277,7 @@ public final class NamingUtil {
     }
 
     public static String getGameIdentifierFor(Game game) {
-        return getGameIdentifierFor(game.getGroup(), game.getScores().get(Boolean.TRUE), game.getScores().get(Boolean.FALSE));
+        return getGameIdentifierFor(game.getGroup(), game.getScores().get(HomeAway.HOME), game.getScores().get(HomeAway.AWAY));
     }
 
     public static String getGameIdentifierFor(Group group, Score homeScore, Score awayScore) {

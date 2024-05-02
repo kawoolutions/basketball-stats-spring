@@ -5,6 +5,7 @@ import java.util.Map;
 
 import io.kawoolutions.bbstats.dto.FinalScoreStatus;
 import io.kawoolutions.bbstats.entity.Game;
+import io.kawoolutions.bbstats.entity.HomeAway;
 import io.kawoolutions.bbstats.entity.Score;
 
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FUTURE;
@@ -24,7 +25,7 @@ public final class GameUtil {
     public static FinalScoreStatus getFinalScoreStatusFor(Game game) {
 //        System.out.println( "getFinalScoreStatusFor(): " + game );
 
-        Map<Boolean, Score> scores = game.getScores();
+        Map<HomeAway, Score> scores = game.getScores();
 
         if (scores == null) {
             return FinalScoreStatus.IN_PROGRESS;
@@ -32,8 +33,8 @@ public final class GameUtil {
 
 //        System.out.println( "Scores: " + scores );
 
-        Score homeScore = scores.get(Boolean.TRUE);
-        Score awayScore = scores.get(Boolean.FALSE);
+        Score homeScore = scores.get(HomeAway.HOME);
+        Score awayScore = scores.get(HomeAway.AWAY);
 
 //        System.out.println( "Score home: " + homeScore );
 //        System.out.println( "Score away: " + awayScore );

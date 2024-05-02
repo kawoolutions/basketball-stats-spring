@@ -1,13 +1,16 @@
 package io.kawoolutions.bbstats.dto;
 
+import io.kawoolutions.bbstats.entity.HomeAway;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class TimelineDto extends BaseDto {
+
     private static final long serialVersionUID = 1L;
 
     private final String teamName;
-    private final boolean home;
+    private final HomeAway homeAway;
 
     private final Long pointsQ1;
     private final Long pointsQ2;
@@ -34,20 +37,20 @@ public class TimelineDto extends BaseDto {
 //     * @param pointsQ3
 //     * @param pointsQ4
 //     */
-//    public TimelineDto( String clubName, Integer ordinalNumber, boolean home, Integer pointsQ1, Integer pointsQ2, Integer pointsQ3,
+//    public TimelineDto( String clubName, Integer ordinalNumber, HomeAway homeAway, Integer pointsQ1, Integer pointsQ2, Integer pointsQ3,
 //                        Integer pointsQ4 )
 //    {
-//        this( clubName, ordinalNumber, home, ( long ) pointsQ1, ( long ) pointsQ2, ( long ) pointsQ3, ( long ) pointsQ4, null, null, null,
+//        this( clubName, ordinalNumber, homeAway, ( long ) pointsQ1, ( long ) pointsQ2, ( long ) pointsQ3, ( long ) pointsQ4, null, null, null,
 //              null, null, null );
 //    }
 
-    public TimelineDto(String clubName, Integer ordinalNumber, boolean home, Long pointsQ1, Long pointsQ2, Long pointsQ3, Long pointsQ4) {
-        this(clubName, ordinalNumber, home, pointsQ1, pointsQ2, pointsQ3, pointsQ4, null, null, null, null, null, null);
+    public TimelineDto(String clubName, Integer ordinalNumber, HomeAway homeAway, Long pointsQ1, Long pointsQ2, Long pointsQ3, Long pointsQ4) {
+        this(clubName, ordinalNumber, homeAway, pointsQ1, pointsQ2, pointsQ3, pointsQ4, null, null, null, null, null, null);
     }
 
-    public TimelineDto(String clubName, Integer ordinalNumber, boolean home, Long pointsQ1, Long pointsQ2, Long pointsQ3, Long pointsQ4,
+    public TimelineDto(String clubName, Integer ordinalNumber, HomeAway homeAway, Long pointsQ1, Long pointsQ2, Long pointsQ3, Long pointsQ4,
                        Long pointsOT1, Long pointsOT2, Long pointsOT3, Long pointsOT4, Long pointsOT5, Long pointsOT6) {
-        this.home = home;
+        this.homeAway = homeAway;
 
         this.teamName = clubName + " " + ordinalNumber;
 
@@ -87,15 +90,6 @@ public class TimelineDto extends BaseDto {
         total += pointsOT6 != null ? pointsOT6.longValue() : 0;
 
         this.points = total != 0 ? Long.valueOf(total) : null;
-    }
-
-    // line type info
-    public boolean gethome() {
-        return home;
-    }
-
-    public boolean home() {
-        return home;
     }
 
     // team info
@@ -166,6 +160,6 @@ public class TimelineDto extends BaseDto {
     // view line impl
     @Override
     public List<Object> getValues() {
-        return Arrays.asList(teamName, Boolean.valueOf(home), pointsQ1, pointsQ2, pointsQ3, pointsQ4, pointsOT1, pointsOT2, pointsOT3, pointsOT4, pointsOT5, pointsOT6);
+        return Arrays.asList(teamName, homeAway, pointsQ1, pointsQ2, pointsQ3, pointsQ4, pointsOT1, pointsOT2, pointsOT3, pointsOT4, pointsOT5, pointsOT6);
     }
 }

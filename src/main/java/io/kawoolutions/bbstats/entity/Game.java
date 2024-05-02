@@ -8,6 +8,7 @@ import java.util.Objects;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKey;
+import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedQuery;
@@ -133,8 +135,9 @@ public class Game extends BaseIdEntity
     private List<Assignment> assignments;
 
     @OneToMany(mappedBy = "game")
-    @MapKey(name = "home")
-    private Map<Boolean, Score> scores;
+    @MapKey(name = "homeAway")
+    @MapKeyEnumerated(EnumType.STRING)
+    private Map<HomeAway, Score> scores;
 
     public Game()
     {
@@ -349,12 +352,12 @@ public class Game extends BaseIdEntity
         this.assignments = assignments;
     }
 
-    public Map<Boolean, Score> getScores()
+    public Map<HomeAway, Score> getScores()
     {
         return scores;
     }
 
-    public void setScores(Map<Boolean, Score> scores)
+    public void setScores(Map<HomeAway, Score> scores)
     {
         this.scores = scores;
     }

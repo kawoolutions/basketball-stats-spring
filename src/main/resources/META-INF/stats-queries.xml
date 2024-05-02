@@ -190,7 +190,7 @@
         <query>
             SELECT NEW io.kawoolutions.bbstats.entity.GameLog(
               gl.gameId,
-              gl.home,
+              gl.scoreHomeAway,
               gl.playerId,
               gl.rosterId,
               gl.seasonStartYear,

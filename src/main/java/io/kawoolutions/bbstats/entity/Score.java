@@ -6,6 +6,8 @@ import java.util.Objects;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -42,8 +44,9 @@ public class Score extends BaseEntity<ScoreId>
     private Integer gameId;
 
     @Id
-    @Column(name = "is_home")
-    private Boolean home;
+    @Column(name = "home_away")
+    @Enumerated(EnumType.STRING)
+    private HomeAway homeAway;
 
     @Basic
     @Column(name = "final_score")
@@ -71,7 +74,7 @@ public class Score extends BaseEntity<ScoreId>
 
     public Score(Score s)
     {
-        this(s.getGameId(), s.getHome(), s.getRosterId(), s.getFinalScore());
+        this(s.getGameId(), s.getHomeAway(), s.getRosterId(), s.getFinalScore());
     }
 
     public Score(Integer finalScore)
@@ -79,20 +82,20 @@ public class Score extends BaseEntity<ScoreId>
         this(null, null, null, finalScore);
     }
 
-    public Score(Integer gameId, Boolean home)
+    public Score(Integer gameId, HomeAway homeAway)
     {
-        this(gameId, home, null);
+        this(gameId, homeAway, null);
     }
 
-    public Score(Integer gameId, Boolean home, Integer rosterId)
+    public Score(Integer gameId, HomeAway homeAway, Integer rosterId)
     {
-        this(gameId, home, rosterId, null);
+        this(gameId, homeAway, rosterId, null);
     }
 
-    public Score(Integer gameId, Boolean home, Integer rosterId, Integer finalScore)
+    public Score(Integer gameId, HomeAway homeAway, Integer rosterId, Integer finalScore)
     {
         this.gameId = Objects.requireNonNull(gameId);
-        this.home = Objects.requireNonNull(home);
+        this.homeAway = Objects.requireNonNull(homeAway);
         this.finalScore = finalScore;
 
         this.game = new Game();
@@ -105,14 +108,14 @@ public class Score extends BaseEntity<ScoreId>
     @Override
     public ScoreId getPk()
     {
-        return new ScoreId(gameId, home);
+        return new ScoreId(gameId, homeAway);
     }
 
     @Override
     public void setPk(ScoreId pk)
     {
         this.gameId = pk.getGameId();
-        this.home = pk.getHome();
+        this.homeAway = pk.getHomeAway();
     }
 
     public Integer getGameId()
@@ -125,14 +128,14 @@ public class Score extends BaseEntity<ScoreId>
         this.gameId = gameId;
     }
 
-    public Boolean getHome()
+    public HomeAway getHomeAway()
     {
-        return home;
+        return homeAway;
     }
 
-    public void setHome(Boolean home)
+    public void setHomeAway(HomeAway homeAway)
     {
-        this.home = home;
+        this.homeAway = homeAway;
     }
 
     public Integer getRosterId()
@@ -191,7 +194,7 @@ public class Score extends BaseEntity<ScoreId>
         final int prime = 31;
         int result = 1;
         result = prime * result + ( (gameId == null) ? 0 : gameId.hashCode() );
-        result = prime * result + ( (home == null) ? 0 : home.hashCode() );
+        result = prime * result + ( (homeAway == null) ? 0 : homeAway.hashCode() );
         return result;
     }
 
@@ -212,12 +215,7 @@ public class Score extends BaseEntity<ScoreId>
         }
         else if ( !gameId.equals( other.gameId ) )
             return false;
-        if ( home == null )
-        {
-            if ( other.home != null )
-                return false;
-        }
-        else if ( !home.equals( other.home ) )
+        if ( homeAway != other.homeAway )
             return false;
         return true;
     }
@@ -225,6 +223,6 @@ public class Score extends BaseEntity<ScoreId>
     @Override
     public String toString()
     {
-        return "[" + gameId + ", " + home + ", " + finalScore + "]";
+        return "[" + gameId + ", " + homeAway + ", " + finalScore + "]";
     }
 }
