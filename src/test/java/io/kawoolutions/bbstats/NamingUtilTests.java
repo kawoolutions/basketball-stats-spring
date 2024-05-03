@@ -43,13 +43,13 @@ public class NamingUtilTests {
 
     @ParameterizedTest
     @MethodSource("provideWholeNumberPairsForVerification")
-    public void wholeNumberShouldReturnValidNumberString(int number, String expectedNumberString) {
+    public void wholeNumberShouldReturnNumberString(int number, String expectedNumberString) {
         assertEquals(expectedNumberString, NamingUtil.convertToEnglishOrdinalStringFor(number));
     }
 
     @Test
     @DisplayName("Negative number should throw an exception")
-    void negativeNumberShouldThrowAnException() {
+    public void negativeNumberShouldThrowAnException() {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> NamingUtil.convertToEnglishOrdinalStringFor(-1))
             .withMessage("Number is negative!");

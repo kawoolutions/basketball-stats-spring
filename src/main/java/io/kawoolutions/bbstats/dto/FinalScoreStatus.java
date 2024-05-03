@@ -7,6 +7,6 @@ public enum FinalScoreStatus {
     PENDING,
     PLAYED,
     RATED,
-    SCORE_OVERDUE,
+    OVERDUE,
     NEVER_PLAYED
 }

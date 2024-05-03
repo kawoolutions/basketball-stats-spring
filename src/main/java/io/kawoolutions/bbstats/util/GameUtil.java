@@ -15,7 +15,7 @@ import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PENDING;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PREVIEW;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.RATED;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.SCORE_OVERDUE;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.OVERDUE;
 
 public final class GameUtil {
 
@@ -47,23 +47,20 @@ public final class GameUtil {
         LocalDateTime actualTipoff = game.getActualTipoff();
         LocalDateTime tipoff = actualTipoff != null ? actualTipoff : scheduledTipoff;
 
-        return getFinalScoreStatusFor(game.getId().intValue(), homeFinalScore, awayFinalScore, false, tipoff);
+        return getFinalScoreStatusFor(homeFinalScore, awayFinalScore, false, tipoff);
     }
 
-    /**
-     * @param gameId Game ID, mostly for debugging
-     */
-    public static FinalScoreStatus getFinalScoreStatusFor(int gameId, int homeFinalScore, int awayFinalScore, boolean withdrawn, LocalDateTime tipoff) {
+    public static FinalScoreStatus getFinalScoreStatusFor(int homeFinalScore, int awayFinalScore, boolean withdrawn, LocalDateTime tipoff) {
 
         boolean hasFinalScore = homeFinalScore > -1 && awayFinalScore > -1;
-
-        // "now" differs slightly per line instance
-        LocalDateTime now = LocalDateTime.now();
 
         if (!hasFinalScore) {
             if (withdrawn) {
                 return NEVER_PLAYED;
             }
+
+            // "now" differs slightly per call
+            LocalDateTime now = LocalDateTime.now();
 
             if (now.isBefore(tipoff)) {
                 // we are before the game has started
@@ -94,7 +91,7 @@ public final class GameUtil {
                 if (now.isBefore(twentyFourHoursAfterEndOfGame)) {
                     return PENDING;
                 } else {
-                    return SCORE_OVERDUE;
+                    return OVERDUE;
                 }
             }
         }

@@ -253,7 +253,7 @@ public class ScheduleScoreDto extends BaseDto {
     }
 
     public FinalScoreStatus getFinalScoreStatus() {
-        return GameUtil.getFinalScoreStatusFor(gameId.intValue(), homeFinalScore, awayFinalScore, withdrawn, tipoff);
+        return GameUtil.getFinalScoreStatusFor(homeFinalScore, awayFinalScore, withdrawn, tipoff);
     }
 
     public boolean filterBothTeamNames(Object row, Object filter, @SuppressWarnings("unused") Locale locale) {
