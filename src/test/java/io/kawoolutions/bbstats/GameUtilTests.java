@@ -1,17 +1,18 @@
 package io.kawoolutions.bbstats;
 
-import io.kawoolutions.bbstats.dto.FinalScoreStatus;
-import io.kawoolutions.bbstats.util.GameUtil;
+import java.time.LocalDateTime;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.time.LocalDateTime;
-import java.util.stream.Stream;
+import io.kawoolutions.bbstats.dto.FinalScoreStatus;
+import io.kawoolutions.bbstats.util.GameUtil;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GameUtilTests {
 
@@ -20,7 +21,10 @@ public class GameUtilTests {
         // no final scores, not withdrawn, tipoff is clearly in the future
         LocalDateTime tipoff = LocalDateTime.now().plusDays(8);
 
-        assertEquals(FinalScoreStatus.FUTURE, GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
+
+        assertEquals(FinalScoreStatus.FUTURE, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.FUTURE);
     }
 
     @Test
@@ -28,7 +32,10 @@ public class GameUtilTests {
         // no final scores, not withdrawn, tipoff is within 7 days in the future
         LocalDateTime tipoff = LocalDateTime.now().plusDays(6);
 
-        assertEquals(FinalScoreStatus.PREVIEW, GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
+
+        assertEquals(FinalScoreStatus.PREVIEW, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.PREVIEW);
     }
 
     @Test
@@ -36,7 +43,10 @@ public class GameUtilTests {
         // no final scores, not withdrawn, tipoff was exactly 1 hour ago
         LocalDateTime tipoff = LocalDateTime.now().minusHours(1);
 
-        assertEquals(FinalScoreStatus.IN_PROGRESS, GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
+
+        assertEquals(FinalScoreStatus.IN_PROGRESS, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.IN_PROGRESS);
     }
 
     @Test
@@ -44,7 +54,10 @@ public class GameUtilTests {
         // final scores (not being 0:0, 20:0 or 0:20), not withdrawn, tipoff is at least 2 hours in the past
         LocalDateTime tipoff = LocalDateTime.now().minusHours(2);
 
-        assertEquals(FinalScoreStatus.REGULARLY_PLAYED, GameUtil.getFinalScoreStatusFor(70, 60, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(70, 60, false, tipoff);
+
+        assertEquals(FinalScoreStatus.REGULARLY_PLAYED, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.REGULARLY_PLAYED);
     }
 
     public static Stream<Arguments> provideRatedPairs() {
@@ -61,7 +74,10 @@ public class GameUtilTests {
         // final scores (being 0:0, 20:0 or 0:20), not withdrawn, tipoff is at least 2 hours in the past
         LocalDateTime tipoff = LocalDateTime.now().minusHours(2);
 
-        assertEquals(FinalScoreStatus.FORMALLY_RATED, GameUtil.getFinalScoreStatusFor(homeFinalScore, awayFinalScore, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(homeFinalScore, awayFinalScore, false, tipoff);
+
+        assertEquals(FinalScoreStatus.FORMALLY_RATED, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.FORMALLY_RATED);
     }
 
     @Test
@@ -69,7 +85,10 @@ public class GameUtilTests {
         // no final scores, not withdrawn, tipoff was exactly 20 hours ago
         LocalDateTime tipoff = LocalDateTime.now().minusHours(20);
 
-        assertEquals(FinalScoreStatus.PENDING, GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
+
+        assertEquals(FinalScoreStatus.PENDING, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.PENDING);
     }
 
     @Test
@@ -77,18 +96,27 @@ public class GameUtilTests {
         // no final scores, not withdrawn, tipoff was exactly 26 hours ago (2 hours game time + 24 waiting time)
         LocalDateTime tipoff = LocalDateTime.now().minusHours(26);
 
-        assertEquals(FinalScoreStatus.OVERDUE, GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
+
+        assertEquals(FinalScoreStatus.OVERDUE, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.OVERDUE);
     }
 
     @Test
     public void shouldReturnFinalScoreStatusBeforeBeingPlayed() {
         // no final scores, withdrawn, tipoff doesn't matter
-        assertEquals(FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED, GameUtil.getFinalScoreStatusFor(-1, -1, true, null));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, true, null);
+
+        assertEquals(FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED);
     }
 
     @Test
     public void shouldReturnFinalScoreStatusAfterBeingPlayed() {
         // final scores (not being 0:0, 20:0 or 0:20), withdrawn, tipoff doesn't matter
-        assertEquals(FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED, GameUtil.getFinalScoreStatusFor(66, 77, true, null));
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(66, 77, true, null);
+
+        assertEquals(FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED);
     }
 }
