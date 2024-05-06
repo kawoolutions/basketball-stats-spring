@@ -5,8 +5,9 @@ public enum FinalScoreStatus {
     PREVIEW,
     IN_PROGRESS,
     PENDING,
-    PLAYED,
-    RATED,
+    REGULARLY_PLAYED,
+    FORMALLY_RATED,
     OVERDUE,
-    NEVER_PLAYED
+    WITHDRAWN_AFTER_BEING_PLAYED, // e.g. a team that was withdrawn near the end of the season
+    WITHDRAWN_BEFORE_BEING_PLAYED  // e.g. a team that was withdrawn near the beginning of the season
 }

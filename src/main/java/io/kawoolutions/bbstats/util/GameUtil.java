@@ -10,12 +10,13 @@ import io.kawoolutions.bbstats.entity.Score;
 
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FUTURE;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.IN_PROGRESS;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.NEVER_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PENDING;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PLAYED;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REGULARLY_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PREVIEW;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.RATED;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FORMALLY_RATED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.OVERDUE;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED;
 
 public final class GameUtil {
 
@@ -54,10 +55,11 @@ public final class GameUtil {
 
         boolean hasFinalScore = homeFinalScore > -1 && awayFinalScore > -1;
 
+        if (withdrawn) {
+            return hasFinalScore ? WITHDRAWN_AFTER_BEING_PLAYED : WITHDRAWN_BEFORE_BEING_PLAYED;
+        }
+
         if (!hasFinalScore) {
-            if (withdrawn) {
-                return NEVER_PLAYED;
-            }
 
             // "now" differs slightly per call
             LocalDateTime now = LocalDateTime.now();
@@ -100,9 +102,9 @@ public final class GameUtil {
         if (homeFinalScore == 0 && awayFinalScore == 0 ||
                 homeFinalScore == 20 && awayFinalScore == 0 ||
                 homeFinalScore == 0 && awayFinalScore == 20) {
-            return RATED;
+            return FORMALLY_RATED;
         }
 
-        return PLAYED;
+        return REGULARLY_PLAYED;
     }
 }
