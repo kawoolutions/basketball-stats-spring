@@ -62,9 +62,9 @@ public class GameUtilTests {
 
     public static Stream<Arguments> provideRatedPairs() {
         return Stream.of(
-                Arguments.of(0, 0),
-                Arguments.of(20, 0),
-                Arguments.of(0, 20)
+            Arguments.of(0, 0),
+            Arguments.of(20, 0),
+            Arguments.of(0, 20)
         );
     }
 
@@ -103,7 +103,7 @@ public class GameUtilTests {
     }
 
     @Test
-    public void shouldReturnFinalScoreStatusBeforeBeingPlayed() {
+    public void shouldReturnFinalScoreStatusWithdrawnBeforeBeingPlayed() {
         // no final scores, withdrawn, tipoff doesn't matter
         FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, true, null);
 
@@ -112,7 +112,7 @@ public class GameUtilTests {
     }
 
     @Test
-    public void shouldReturnFinalScoreStatusAfterBeingPlayed() {
+    public void shouldReturnFinalScoreStatusWithdrawnAfterBeingPlayed() {
         // final scores (not being 0:0, 20:0 or 0:20), withdrawn, tipoff doesn't matter
         FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(66, 77, true, null);
 
