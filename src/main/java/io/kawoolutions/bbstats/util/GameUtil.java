@@ -10,11 +10,11 @@ import io.kawoolutions.bbstats.entity.Score;
 
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FUTURE;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.IN_PROGRESS;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PENDING;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_PENDING;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REGULARLY_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PREVIEW;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FORMALLY_RATED;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.OVERDUE;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_OVERDUE;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED;
 
@@ -91,9 +91,9 @@ public final class GameUtil {
                 LocalDateTime twentyFourHoursAfterEndOfGame = endOfGame.plusHours(24);
 
                 if (now.isBefore(twentyFourHoursAfterEndOfGame)) {
-                    return PENDING;
+                    return REPORT_PENDING;
                 } else {
-                    return OVERDUE;
+                    return REPORT_OVERDUE;
                 }
             }
         }

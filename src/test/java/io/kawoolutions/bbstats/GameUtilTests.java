@@ -87,8 +87,8 @@ public class GameUtilTests {
 
         FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
 
-        assertEquals(FinalScoreStatus.PENDING, status);
-        assertThat(status).isEqualTo(FinalScoreStatus.PENDING);
+        assertEquals(FinalScoreStatus.REPORT_PENDING, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.REPORT_PENDING);
     }
 
     @Test
@@ -98,8 +98,8 @@ public class GameUtilTests {
 
         FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(-1, -1, false, tipoff);
 
-        assertEquals(FinalScoreStatus.OVERDUE, status);
-        assertThat(status).isEqualTo(FinalScoreStatus.OVERDUE);
+        assertEquals(FinalScoreStatus.REPORT_OVERDUE, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.REPORT_OVERDUE);
     }
 
     @Test
