@@ -60,28 +60,8 @@ public class GameUtilTests {
         assertThat(status).isEqualTo(FinalScoreStatus.REGULARLY_PLAYED);
     }
 
-    public static Stream<Arguments> provideRatedPairs() {
-        return Stream.of(
-            Arguments.of(0, 0),
-            Arguments.of(20, 0),
-            Arguments.of(0, 20)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideRatedPairs")
-    public void shouldReturnFinalScoreStatusFormallyRated(int homeFinalScore, int awayFinalScore) {
-        // final scores (being 0:0, 20:0 or 0:20), not withdrawn, tipoff is at least 2 hours in the past
-        LocalDateTime tipoff = LocalDateTime.now().minusHours(2);
-
-        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(homeFinalScore, awayFinalScore, false, tipoff);
-
-        assertEquals(FinalScoreStatus.FORMALLY_RATED, status);
-        assertThat(status).isEqualTo(FinalScoreStatus.FORMALLY_RATED);
-    }
-
     @Test
-    public void shouldReturnFinalScoreStatusPending() {
+    public void shouldReturnFinalScoreStatusReportPending() {
         // no final scores, not withdrawn, tipoff was exactly 20 hours ago
         LocalDateTime tipoff = LocalDateTime.now().minusHours(20);
 
@@ -92,7 +72,7 @@ public class GameUtilTests {
     }
 
     @Test
-    public void shouldReturnFinalScoreStatusOverdue() {
+    public void shouldReturnFinalScoreStatusReportOverdue() {
         // no final scores, not withdrawn, tipoff was exactly 26 hours ago (2 hours game time + 24 waiting time)
         LocalDateTime tipoff = LocalDateTime.now().minusHours(26);
 
@@ -100,6 +80,26 @@ public class GameUtilTests {
 
         assertEquals(FinalScoreStatus.REPORT_OVERDUE, status);
         assertThat(status).isEqualTo(FinalScoreStatus.REPORT_OVERDUE);
+    }
+
+    public static Stream<Arguments> provideFormallyRatedScores() {
+        return Stream.of(
+                Arguments.of(0, 0),
+                Arguments.of(20, 0),
+                Arguments.of(0, 20)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideFormallyRatedScores")
+    public void shouldReturnFinalScoreStatusFormallyRated(int homeFinalScore, int awayFinalScore) {
+        // final scores (being 0:0, 20:0 or 0:20), not withdrawn, tipoff is at least 2 hours in the past
+        LocalDateTime tipoff = LocalDateTime.now().minusHours(2);
+
+        FinalScoreStatus status = GameUtil.getFinalScoreStatusFor(homeFinalScore, awayFinalScore, false, tipoff);
+
+        assertEquals(FinalScoreStatus.FORMALLY_RATED, status);
+        assertThat(status).isEqualTo(FinalScoreStatus.FORMALLY_RATED);
     }
 
     @Test
