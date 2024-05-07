@@ -8,13 +8,13 @@ import io.kawoolutions.bbstats.entity.Game;
 import io.kawoolutions.bbstats.entity.HomeAway;
 import io.kawoolutions.bbstats.entity.Score;
 
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FORMALLY_RATED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FUTURE;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.IN_PROGRESS;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_PENDING;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REGULARLY_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.PREVIEW;
-import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FORMALLY_RATED;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REGULARLY_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_OVERDUE;
+import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_PENDING;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED;
 
@@ -41,8 +41,8 @@ public final class GameUtil {
 //        System.out.println( "Score away: " + awayScore );
 
         // scores may be null for games that haven't been played yet
-        int homeFinalScore = homeScore != null && homeScore.getFinalScore() != null ? homeScore.getFinalScore().intValue() : -1;
-        int awayFinalScore = awayScore != null && awayScore.getFinalScore() != null ? awayScore.getFinalScore().intValue() : -1;
+        Integer homeFinalScore = homeScore != null && homeScore.getFinalScore() != null ? homeScore.getFinalScore() : null;
+        Integer awayFinalScore = awayScore != null && awayScore.getFinalScore() != null ? awayScore.getFinalScore() : null;
 
         LocalDateTime scheduledTipoff = game.getScheduledTipoff();
         LocalDateTime actualTipoff = game.getActualTipoff();
@@ -51,9 +51,9 @@ public final class GameUtil {
         return getFinalScoreStatusFor(homeFinalScore, awayFinalScore, false, tipoff);
     }
 
-    public static FinalScoreStatus getFinalScoreStatusFor(int homeFinalScore, int awayFinalScore, boolean withdrawn, LocalDateTime tipoff) {
+    public static FinalScoreStatus getFinalScoreStatusFor(Integer homeFinalScore, Integer awayFinalScore, boolean withdrawn, LocalDateTime tipoff) {
 
-        boolean hasFinalScore = homeFinalScore > -1 && awayFinalScore > -1;
+        boolean hasFinalScore = homeFinalScore != null && awayFinalScore != null;
 
         if (withdrawn) {
             return hasFinalScore ? WITHDRAWN_AFTER_BEING_PLAYED : WITHDRAWN_BEFORE_BEING_PLAYED;
