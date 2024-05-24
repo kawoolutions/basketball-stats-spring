@@ -14,7 +14,7 @@
     <name>basketball-stats-spring</name>
     <description>basketball-stats-spring</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
