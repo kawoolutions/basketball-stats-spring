@@ -2,6 +2,8 @@ package io.kawoolutions.bbstats;
 
 import java.util.stream.Stream;
 
+import io.kawoolutions.bbstats.entity.Club;
+import io.kawoolutions.bbstats.entity.Season;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,25 +21,25 @@ public class NamingUtilTests {
 
     public static Stream<Arguments> provideWholeNumberPairsForVerification() {
         return Stream.of(
-                Arguments.of(0, "0th"),
-                Arguments.of(1, "1st"),
-                Arguments.of(2, "2nd"),
-                Arguments.of(3, "3rd"),
-                Arguments.of(4, "4th"),
-                Arguments.of(11, "11th"),
-                Arguments.of(12, "12th"),
-                Arguments.of(13, "13th"),
-                Arguments.of(14, "14th"),
+            Arguments.of(0, "0th"),
+            Arguments.of(1, "1st"),
+            Arguments.of(2, "2nd"),
+            Arguments.of(3, "3rd"),
+            Arguments.of(4, "4th"),
+            Arguments.of(11, "11th"),
+            Arguments.of(12, "12th"),
+            Arguments.of(13, "13th"),
+            Arguments.of(14, "14th"),
 
-                Arguments.of(100, "100th"),
-                Arguments.of(101, "101st"),
-                Arguments.of(102, "102nd"),
-                Arguments.of(103, "103rd"),
-                Arguments.of(104, "104th"),
-                Arguments.of(111, "111th"),
-                Arguments.of(112, "112th"),
-                Arguments.of(113, "113th"),
-                Arguments.of(114, "114th")
+            Arguments.of(100, "100th"),
+            Arguments.of(101, "101st"),
+            Arguments.of(102, "102nd"),
+            Arguments.of(103, "103rd"),
+            Arguments.of(104, "104th"),
+            Arguments.of(111, "111th"),
+            Arguments.of(112, "112th"),
+            Arguments.of(113, "113th"),
+            Arguments.of(114, "114th")
         );
     }
 
@@ -135,5 +137,47 @@ public class NamingUtilTests {
 
         // then
         assertEquals("Number is negative!", minusOneException.getMessage()); // https://stackoverflow.com/a/46514550/396732
+    }
+
+    public static Stream<Arguments> provideStartYearsForVerification() {
+        return Stream.of(
+            Arguments.of(1999, "1999/00"),
+            Arguments.of(2018, "2018/19"),
+            Arguments.of(2100, "2100/01")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideStartYearsForVerification")
+    public void startYearShouldReturnLabelString(int seasonStartYear, String expectedLabel) {
+        assertEquals(expectedLabel, NamingUtil.getSeasonLabelForStartYear(seasonStartYear));
+    }
+
+    public static Stream<Arguments> provideSeasonsForVerification() {
+        return Stream.of(
+            Arguments.of(new Season(1999), "1999/00"),
+            Arguments.of(new Season(2018), "2018/19"),
+            Arguments.of(new Season(2100), "2100/01")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideSeasonsForVerification")
+    public void seasonShouldReturnLabelString(Season season, String expectedLabel) {
+        assertEquals(expectedLabel, NamingUtil.getSeasonLabelFor(season));
+    }
+
+    public static Stream<Arguments> provideClubsForVerification() {
+        return Stream.of(
+            Arguments.of(new Club("TV Dieburg", "DIEB"), "TV Dieburg (DIEB)"),
+            Arguments.of(new Club("TV Babenhausen", "BABH"), "TV Babenhausen (BABH)"),
+            Arguments.of(new Club("SCC Pfungstadt", "SCCP"), "SCC Pfungstadt (SCCP)")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideClubsForVerification")
+    public void startYearShouldReturnLabelString(Club club, String expectedLabel) {
+        assertEquals(expectedLabel, NamingUtil.getClubLabelFor(club));
     }
 }
