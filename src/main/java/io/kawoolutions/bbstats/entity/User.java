@@ -112,7 +112,10 @@ public class User extends BaseEntity<String>
         this.salt = salt;
         this.themeName = themeName;
 
-        this.person = new Person();
+        if ( personId != null )
+        {
+            this.person = new Person();
+        }
         this.person.setId(personId);
     }
 

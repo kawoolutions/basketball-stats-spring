@@ -150,7 +150,7 @@
     "doRelPkFieldSyncNotNullChecks": true,
     "doRelationshipConCalls": true,
     "doRelationshipControl": true,
-    "doRelationshipNotNullChecks": false,
+    "doRelationshipNotNullChecks": true,
     "doRenameIdOnRelationshipNestedCpkClassFieldXetters": false,
     "doRenameSecondaryTableSingleFields": true,
     "doSortClassLevelAnnotations": true,
