@@ -38,7 +38,7 @@ public class ScheduleScoreDto extends BaseDto {
     private final int awayFinalScore;
 
     private final boolean hasFinalScore;
-    private final int deltaFinalScore;
+    private final Integer deltaFinalScore;
     private final boolean hasPlayerStats;
     private final boolean withdrawn;
 
@@ -99,15 +99,15 @@ public class ScheduleScoreDto extends BaseDto {
         this.homeRosterId = homeRosterId;
         this.homeTeamName = NamingUtil.getTeamLabelFor(homeClubName, homeTeamOrdinalNumber, homeClubCode);
         this.homeTeamCode = homeClubCode + homeTeamOrdinalNumber;
-        this.homeFinalScore = homeFinalScore != null ? homeFinalScore.intValue() : -1;
+        this.homeFinalScore = homeFinalScore;
 
         this.awayRosterId = awayRosterId;
         this.awayTeamName = NamingUtil.getTeamLabelFor(awayClubName, awayTeamOrdinalNumber, awayClubCode);
         this.awayTeamCode = awayClubCode + " " + awayTeamOrdinalNumber;
-        this.awayFinalScore = awayFinalScore != null ? awayFinalScore.intValue() : -1;
+        this.awayFinalScore = awayFinalScore;
 
         this.hasFinalScore = hasFinalScore;
-        this.deltaFinalScore = hasFinalScore ? Math.abs(this.homeFinalScore - this.awayFinalScore) : -1;
+        this.deltaFinalScore = hasFinalScore ? Math.abs(this.homeFinalScore - this.awayFinalScore) : null;
         this.hasPlayerStats = hasPlayerStats;
         this.withdrawn = withdrawn;
     }

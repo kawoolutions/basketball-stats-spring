@@ -40,7 +40,7 @@ public final class NamingUtil {
     }
 
     public static String getSeasonLabelFor(Season season) {
-        return getSeasonLabelForStartYear(season.getStartYear().intValue());
+        return getSeasonLabelForStartYear(season.getStartYear());
     }
 
     /**
@@ -49,7 +49,9 @@ public final class NamingUtil {
      * @param startYear
      * @return
      */
-    public static String getSeasonLabelForStartYear(int startYear) {
+    public static String getSeasonLabelForStartYear(Integer startYear) {
+        Objects.requireNonNull(startYear, "Start year is null!");
+
         // "2018/19"
         return startYear + "/" + Integer.valueOf(startYear + 1).toString().substring(2);
     }
@@ -89,15 +91,16 @@ public final class NamingUtil {
     public static String getTeamLabelForTeam(Team team) {
         Club club = team.getClub();
 
-        return getTeamLabelFor(club.getName(), team.getOrdinalNbr().intValue(), club.getCode());
+        return getTeamLabelFor(club.getName(), team.getOrdinalNbr(), club.getCode());
     }
 
-    public static String getShortTeamLabelFor(String clubName, int teamNumber) {
+    public static String getShortTeamLabelFor(String clubName, Integer teamNumber) {
         return NamingUtil.getTeamLabelFor(clubName, teamNumber, null);
     }
 
-    public static String getTeamLabelFor(String clubName, int teamNumber, String clubCode) {
+    public static String getTeamLabelFor(String clubName, Integer teamNumber, String clubCode) {
         Objects.requireNonNull(clubName, "Club name is null!");
+        Objects.requireNonNull(teamNumber, "Team number is null!");
 
         if (clubName.isEmpty()) {
             throw new IllegalArgumentException("Club name is empty!");
@@ -126,17 +129,21 @@ public final class NamingUtil {
     }
 
     public static String getFormalPersonNameFor(Player player) {
-        return getFormalPersonNameFor(player.getPerson().getLastName(), player.getPerson().getFirstName(), player.getPerson().getIncognito().booleanValue());
+        return getFormalPersonNameFor(player.getPerson().getLastName(), player.getPerson().getFirstName(), player.getPerson().getIncognito());
     }
 
-    public static String getFormalPersonNameFor(String lastName, String firstName, boolean incognito) {
-        if (incognito && lastName != null) {
+    public static String getFormalPersonNameFor(String lastName, String firstName, Boolean incognito) {
+        Objects.requireNonNull(lastName, "Last name is null!");
+        Objects.requireNonNull(firstName, "First name is null!");
+        Objects.requireNonNull(incognito, "Incognito is null!");
+
+        if (incognito) {
             // overwrite param, no good practice :-)
             lastName = NamingUtil.abbreviateLastName(lastName);
         }
 
         // setting only last or first name leaves off comma
-        String formalName = (lastName != null ? lastName : "") + (lastName != null && firstName != null ? ", " : "") + (firstName != null ? firstName : "");
+        String formalName = (lastName != null ? lastName : "") + (lastName != null ? ", " : "") + firstName;
 
         return formalName;
     }
