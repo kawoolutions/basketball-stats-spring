@@ -55,13 +55,13 @@ public class SeasonResource {
         seasonRepository.save(season);
     }
 
-    @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateSeason(@PathVariable Integer id, @RequestBody Season season) {
-        if (seasonRepository.findById(id).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        seasonRepository.save(season);
-    }
+//    @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public void updateSeason(@PathVariable Integer id, @RequestBody Season season) {
+//        if (seasonRepository.findById(id).isEmpty()) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+//        }
+//        seasonRepository.save(season);
+//    }
 
     @DeleteMapping(path = "{id}")
     public void deleteSeason(@PathVariable Integer id) {
