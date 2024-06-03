@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class NamingUtilTests {
+class NamingUtilTests {
 
     public static Stream<Arguments> provideWholeNumberPairsForVerification() {
         return Stream.of(
