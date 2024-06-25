@@ -117,16 +117,8 @@ public class Roster extends BaseIdEntity
 
         this.season = new Season(seasonStartYear);
         this.team = new Team(clubId, teamTypeCode, teamOrdinalNbr);
-
-        if ( primaryJerseyColorName != null )
-        {
-            this.primaryJerseyColor = new Color(primaryJerseyColorName);
-        }
-
-        if ( secondaryJerseyColorName != null )
-        {
-            this.secondaryJerseyColor = new Color(secondaryJerseyColorName);
-        }
+        this.primaryJerseyColor = new Color(primaryJerseyColorName);
+        this.secondaryJerseyColor = new Color(secondaryJerseyColorName);
     }
 
     @Override
