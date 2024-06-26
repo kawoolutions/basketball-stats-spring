@@ -86,8 +86,11 @@ public class Assignment extends BaseEntity<AssignmentId>
         this.game = new Game();
         this.game.setId(gameId);
 
-        this.ownerClub = new Club();
-        this.ownerClub.setId(ownerClubId);
+        if ( ownerClubId != null )
+        {
+            this.ownerClub = new Club();
+            this.ownerClub.setId(ownerClubId);
+        }
 
         this.refpoolMember = new RefpoolMember(refereeId, clubId, seasonStartYear);
     }

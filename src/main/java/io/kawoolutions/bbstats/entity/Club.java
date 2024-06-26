@@ -143,7 +143,10 @@ public class Club extends Contact
         this.code = code;
         this.websiteUrl = websiteUrl;
 
-        this.color = new Color(colorName);
+        if ( colorName != null )
+        {
+            this.color = new Color(colorName);
+        }
 
         this.district = new District();
         this.district.setId(districtId);

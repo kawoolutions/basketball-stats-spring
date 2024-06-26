@@ -179,11 +179,17 @@ public class Game extends BaseIdEntity
         this.attendance = attendance;
         this.recap = recap;
 
-        this.refClub = new Club();
-        this.refClub.setId(refClubId);
+        if ( refClubId != null )
+        {
+            this.refClub = new Club();
+            this.refClub.setId(refClubId);
+        }
 
-        this.arena = new Arena();
-        this.arena.setId(arenaId);
+        if ( arenaId != null )
+        {
+            this.arena = new Arena();
+            this.arena.setId(arenaId);
+        }
 
         this.group = new Group(roundId, groupCode);
     }
