@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,14 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import io.kawoolutions.bbstats.entity.Coach;
 import io.kawoolutions.bbstats.entity.Person;
 import io.kawoolutions.bbstats.entity.Player;
 import io.kawoolutions.bbstats.entity.Referee;
 import io.kawoolutions.bbstats.repository.CoachRepository;
+import io.kawoolutions.bbstats.repository.PersonRepository;
 import io.kawoolutions.bbstats.repository.PlayerRepository;
 import io.kawoolutions.bbstats.repository.RefereeRepository;
-import io.kawoolutions.bbstats.repository.PersonRepository;
 
 //@CrossOrigin
 @RestController
@@ -106,9 +106,9 @@ public class PersonResource {
         });
 
         URI uri = MvcUriComponentsBuilder.fromController(getClass())
-            .path("/{id}")
-            .buildAndExpand(sharedId)
-            .toUri();
+                .path("/{id}")
+                .buildAndExpand(sharedId)
+                .toUri();
 
         return ResponseEntity.created(uri).body(savedPerson);
     }
@@ -120,8 +120,8 @@ public class PersonResource {
     public ResponseEntity<Person> updatePerson(@PathVariable Integer id, @RequestBody Person person) {
         if (!Objects.equals(id, person.getId())) {
             return ResponseEntity.badRequest()
-                .header("x-message","ID of updated person must correspond to path")
-                .build();
+                    .header("x-message", "ID of updated person must correspond to path")
+                    .build();
         }
 
         if (!personRepository.existsById(id)) {
