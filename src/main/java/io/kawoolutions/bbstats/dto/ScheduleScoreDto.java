@@ -1,15 +1,16 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.entity.CompetitionType;
-import io.kawoolutions.bbstats.util.GameUtil;
-import io.kawoolutions.bbstats.util.NamingUtil;
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.lang3.StringUtils;
+
+import io.kawoolutions.bbstats.entity.CompetitionType;
+import io.kawoolutions.bbstats.util.GameUtil;
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 public class ScheduleScoreDto extends BaseDto {
     private static final long serialVersionUID = 1L;

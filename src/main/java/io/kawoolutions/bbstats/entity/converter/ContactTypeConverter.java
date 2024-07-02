@@ -1,12 +1,13 @@
 package io.kawoolutions.bbstats.entity.converter;
 
-import io.kawoolutions.bbstats.entity.ContactType;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
-
 import static io.kawoolutions.bbstats.entity.ContactType.ARENA;
 import static io.kawoolutions.bbstats.entity.ContactType.CLUB;
 import static io.kawoolutions.bbstats.entity.ContactType.PERSON;
+
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
+
+import io.kawoolutions.bbstats.entity.ContactType;
 
 @Converter(autoApply = false)
 public class ContactTypeConverter implements AttributeConverter<ContactType, String> {

@@ -1,5 +1,10 @@
 package io.kawoolutions.bbstats.dto;
 
+import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import io.kawoolutions.bbstats.entity.Continent;
 import io.kawoolutions.bbstats.entity.Country;
 import io.kawoolutions.bbstats.entity.GeoContext;
@@ -10,11 +15,6 @@ import io.kawoolutions.bbstats.entity.Roster;
 import io.kawoolutions.bbstats.entity.State;
 import io.kawoolutions.bbstats.entity.TeamMember;
 import io.kawoolutions.bbstats.util.NamingUtil;
-
-import java.lang.reflect.Method;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerDto extends BaseDto {
     private static final long serialVersionUID = 1L;

@@ -1,19 +1,15 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.entity.AgeGroup;
-import io.kawoolutions.bbstats.entity.Continent;
-import io.kawoolutions.bbstats.entity.Country;
-import io.kawoolutions.bbstats.entity.GeoContext;
-import io.kawoolutions.bbstats.entity.Region;
-import io.kawoolutions.bbstats.entity.State;
-import io.kawoolutions.bbstats.entity.TeamTypeGender;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import org.springframework.context.annotation.Bean;
-
 import java.io.Serial;
 import java.io.Serializable;
-import java.lang.reflect.Method;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+import io.kawoolutions.bbstats.entity.AgeGroup;
+import io.kawoolutions.bbstats.entity.Country;
+import io.kawoolutions.bbstats.entity.GeoContext;
+import io.kawoolutions.bbstats.entity.TeamTypeGender;
 
 @Entity
 public class TeamDto implements Serializable {

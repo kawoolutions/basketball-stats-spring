@@ -1,12 +1,12 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.entity.Arena;
-import io.kawoolutions.bbstats.entity.Club;
-import io.kawoolutions.bbstats.entity.Country;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import io.kawoolutions.bbstats.entity.Arena;
+import io.kawoolutions.bbstats.entity.Club;
+import io.kawoolutions.bbstats.entity.Country;
 
 public class ArenaDto extends BaseDto {
     private static final long serialVersionUID = 1L;

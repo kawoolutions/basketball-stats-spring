@@ -1,5 +1,8 @@
 package io.kawoolutions.bbstats;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
@@ -10,9 +13,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import io.kawoolutions.bbstats.dto.FinalScoreStatus;
 import io.kawoolutions.bbstats.util.GameUtil;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameUtilTests {
 

@@ -1,9 +1,9 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.util.NamingUtil;
-
 import java.util.Arrays;
 import java.util.List;
+
+import io.kawoolutions.bbstats.util.NamingUtil;
 
 public class TeamStatDto extends MultiGameLogDto {
     // team info

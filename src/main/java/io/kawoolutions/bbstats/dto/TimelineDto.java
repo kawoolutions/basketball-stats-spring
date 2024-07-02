@@ -1,9 +1,9 @@
 package io.kawoolutions.bbstats.dto;
 
-import io.kawoolutions.bbstats.entity.HomeAway;
-
 import java.util.Arrays;
 import java.util.List;
+
+import io.kawoolutions.bbstats.entity.HomeAway;
 
 public class TimelineDto extends BaseDto {
 

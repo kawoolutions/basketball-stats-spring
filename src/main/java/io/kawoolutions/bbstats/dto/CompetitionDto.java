@@ -1,5 +1,8 @@
 package io.kawoolutions.bbstats.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.kawoolutions.bbstats.entity.AgeGroup;
 import io.kawoolutions.bbstats.entity.CompetitionType;
 import io.kawoolutions.bbstats.entity.Country;
@@ -7,9 +10,6 @@ import io.kawoolutions.bbstats.entity.GeoContext;
 import io.kawoolutions.bbstats.entity.GeoContextType;
 import io.kawoolutions.bbstats.entity.TeamTypeGender;
 import io.kawoolutions.bbstats.util.NamingUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CompetitionDto extends BaseDto {
     private static final long serialVersionUID = 1L;

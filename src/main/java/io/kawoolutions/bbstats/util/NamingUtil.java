@@ -1,5 +1,7 @@
 package io.kawoolutions.bbstats.util;
 
+import java.util.Objects;
+
 import io.kawoolutions.bbstats.entity.AgeGroup;
 import io.kawoolutions.bbstats.entity.Club;
 import io.kawoolutions.bbstats.entity.Competition;
@@ -18,8 +20,6 @@ import io.kawoolutions.bbstats.entity.Stat;
 import io.kawoolutions.bbstats.entity.Team;
 import io.kawoolutions.bbstats.entity.TeamMember;
 import io.kawoolutions.bbstats.entity.TeamTypeGender;
-
-import java.util.Objects;
 
 public final class NamingUtil {
 

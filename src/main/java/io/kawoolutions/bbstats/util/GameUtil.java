@@ -1,13 +1,5 @@
 package io.kawoolutions.bbstats.util;
 
-import java.time.LocalDateTime;
-import java.util.Map;
-
-import io.kawoolutions.bbstats.dto.FinalScoreStatus;
-import io.kawoolutions.bbstats.entity.Game;
-import io.kawoolutions.bbstats.entity.HomeAway;
-import io.kawoolutions.bbstats.entity.Score;
-
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FORMALLY_RATED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.FUTURE;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.IN_PROGRESS;
@@ -17,6 +9,14 @@ import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_OVERDUE;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.REPORT_PENDING;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_AFTER_BEING_PLAYED;
 import static io.kawoolutions.bbstats.dto.FinalScoreStatus.WITHDRAWN_BEFORE_BEING_PLAYED;
+
+import java.time.LocalDateTime;
+import java.util.Map;
+
+import io.kawoolutions.bbstats.dto.FinalScoreStatus;
+import io.kawoolutions.bbstats.entity.Game;
+import io.kawoolutions.bbstats.entity.HomeAway;
+import io.kawoolutions.bbstats.entity.Score;
 
 public final class GameUtil {
 

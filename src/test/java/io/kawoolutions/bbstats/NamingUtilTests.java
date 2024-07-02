@@ -1,21 +1,20 @@
 package io.kawoolutions.bbstats;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.stream.Stream;
 
-import io.kawoolutions.bbstats.entity.Club;
-import io.kawoolutions.bbstats.entity.Season;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import io.kawoolutions.bbstats.entity.Club;
+import io.kawoolutions.bbstats.entity.Season;
 import io.kawoolutions.bbstats.util.NamingUtil;
-
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NamingUtilTests {
 

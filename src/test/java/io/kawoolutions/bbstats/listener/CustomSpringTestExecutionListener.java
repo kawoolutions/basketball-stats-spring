@@ -1,12 +1,5 @@
 package io.kawoolutions.bbstats.listener;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestExecutionListener;
 
 public class CustomSpringTestExecutionListener implements TestExecutionListener {
