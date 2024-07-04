@@ -9,12 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import io.kawoolutions.bbstats.entity.Person;
 import io.kawoolutions.bbstats.entity.PersonGender;
-import io.kawoolutions.bbstats.repository.PersonRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RestIntegrationTests {
+class ResourceIntegrationTests {
 
     @Autowired
     private PersonResource personResource;
