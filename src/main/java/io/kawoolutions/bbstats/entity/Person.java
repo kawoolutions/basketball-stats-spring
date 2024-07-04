@@ -66,7 +66,7 @@ public class Person extends Contact
     @Basic(optional = false)
     @Column
     @Enumerated(EnumType.STRING)
-    private PersonGender gender = PersonGender.MALE;
+    private PersonGender gender;
 
     @Basic
     @Column(name = "birth_date")
@@ -99,23 +99,23 @@ public class Person extends Contact
 
     public Person(Person p)
     {
-        this(p.getCountryCode(), p.getZipCode(), p.getCityName(), p.getStreetName(), p.getHouseNbr(), p.getLatitude(), p.getLongitude(), p.getFirstName(), p.getLastName(), p.getBirthDate());
+        this(p.getCountryCode(), p.getZipCode(), p.getCityName(), p.getStreetName(), p.getHouseNbr(), p.getLatitude(), p.getLongitude(), p.getFirstName(), p.getLastName(), p.getGender(), p.getBirthDate());
 
-        this.gender = p.getGender();
         this.incognito = p.getIncognito();
     }
 
-    public Person(String firstName, String lastName)
+    public Person(String firstName, String lastName, PersonGender gender)
     {
-        this(null, null, null, null, null, null, null, firstName, lastName, null);
+        this(null, null, null, null, null, null, null, firstName, lastName, gender, null);
     }
 
-    public Person(String countryCode, String zipCode, String cityName, String streetName, String houseNbr, Double latitude, Double longitude, String firstName, String lastName, LocalDate birthDate)
+    public Person(String countryCode, String zipCode, String cityName, String streetName, String houseNbr, Double latitude, Double longitude, String firstName, String lastName, PersonGender gender, LocalDate birthDate)
     {
         super(countryCode, zipCode, cityName, streetName, houseNbr, latitude, longitude);
 
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.birthDate = birthDate;
     }
 
