@@ -4745,3 +4745,5 @@ FROM Persons pe
   INNER JOIN GroupMembers gma     ON roa.id = gma.roster_id AND rd.id = gma.round_id AND gr.code = gma.group_code
 
 GROUP BY ga.id, pl.id;
+
+ALTER TABLE Contacts ALTER COLUMN id RESTART WITH (SELECT MAX(ID) FROM Contacts) + 1;
