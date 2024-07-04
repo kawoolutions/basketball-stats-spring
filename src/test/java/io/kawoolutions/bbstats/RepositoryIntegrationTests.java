@@ -58,9 +58,9 @@ class RepositoryIntegrationTests {
         int sizeBefore = personsBefore.size();
 
         List<Person> personsToInsert = List.of(
-                new Person("Fabian", "Müller", PersonGender.MALE),
-                new Person("Anna Marie", "Kuhn", PersonGender.FEMALE),
-                new Person("Lukas", "Füllkrug", PersonGender.MALE),
+                new Person("Fabian", "Herrmann", PersonGender.MALE),
+                new Person("Annamarie", "Kuhn", PersonGender.FEMALE),
+                new Person("Lukas", "Mayer", PersonGender.MALE),
                 new Person("Patrizia", "Flechtner", PersonGender.FEMALE)
         );
 
