@@ -143,9 +143,9 @@ CREATE TABLE IF NOT EXISTS PhoneNumbers (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS EmailAddresses (
   contact_id INT NOT NULL,
-  "index" INT NOT NULL,
+  idx INT NOT NULL,
   uri VARCHAR(64) NOT NULL,
-  PRIMARY KEY (contact_id, "index"),
+  PRIMARY KEY (contact_id, idx),
   CONSTRAINT emailaddresses_contacts_fk
     FOREIGN KEY (contact_id)
     REFERENCES Contacts (id)

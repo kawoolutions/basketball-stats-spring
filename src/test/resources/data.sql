@@ -1600,7 +1600,7 @@ INSERT INTO PhoneNumbers (contact_id, type, country_code, area_code, subscriber_
 (1, 'FIXED' , 49, 6071,  749015),
 (1, 'FAX'   , 49, 6071,  749016);
 
-INSERT INTO EmailAddresses (contact_id, "index", uri) VALUES
+INSERT INTO EmailAddresses (contact_id, idx, uri) VALUES
 (1, 0, 'kwutzke@yahoo.de'),
 (1, 1, 'kasi@nba.com');
 

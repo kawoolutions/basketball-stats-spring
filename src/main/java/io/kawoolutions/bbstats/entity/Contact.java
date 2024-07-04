@@ -78,7 +78,7 @@ public abstract class Contact extends BaseIdEntity
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "EmailAddresses", joinColumns = {@JoinColumn(name = "contact_id", referencedColumnName = "id")})
-    @OrderColumn(name = "index")
+    @OrderColumn(name = "idx")
     @Column(name = "uri")
     protected List<String> emailAddresses;
 
