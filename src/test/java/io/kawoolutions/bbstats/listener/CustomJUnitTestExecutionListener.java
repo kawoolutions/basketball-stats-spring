@@ -44,7 +44,7 @@ public class CustomJUnitTestExecutionListener implements TestExecutionListener {
     private void log(String prefix, MethodSource methodSource, boolean useNewline) {
 //        String methodName = methodSource.getClassName() + "." + methodSource.getMethodName();
         String methodName = methodSource.getMethodName();
-        log(prefix + " " + methodName + "()" + (useNewline ? "\n": ""));
+        log(prefix + " " + methodName + "()" + (useNewline ? "\n" : ""));
     }
 
     private void log(String message) {
