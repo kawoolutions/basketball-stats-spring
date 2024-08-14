@@ -84,10 +84,9 @@ class GameUtilTests {
 
     public static Stream<Arguments> provideFormallyRatedScores() {
         return Stream.of(
-            Arguments.of(0, 0),
-            Arguments.of(20, 0),
-            Arguments.of(0, 20)
-        );
+                Arguments.of(0, 0),
+                Arguments.of(20, 0),
+                Arguments.of(0, 20));
     }
 
     @ParameterizedTest

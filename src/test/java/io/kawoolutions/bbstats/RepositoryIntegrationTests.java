@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-import io.kawoolutions.bbstats.entity.Person;
-import io.kawoolutions.bbstats.entity.PersonGender;
-import io.kawoolutions.bbstats.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import io.kawoolutions.bbstats.entity.Continent;
+import io.kawoolutions.bbstats.entity.Person;
+import io.kawoolutions.bbstats.entity.PersonGender;
 import io.kawoolutions.bbstats.entity.Season;
 import io.kawoolutions.bbstats.repository.ContinentRepository;
+import io.kawoolutions.bbstats.repository.PersonRepository;
 import io.kawoolutions.bbstats.repository.SeasonRepository;
 
 @SpringBootTest
@@ -61,8 +61,7 @@ class RepositoryIntegrationTests {
                 new Person("Fabian", "Herrmann", PersonGender.MALE),
                 new Person("Annamarie", "Kuhn", PersonGender.FEMALE),
                 new Person("Lukas", "Mayer", PersonGender.MALE),
-                new Person("Patrizia", "Flechtner", PersonGender.FEMALE)
-        );
+                new Person("Patrizia", "Flechtner", PersonGender.FEMALE));
 
         personRepository.saveAll(personsToInsert);
 
